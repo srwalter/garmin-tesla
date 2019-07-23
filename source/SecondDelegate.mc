@@ -3,39 +3,32 @@ using Toybox.Communications as Communications;
 
 class SecondDelegate extends Ui.BehaviorDelegate {
     var _handler;
+    var _tesla;
 
     function initialize(handler) {
         BehaviorDelegate.initialize();
         _handler = handler;
+        _tesla = new Tesla();
     }
 
     function onSelect() {
-        _handler.invoke("Querying...");
-        makeRequest();
+        _handler.invoke("Authenticating...");
+        _tesla.authenticate(method(:onReceiveAuth));
         return true;
     }
 
-    function makeRequest() {
-        Communications.makeWebRequest(
-            "https://owner-api.teslamotors.com/oauth/token",
-            {
-                "grant_type" => "password",
-                "client_id" => "81527cff06843c8634fdc09e8ac0abefb46ac849f38fe1e431c2ef2106796384",
-                "client_secret" => "c7257eb71a564034f9419ee651c7d0e5f7aa6bfbd18bafb5c5c033b093bb2fa3",
-                "email" => "steven@stevenwalter.org",
-                "password" => ""
-            },
-            {
-                :method => Communications.HTTP_REQUEST_METHOD_POST,
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            },
-            method(:onReceive)
-        );
+    function onReceiveAuth(responseCode, data) {
+        if (responseCode == 200) {
+            _handler.invoke("Getting vehicles...");
+            _tesla.getVehicleId(method(:onReceiveVehicles));
+        } else {
+            _handler.invoke("Error: " + responseCode.toString());
+        }
     }
 
-    function onReceive(responseCode, data) {
+    function onReceiveVehicles(responseCode, data) {
         if (responseCode == 200) {
-            _handler.invoke(data);
+            _handler.invoke(data.get("id"));
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
