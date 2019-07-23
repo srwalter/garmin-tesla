@@ -4,24 +4,32 @@ using Toybox.Communications as Communications;
 class SecondDelegate extends Ui.BehaviorDelegate {
     var _handler;
     var _tesla;
-    var _need_auth;
     var _vehicle_id;
-    var _get_climate;
+    var _need_auth;
     var _need_wake;
+
+    var _get_climate;
+    var _get_charge;
+
+    var _climate;
+    var _charge;
 
     function initialize(handler) {
         BehaviorDelegate.initialize();
-        _handler = handler;
         var _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
+        _handler = handler;
         _tesla = new Tesla(_token);
+
         _get_climate = 0;
-        _need_wake = 1;
+        _get_charge = 0;
+
         if (_token != null) {
             _need_auth = 0;
         } else {
             _need_auth = 1;
         }
+        _need_wake = 1;
     }
 
     function stateMachine() {
@@ -43,9 +51,15 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             return;
         }
 
+        _handler.invoke("Vehicle awake");
         if (_get_climate) {
-            _handler.invoke("Getting climate state...");
+            _get_climate = 0;
             _tesla.getClimateState(_vehicle_id, method(:onReceiveClimate));
+        }
+
+        if (_get_charge) {
+            _get_charge = 0;
+            _tesla.getChargeState(_vehicle_id, method(:onReceiveCharge));
         }
     }
 
@@ -76,9 +90,16 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onReceiveClimate(responseCode, data) {
-        _get_climate = 0;
         if (responseCode == 200) {
-            _handler.invoke(data);
+            _climate = data;
+        } else {
+            _handler.invoke("Error: " + responseCode.toString());
+        }
+    }
+
+    function onReceiveCharge(responseCode, data) {
+        if (responseCode == 200) {
+            _charge = data;
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
