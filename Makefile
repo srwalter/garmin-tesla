@@ -24,7 +24,7 @@ buildall:
 	done
 
 run: build
-	@$(SDK_HOME)/bin/connectiq &&\
+	@$(SDK_HOME)/bin/connectiq;\
 	sleep 3 &&\
 	$(SDK_HOME)/bin/monkeydo bin/$(appName).prg $(DEVICE)
 

@@ -6,8 +6,9 @@ class SimpleDelegate extends Ui.BehaviorDelegate {
         BehaviorDelegate.initialize();
     }
 
-    function onMenu() {
-        Ui.pushView(new Rez.Menus.MainMenu(), new SimpleMenuDelegate(), Ui.SLIDE_UP);
+    function onSelect() {
+        var view = new SecondView();
+        Ui.pushView(view, new SecondDelegate(view.method(:onReceive)), Ui.SLIDE_UP);
         return true;
     }
 
