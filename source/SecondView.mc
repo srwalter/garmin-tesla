@@ -7,11 +7,11 @@ class SecondView extends Ui.View {
     function initialize(data) {
         View.initialize();
         _data = data;
+        _display = "";
     }
 
     //! Load your resources here
     function onLayout(dc) {
-        _display = "Second";
     }
 
     //! Called when this View is brought to the foreground. Restore

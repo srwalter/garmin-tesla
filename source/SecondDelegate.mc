@@ -21,15 +21,16 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _handler = handler;
         _tesla = new Tesla(_token);
 
-        _get_climate = 0;
-        _get_charge = 0;
-
         if (_token != null) {
             _need_auth = 0;
         } else {
             _need_auth = 1;
         }
         _need_wake = 1;
+
+        _get_climate = 1;
+        _get_charge = 1;
+        stateMachine();
     }
 
     function stateMachine() {
@@ -64,9 +65,6 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onSelect() {
-        _get_climate = 1;
-        _get_charge = 1;
-        stateMachine();
         return true;
     }
 
