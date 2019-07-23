@@ -6,7 +6,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _tesla;
     var _vehicle_id;
     var _need_auth;
+    var _auth_done;
     var _need_wake;
+    var _wake_done;
 
     var _get_climate;
     var _set_climate;
@@ -24,10 +26,13 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_token != null) {
             _need_auth = 0;
+            _auth_done = 1;
         } else {
             _need_auth = 1;
+            _auth_done = 0;
         }
         _need_wake = 1;
+        _wake_done = 0;
 
         _set_climate = 0;
         _get_climate = 1;
@@ -39,6 +44,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         if (_need_auth) {
             _handler.invoke("Authenticating...");
             _tesla.authenticate(method(:onReceiveAuth));
+        }
+
+        if (!_auth_done) {
             return;
         }
 
@@ -49,8 +57,13 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         }
 
         if (_need_wake) {
+            _need_wake = 0;
             _handler.invoke("Waking vehicle...");
             _tesla.wakeVehicle(_vehicle_id, method(:onReceiveAwake));
+            return;
+        }
+
+        if (!_wake_done) {
             return;
         }
 
@@ -119,7 +132,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
-            _need_wake = 0;
+            _wake_done = 1;
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
