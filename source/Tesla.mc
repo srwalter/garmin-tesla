@@ -2,6 +2,12 @@ class Tesla {
     hidden var _token;
     hidden var _notify;
 
+    function initialize(token) {
+        if (token != null) {
+            _token = "Bearer " + token;
+        }
+    }
+
     function authenticate(notify) {
         _notify = notify;
         Communications.makeWebRequest(
@@ -22,6 +28,7 @@ class Tesla {
     }
 
     function getVehicleId(notify) {
+        System.println(_token);
         Communications.makeWebRequest(
             "https://owner-api.teslamotors.com/api/1/vehicles",
             null,
@@ -32,13 +39,14 @@ class Tesla {
                 },
                 :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
             },
-            method(notify)
+            notify
         );
 
     }
 
     function authCallback(responseCode, data) {
         if (responseCode == 200) {
+            Application.getApp().setProperty("token", data.get("access_token"));
             _token = "Bearer " + data.get("access_token");
         }
         _notify.invoke(responseCode, data);

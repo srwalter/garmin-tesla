@@ -4,31 +4,44 @@ using Toybox.Communications as Communications;
 class SecondDelegate extends Ui.BehaviorDelegate {
     var _handler;
     var _tesla;
+    var _token;
 
     function initialize(handler) {
         BehaviorDelegate.initialize();
         _handler = handler;
-        _tesla = new Tesla();
+        _token = Application.getApp().getProperty("token");
+        _tesla = new Tesla(_token);
     }
 
     function onSelect() {
-        _handler.invoke("Authenticating...");
-        _tesla.authenticate(method(:onReceiveAuth));
+        if (_token != null) {
+            getVehicles();
+        } else {
+            _handler.invoke("Authenticating...");
+            _tesla.authenticate(method(:onReceiveAuth));
+        }
         return true;
+    }
+
+    function getVehicles() {
+        _handler.invoke("Getting vehicles...");
+        _tesla.getVehicleId(method(:onReceiveVehicles));
     }
 
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
-            _handler.invoke("Getting vehicles...");
-            _tesla.getVehicleId(method(:onReceiveVehicles));
+            getVehicles();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
     }
 
     function onReceiveVehicles(responseCode, data) {
+        System.println("on receive vehicles");
         if (responseCode == 200) {
-            _handler.invoke(data.get("id"));
+            var id = data.get("response")[0].get("id");
+            System.println(id);
+            _handler.invoke(id);
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
