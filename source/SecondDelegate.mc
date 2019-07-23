@@ -3,6 +3,7 @@ using Toybox.Communications as Communications;
 
 class SecondDelegate extends Ui.BehaviorDelegate {
     var _handler;
+    var _token;
     var _tesla;
     var _vehicle_id;
     var _need_auth;
@@ -19,10 +20,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function initialize(data, handler) {
         BehaviorDelegate.initialize();
         _data = data;
-        var _token = Application.getApp().getProperty("token");
+        _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
         _handler = handler;
-        _tesla = new Tesla(_token);
 
         if (_token != null) {
             _need_auth = 0;
@@ -42,13 +42,28 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function stateMachine() {
         if (_need_auth) {
-            _handler.invoke("Authenticating...");
-            _tesla.authenticate(method(:onReceiveAuth));
+            _need_auth = 0;
+            _handler.invoke("Login on Phone!");
+            //_tesla.authenticate(method(:onReceiveAuth));
+            Communications.registerForOAuthMessages(method(:onOAuthMessage));
+            Communications.makeOAuthRequest(
+                "https://dasbrennen.org/~srwalter/tesla.html",
+                {},
+                "https://dasbrennen.org/~srwalter/tesla-done.html",
+                Communications.OAUTH_RESULT_TYPE_URL,
+                {
+                    "responseCode" => "OAUTH_CODE",
+                    "responseError" => "OAUTH_ERROR"
+                }
+            );
+            return;
         }
 
         if (!_auth_done) {
             return;
         }
+
+        _tesla = new Tesla(_token);
 
         if (_vehicle_id == null) {
             _handler.invoke("Getting vehicles...");
@@ -92,7 +107,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
-            _need_auth = 0;
+            _auth_done = 1;
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
@@ -145,6 +160,17 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
+        }
+    }
+
+    function onOAuthMessage(message) {
+        if (message.data != null) {
+            _token = message.data["OAUTH_CODE"];
+            Application.getApp().setProperty("token", _token);
+            _auth_done = 1;
+            stateMachine();
+        } else {
+            _handler.invoke("OAuth err");
         }
     }
 }
