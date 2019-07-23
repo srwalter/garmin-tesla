@@ -84,7 +84,7 @@ class Tesla {
             url,
             null,
             {
-                :method => Communications.HTTP_REQUEST_METHOD_GET,
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
                 :headers => {
                     "Authorization" => _token
                 },
@@ -101,7 +101,7 @@ class Tesla {
             url,
             null,
             {
-                :method => Communications.HTTP_REQUEST_METHOD_GET,
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
                 :headers => {
                     "Authorization" => _token
                 },

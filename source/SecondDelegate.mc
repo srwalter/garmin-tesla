@@ -118,8 +118,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onReceiveAwake(responseCode, data) {
-        _need_wake = 0;
-        stateMachine();
+        if (responseCode == 200) {
+            _need_wake = 0;
+            stateMachine();
+        } else {
+            _handler.invoke("Error: " + responseCode.toString());
+        }
     }
 
     function onClimateDone(responseCode, data) {
