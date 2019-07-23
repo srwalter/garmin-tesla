@@ -40,8 +40,16 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         System.println("on receive vehicles");
         if (responseCode == 200) {
             var id = data.get("response")[0].get("id");
-            System.println(id);
-            _handler.invoke(id);
+            _handler.invoke("Getting climate state...");
+            _tesla.getClimateState(id, method(:onReceiveClimate));
+        } else {
+            _handler.invoke("Error: " + responseCode.toString());
+        }
+    }
+
+    function onReceiveClimate(responseCode, data) {
+        if (responseCode == 200) {
+            _handler.invoke(data);
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
