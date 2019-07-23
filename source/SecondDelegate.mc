@@ -65,6 +65,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onSelect() {
         _get_climate = 1;
+        _get_charge = 1;
         stateMachine();
         return true;
     }
@@ -91,7 +92,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveClimate(responseCode, data) {
         if (responseCode == 200) {
-            _data._climate = data;
+            _data._climate = data.get("response");
+            System.println("Got climate");
+            _handler.invoke(null);
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
@@ -99,7 +102,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveCharge(responseCode, data) {
         if (responseCode == 200) {
-            _data._charge = data;
+            _data._charge = data.get("response");
+            System.println("Got charge");
+            _handler.invoke(null);
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }

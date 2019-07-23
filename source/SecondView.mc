@@ -24,7 +24,23 @@ class SecondView extends Ui.View {
     function onUpdate(dc) {
         dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
         dc.clear();
-        dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        if (_display != null) {
+            dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        } else {
+            if (_data._charge != null) {
+                var charge = _data._charge.get("battery_level").toString();
+                dc.drawText(dc.getWidth()/2, 40, Graphics.FONT_MEDIUM, "Charge: " + charge, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            } else {
+                dc.drawText(dc.getWidth()/2, 40, Graphics.FONT_MEDIUM, "Charge: ", Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+
+            if (_data._climate != null) {
+                var temp = _data._climate.get("inside_temp").toNumber().toString();
+                dc.drawText(dc.getWidth()/2, 80, Graphics.FONT_MEDIUM, "Temp: " + temp, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            } else {
+                dc.drawText(dc.getWidth()/2, 80, Graphics.FONT_MEDIUM, "Temp: ", Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
+        }
     }
 
     //! Called when this View is removed from the screen. Save the
@@ -34,17 +50,7 @@ class SecondView extends Ui.View {
     }
 
     function onReceive(args) {
-        if (args instanceof Lang.String) {
-            _display = args;
-        }
-        else if (args instanceof Dictionary) {
-            // Print the arguments duplicated and returned by jsonplaceholder.typicode.com
-            var keys = args.keys();
-            _display = "";
-            for( var i = 0; i < keys.size(); i++ ) {
-                _display += Lang.format("$1$: $2$\n", [keys[i], args[keys[i]]]);
-            }
-        }
+        _display = args;
         WatchUi.requestUpdate();
     }
 }
