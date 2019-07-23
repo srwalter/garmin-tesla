@@ -37,8 +37,11 @@ class SecondView extends Ui.View {
             if (_data._climate != null) {
                 var temp = _data._climate.get("inside_temp").toNumber().toString();
                 dc.drawText(dc.getWidth()/2, 80, Graphics.FONT_MEDIUM, "Temp: " + temp, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                var on = _data._climate.get("is_climate_on") ? "On" : "Off";
+                dc.drawText(dc.getWidth()/2, 60, Graphics.FONT_MEDIUM, "Climate: " + on, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
                 dc.drawText(dc.getWidth()/2, 80, Graphics.FONT_MEDIUM, "Temp: ", Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(dc.getWidth()/2, 60, Graphics.FONT_MEDIUM, "Climate: ", Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
         }
     }
