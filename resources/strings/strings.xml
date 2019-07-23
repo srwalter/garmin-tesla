@@ -2,7 +2,7 @@
     <string id="AppName">Tesla</string>
 
     <string id="prompt">Tesla</string>
-    <string id="press_start">Press start to continue...</string>
+    <string id="press_start">Press start...</string>
     <string id="second">Second</string>
 
     <string id="menu_label_1">Item 1</string>
