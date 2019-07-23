@@ -2,9 +2,11 @@ using Toybox.WatchUi as Ui;
 
 class SecondView extends Ui.View {
     hidden var _display;
+    var _data;
 
-    function initialize() {
+    function initialize(data) {
         View.initialize();
+        _data = data;
     }
 
     //! Load your resources here

@@ -11,11 +11,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _get_climate;
     var _get_charge;
 
-    var _climate;
-    var _charge;
+    var _data;
 
-    function initialize(handler) {
+    function initialize(data, handler) {
         BehaviorDelegate.initialize();
+        _data = data;
         var _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
         _handler = handler;
@@ -91,7 +91,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveClimate(responseCode, data) {
         if (responseCode == 200) {
-            _climate = data;
+            _data._climate = data;
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }
@@ -99,7 +99,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveCharge(responseCode, data) {
         if (responseCode == 200) {
-            _charge = data;
+            _data._charge = data;
         } else {
             _handler.invoke("Error: " + responseCode.toString());
         }

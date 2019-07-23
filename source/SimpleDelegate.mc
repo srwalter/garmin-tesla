@@ -7,8 +7,9 @@ class SimpleDelegate extends Ui.BehaviorDelegate {
     }
 
     function onSelect() {
-        var view = new SecondView();
-        Ui.pushView(view, new SecondDelegate(view.method(:onReceive)), Ui.SLIDE_UP);
+        var data = new TeslaData();
+        var view = new SecondView(data);
+        Ui.pushView(view, new SecondDelegate(data, view.method(:onReceive)), Ui.SLIDE_UP);
         return true;
     }
 
