@@ -13,6 +13,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         BehaviorDelegate.initialize();
         _handler = handler;
         var _token = Application.getApp().getProperty("token");
+        _vehicle_id = Application.getApp().getProperty("vehicle");
         _tesla = new Tesla(_token);
         _get_climate = 0;
         _need_wake = 1;
@@ -67,6 +68,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         System.println("on receive vehicles");
         if (responseCode == 200) {
             _vehicle_id = data.get("response")[0].get("id");
+            Application.getApp().setProperty("vehicle", _vehicle_id);
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
