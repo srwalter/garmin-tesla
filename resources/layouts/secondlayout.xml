@@ -1,3 +1,0 @@
-<layout id="SecondLayout">
-    <label x="center" y="center" text="@Strings.second" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
-</layout>
