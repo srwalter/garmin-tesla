@@ -111,6 +111,23 @@ class Tesla {
         );
     }
 
+    function honkHorn(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/honk_horn";
+        System.println(url);
+        Communications.makeWebRequest(
+            url,
+            null,
+            {
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
+                :headers => {
+                    "Authorization" => _token
+                },
+                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+            },
+            notify
+        );
+    }
+
     //function authCallback(responseCode, data) {
     //    if (responseCode == 200) {
     //        Application.getApp().setProperty("token", data.get("access_token"));

@@ -14,6 +14,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _get_climate;
     var _set_climate;
     var _get_charge;
+    var _honk_horn;
 
     var _data;
 
@@ -37,6 +38,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _set_climate = false;
         _get_climate = true;
         _get_charge = true;
+        _honk_horn = false;
         stateMachine();
     }
 
@@ -97,10 +99,22 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke("HVAC On");
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
         }
+
+        if (_honk_horn) {
+            _honk_horn = false;
+            _handler.invoke("Honk");
+            _tesla.honkHorn(_vehicle_id, method(:genericHandler));
+        }
     }
 
     function onSelect() {
         _set_climate = true;
+        stateMachine();
+        return true;
+    }
+
+    function onNextPage() {
+        _honk_horn = true;
         stateMachine();
         return true;
     }
@@ -163,6 +177,15 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onClimateDone(responseCode, data) {
         if (responseCode == 200) {
             _get_climate = true;
+            _handler.invoke(null);
+            stateMachine();
+        } else {
+            _handler.invoke("Error: " + responseCode.toString());
+        }
+    }
+
+    function genericHandler(responseCode, data) {
+        if (responseCode == 200) {
             _handler.invoke(null);
             stateMachine();
         } else {
