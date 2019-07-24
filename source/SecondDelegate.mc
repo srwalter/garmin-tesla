@@ -1,10 +1,12 @@
 using Toybox.WatchUi as Ui;
+using Toybox.Timer;
 using Toybox.Communications as Communications;
 
 class SecondDelegate extends Ui.BehaviorDelegate {
     var _handler;
     var _token;
     var _tesla;
+    var _timer;
     var _vehicle_id;
     var _need_auth;
     var _auth_done;
@@ -25,6 +27,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _data = data;
         _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
+        _timer = new Timer.Timer();
+        _timer.start(method(:timerRefresh), 30000, true);
         _handler = handler;
 
         if (_token != null) {
@@ -122,6 +126,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         }
     }
 
+    function timerRefresh() {
+        _get_climate = true;
+        _get_charge = true;
+        stateMachine();
+    }
+
     function onSelect() {
         _set_climate = true;
         stateMachine();
@@ -142,6 +152,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onBack() {
         Ui.popView(Ui.SLIDE_DOWN);
+        if (_timer != null) {
+            _timer.stop();
+        }
         return true;
     }
 
