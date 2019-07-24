@@ -6,6 +6,7 @@ devices = `grep 'iq:product id' manifest.xml | sed 's/.*iq:product id="\([^"]*\)
 build:
 	$(SDK_HOME)/bin/monkeyc \
 	--jungles ./monkey.jungle \
+	--release \
 	--device $(DEVICE) \
 	--output bin/$(appName).prg \
 	--private-key $(PRIVATE_KEY) \
