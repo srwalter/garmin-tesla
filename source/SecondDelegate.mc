@@ -82,7 +82,6 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             return;
         }
 
-        _handler.invoke("Vehicle awake");
         if (_get_climate) {
             _get_climate = false;
             _tesla.getClimateState(_vehicle_id, method(:onReceiveClimate));
@@ -95,6 +94,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_set_climate) {
             _set_climate = false;
+            _handler.invoke("HVAC On");
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
         }
     }
@@ -102,6 +102,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onSelect() {
         _set_climate = true;
         stateMachine();
+        return true;
+    }
+
+    function onBack() {
+        Ui.popView(Ui.SLIDE_DOWN);
         return true;
     }
 
@@ -148,6 +153,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
             _wake_done = true;
+            _handler.invoke("Vehicle awake");
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
@@ -157,6 +163,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onClimateDone(responseCode, data) {
         if (responseCode == 200) {
             _get_climate = true;
+            _handler.invoke(null);
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
