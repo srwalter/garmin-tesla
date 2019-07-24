@@ -27,11 +27,9 @@ class Tesla {
     //    );
     //}
 
-    function getVehicleId(notify) {
-        System.println(_token);
+    hidden function genericGet(url, notify) {
         Communications.makeWebRequest(
-            "https://owner-api.teslamotors.com/api/1/vehicles",
-            null,
+            url, null,
             {
                 :method => Communications.HTTP_REQUEST_METHOD_GET,
                 :headers => {
@@ -41,50 +39,37 @@ class Tesla {
             },
             notify
         );
+    }
+
+    function getVehicleId(notify) {
+        System.println(_token);
+        genericGet("https://owner-api.teslamotors.com/api/1/vehicles", notify);
     }
 
     function getClimateState(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/data_request/climate_state";
         System.println(url);
-        Communications.makeWebRequest(
-            url,
-            null,
-            {
-                :method => Communications.HTTP_REQUEST_METHOD_GET,
-                :headers => {
-                    "Authorization" => _token
-                },
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            },
-            notify
-        );
+        genericGet(url, notify);
     }
 
     function getChargeState(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/data_request/charge_state";
         System.println(url);
-        Communications.makeWebRequest(
-            url,
-            null,
-            {
-                :method => Communications.HTTP_REQUEST_METHOD_GET,
-                :headers => {
-                    "Authorization" => _token
-                },
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            },
-            notify
-        );
+        genericGet(url, notify);
     }
 
     function getVehicleState(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/data_request/vehicle_state";
         System.println(url);
+        genericGet(url, notify);
+    }
+
+    function genericPost(url, notify) {
         Communications.makeWebRequest(
             url,
             null,
             {
-                :method => Communications.HTTP_REQUEST_METHOD_GET,
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
                 :headers => {
                     "Authorization" => _token
                 },
@@ -97,52 +82,19 @@ class Tesla {
     function wakeVehicle(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/wake_up";
         System.println(url);
-        Communications.makeWebRequest(
-            url,
-            null,
-            {
-                :method => Communications.HTTP_REQUEST_METHOD_POST,
-                :headers => {
-                    "Authorization" => _token
-                },
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            },
-            notify
-        );
+        genericPost(url, notify);
     }
 
     function climateOn(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/auto_conditioning_start";
         System.println(url);
-        Communications.makeWebRequest(
-            url,
-            null,
-            {
-                :method => Communications.HTTP_REQUEST_METHOD_POST,
-                :headers => {
-                    "Authorization" => _token
-                },
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            },
-            notify
-        );
+        genericPost(url, notify);
     }
 
     function honkHorn(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/honk_horn";
         System.println(url);
-        Communications.makeWebRequest(
-            url,
-            null,
-            {
-                :method => Communications.HTTP_REQUEST_METHOD_POST,
-                :headers => {
-                    "Authorization" => _token
-                },
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            },
-            notify
-        );
+        genericPost(url, notify);
     }
 
     function openFrunk(vehicle, notify) {
