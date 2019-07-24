@@ -15,6 +15,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _set_climate;
     var _get_charge;
     var _honk_horn;
+    var _open_frunk;
 
     var _data;
 
@@ -39,6 +40,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _get_climate = true;
         _get_charge = true;
         _honk_horn = false;
+        _open_frunk = false;
         stateMachine();
     }
 
@@ -105,6 +107,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke("Honk");
             _tesla.honkHorn(_vehicle_id, method(:genericHandler));
         }
+
+        if (_open_frunk) {
+            _open_frunk = false;
+            _handler.invoke("Frunk");
+            _tesla.openFrunk(_vehicle_id, method(:genericHandler));
+        }
     }
 
     function onSelect() {
@@ -115,6 +123,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onNextPage() {
         _honk_horn = true;
+        stateMachine();
+        return true;
+    }
+
+    function onPreviousPage() {
+        _open_frunk = true;
         stateMachine();
         return true;
     }
