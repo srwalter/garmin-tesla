@@ -155,6 +155,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 408) {
+                stateMachine();
+            }
         }
     }
 
@@ -164,7 +167,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             System.println("Got climate");
             _handler.invoke(null);
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 408) {
+                _get_climate = true;
+                stateMachine();
+            } else {
+                _handler.invoke("Error: " + responseCode.toString());
+            }
         }
     }
 
@@ -174,7 +182,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             System.println("Got charge");
             _handler.invoke(null);
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 408) {
+                _get_charge = true;
+                stateMachine();
+            } else {
+                _handler.invoke("Error: " + responseCode.toString());
+            }
         }
     }
 
@@ -185,6 +198,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 408) {
+                _need_wake = true;
+                stateMachine();
+            }
         }
     }
 
