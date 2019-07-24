@@ -14,6 +14,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _get_climate;
     var _set_climate;
     var _get_charge;
+    var _get_vehicle;
     var _honk_horn;
     var _open_frunk;
 
@@ -39,6 +40,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _set_climate = false;
         _get_climate = true;
         _get_charge = true;
+        _get_vehicle = true;
         _honk_horn = false;
         _open_frunk = false;
         stateMachine();
@@ -84,6 +86,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (!_wake_done) {
             return;
+        }
+
+        if (_get_vehicle) {
+            _get_vehicle = false;
+            _tesla.getVehicleState(_vehicle_id, method(:onReceiveVehicle));
         }
 
         if (_get_climate) {
@@ -157,6 +164,20 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke("Error: " + responseCode.toString());
             if (responseCode == 408) {
                 stateMachine();
+            }
+        }
+    }
+
+    function onReceiveVehicle(responseCode, data) {
+        if (responseCode == 200) {
+            _data._vehicle = data.get("response");
+            _handler.invoke(null);
+        } else {
+            if (responseCode == 408) {
+                _get_climate = true;
+                stateMachine();
+            } else {
+                _handler.invoke("Error: " + responseCode.toString());
             }
         }
     }
