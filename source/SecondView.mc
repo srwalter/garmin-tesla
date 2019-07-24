@@ -27,6 +27,9 @@ class SecondView extends Ui.View {
         if (_display != null) {
             dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
+            if (_data._vehicle != null) {
+                dc.drawText(dc.getWidth()/2, 40, Graphics.FONT_SMALL, _data._vehicle.get("vehicle_name"), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            }
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
             if (_data._charge != null) {
                 var charge = _data._charge.get("battery_level").toString();
