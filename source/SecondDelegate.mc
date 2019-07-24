@@ -25,24 +25,24 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _handler = handler;
 
         if (_token != null) {
-            _need_auth = 0;
-            _auth_done = 1;
+            _need_auth = false;
+            _auth_done = true;
         } else {
-            _need_auth = 1;
-            _auth_done = 0;
+            _need_auth = true;
+            _auth_done = false;
         }
-        _need_wake = 1;
-        _wake_done = 0;
+        _need_wake = true;
+        _wake_done = false;
 
-        _set_climate = 0;
-        _get_climate = 1;
-        _get_charge = 1;
+        _set_climate = false;
+        _get_climate = true;
+        _get_charge = true;
         stateMachine();
     }
 
     function stateMachine() {
         if (_need_auth) {
-            _need_auth = 0;
+            _need_auth = false;
             _handler.invoke("Login on Phone!");
             //_tesla.authenticate(method(:onReceiveAuth));
             Communications.registerForOAuthMessages(method(:onOAuthMessage));
@@ -72,7 +72,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         }
 
         if (_need_wake) {
-            _need_wake = 0;
+            _need_wake = false;
             _handler.invoke("Waking vehicle...");
             _tesla.wakeVehicle(_vehicle_id, method(:onReceiveAwake));
             return;
@@ -84,30 +84,30 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         _handler.invoke("Vehicle awake");
         if (_get_climate) {
-            _get_climate = 0;
+            _get_climate = false;
             _tesla.getClimateState(_vehicle_id, method(:onReceiveClimate));
         }
 
         if (_get_charge) {
-            _get_charge = 0;
+            _get_charge = false;
             _tesla.getChargeState(_vehicle_id, method(:onReceiveCharge));
         }
 
         if (_set_climate) {
-            _set_climate = 0;
+            _set_climate = false;
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
         }
     }
 
     function onSelect() {
-        _set_climate = 1;
+        _set_climate = true;
         stateMachine();
         return true;
     }
 
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
-            _auth_done = 1;
+            _auth_done = true;
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
@@ -147,7 +147,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
-            _wake_done = 1;
+            _wake_done = true;
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
@@ -156,7 +156,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onClimateDone(responseCode, data) {
         if (responseCode == 200) {
-            _get_climate = 1;
+            _get_climate = true;
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
@@ -167,7 +167,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         if (message.data != null) {
             _token = message.data["OAUTH_CODE"];
             Application.getApp().setProperty("token", _token);
-            _auth_done = 1;
+            _auth_done = true;
             stateMachine();
         } else {
             _handler.invoke("OAuth err");
