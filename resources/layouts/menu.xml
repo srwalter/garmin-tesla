@@ -1,0 +1,3 @@
+<menu id="OptionMenu">
+    <menu-item id="reset" label="@Strings.menu_label_1" />
+</menu>

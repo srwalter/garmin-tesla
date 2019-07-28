@@ -158,6 +158,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         return true;
     }
 
+    function onMenu() {
+        Ui.pushView(new Rez.Menus.OptionMenu(), new OptionMenuDelegate(), Ui.SLIDE_UP);
+        return true;
+    }
+
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
             _auth_done = true;
