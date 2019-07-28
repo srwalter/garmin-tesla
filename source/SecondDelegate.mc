@@ -3,6 +3,7 @@ using Toybox.Timer;
 using Toybox.Communications as Communications;
 
 class SecondDelegate extends Ui.BehaviorDelegate {
+    var _dummy_mode;
     var _handler;
     var _token;
     var _tesla;
@@ -24,6 +25,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function initialize(data, handler) {
         BehaviorDelegate.initialize();
+        _dummy_mode = true;
         _data = data;
         _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
@@ -48,10 +50,29 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _get_vehicle = true;
         _honk_horn = false;
         _open_frunk = false;
+
+        if(_dummy_mode) {
+            _data._vehicle = {
+                "vehicle_name" => "Janet"
+            };
+            _data._charge = {
+                "battery_level" => 65,
+                "charge_limit_soc" => 80
+            };
+            _data._climate = {
+                "inside_temp" => 25,
+                "is_climate_on" => true
+            };
+        }
         stateMachine();
     }
 
     function stateMachine() {
+        if(_dummy_mode) {
+            _handler.invoke(null);
+            return;
+        }
+
         if (_need_auth) {
             _need_auth = false;
             _handler.invoke("Login on Phone!");
