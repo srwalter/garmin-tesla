@@ -1,5 +1,5 @@
 <iq:manifest xmlns:iq="http://www.garmin.com/xml/connectiq" version="1">
-    <iq:application entry="QuickTesla" id="D1457A329800496B8C91BF6E3F057152" launcherIcon="@Drawables.LauncherIcon" name="@Strings.AppName" type="widget">
+    <iq:application entry="QuickTesla" id="1B53AE9BD336E15687677675747AC412" launcherIcon="@Drawables.LauncherIcon" name="@Strings.AppName" type="widget">
 
         <iq:products>
             <iq:product id="d2bravo"/>
