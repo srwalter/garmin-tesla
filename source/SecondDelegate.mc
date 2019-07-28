@@ -30,6 +30,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _timer = new Timer.Timer();
         _timer.start(method(:timerRefresh), 30000, true);
         _handler = handler;
+        _tesla = null;
 
         if (_token != null) {
             _need_auth = false;
@@ -73,7 +74,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             return;
         }
 
-        _tesla = new Tesla(_token);
+        if (_tesla == null) {
+            _tesla = new Tesla(_token);
+        }
 
         if (_vehicle_id == null) {
             _handler.invoke("Getting vehicles...");
