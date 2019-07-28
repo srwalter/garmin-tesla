@@ -3,8 +3,6 @@
 
     <string id="prompt">Tesla</string>
     <string id="press_start">Press start...</string>
-    <string id="second">Second</string>
 
     <string id="menu_label_1">Reset...</string>
-    <string id="menu_label_2">Item 2</string>
 </strings>
