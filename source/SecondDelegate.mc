@@ -25,7 +25,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function initialize(data, handler) {
         BehaviorDelegate.initialize();
-        _dummy_mode = true;
+        _dummy_mode = false;
         _data = data;
         _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
@@ -79,9 +79,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             //_tesla.authenticate(method(:onReceiveAuth));
             Communications.registerForOAuthMessages(method(:onOAuthMessage));
             Communications.makeOAuthRequest(
-                "https://dasbrennen.org/~srwalter/tesla.html",
+                "https://dasbrennen.org/tesla/tesla.html",
                 {},
-                "https://dasbrennen.org/~srwalter/tesla-done.html",
+                "https://dasbrennen.org/tesla/tesla-done.html",
                 Communications.OAUTH_RESULT_TYPE_URL,
                 {
                     "responseCode" => "OAUTH_CODE",
