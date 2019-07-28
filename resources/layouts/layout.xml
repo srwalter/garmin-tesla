@@ -1,4 +1,5 @@
 <layout id="MainLayout">
     <label x="center" y="80" font="Graphics.FONT_LARGE" text="@Strings.prompt" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
-    <label x="center" y="120" text="@Strings.press_start" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+    <label x="center" y="120" text="@Strings.press_start1" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+    <label x="center" y="150" text="@Strings.press_start2" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
 </layout>
