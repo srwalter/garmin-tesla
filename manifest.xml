@@ -6,10 +6,6 @@
             <iq:product id="d2bravo_titanium"/>
             <iq:product id="d2charlie"/>
             <iq:product id="descentmk1"/>
-            <iq:product id="edge820"/>
-            <iq:product id="edge520plus"/>
-            <iq:product id="edge1030"/>
-            <iq:product id="edge1030bontrager"/>
             <iq:product id="fr645"/>
             <iq:product id="fr645m"/>
             <iq:product id="fr935"/>
@@ -22,8 +18,6 @@
             <iq:product id="fenix5x"/>
             <iq:product id="fenix5xplus"/>
             <iq:product id="fenixchronos"/>
-            <iq:product id="vivoactive3"/>
-            <iq:product id="vivoactive3m"/>
         </iq:products>
 
         <iq:permissions>
