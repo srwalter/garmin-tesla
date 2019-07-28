@@ -22,18 +22,40 @@ class SecondView extends Ui.View {
 
     //! Update the view
     function onUpdate(dc) {
+        var center_x = dc.getWidth()/2;
+        var center_y = dc.getHeight()/2;
         dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
         dc.clear();
         if (_display != null) {
-            dc.drawText(dc.getWidth()/2, dc.getHeight()/2, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(center_x, center_y, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
             if (_data._vehicle != null) {
-                dc.drawText(dc.getWidth()/2, 40, Graphics.FONT_SMALL, _data._vehicle.get("vehicle_name"), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(center_x, 40, Graphics.FONT_SMALL, _data._vehicle.get("vehicle_name"), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
+            dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
+            var radius;
+            if (center_x < center_y) {
+                radius = center_x-5;
+            } else {
+                radius = center_y-5;
+            }
+            dc.setPenWidth(5);
+            dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 180, 0);
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
             if (_data._charge != null) {
-                var charge = _data._charge.get("battery_level").toString();
-                dc.drawText(60, 90, Graphics.FONT_MEDIUM, "Charge: " + charge, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                var charge = _data._charge.get("battery_level");
+                var requested_charge = _data._charge.get("charge_limit_soc");
+                dc.drawText(60, 90, Graphics.FONT_MEDIUM, "Charge: " + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
+                var angle = (180 - (charge * 180 / 100)) % 360;
+                System.println(angle.toString());
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 180, angle);
+                dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
+                angle = 180 - (requested_charge * 180 / 100);
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle-1, angle-4);
+                System.println("Requested " + requested_charge.toString());
+                System.println("Angle " + angle.toString());
+                dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
             } else {
                 dc.drawText(60, 90, Graphics.FONT_MEDIUM, "Charge: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             }
@@ -50,7 +72,7 @@ class SecondView extends Ui.View {
 
             dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
             dc.drawText(dc.getWidth() - 20, 60, Graphics.FONT_TINY, "AC", Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(5, dc.getHeight()/2, Graphics.FONT_TINY, "Frunk", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(5, center_y, Graphics.FONT_TINY, "Frunk", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             dc.drawText(20, 150, Graphics.FONT_TINY, "Horn", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         }
     }
