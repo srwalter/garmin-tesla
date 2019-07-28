@@ -45,7 +45,7 @@ class SecondView extends Ui.View {
             if (_data._charge != null) {
                 var charge = _data._charge.get("battery_level");
                 var requested_charge = _data._charge.get("charge_limit_soc");
-                dc.drawText(60, 90, Graphics.FONT_MEDIUM, "Charge: " + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(60, 110, Graphics.FONT_MEDIUM, "Charge: " + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
                 var angle = (180 - (charge * 180 / 100)) % 360;
                 System.println(angle.toString());
@@ -57,22 +57,22 @@ class SecondView extends Ui.View {
                 System.println("Angle " + angle.toString());
                 dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
             } else {
-                dc.drawText(60, 90, Graphics.FONT_MEDIUM, "Charge: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(60, 110, Graphics.FONT_MEDIUM, "Charge: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             }
 
             if (_data._climate != null) {
                 var temp = _data._climate.get("inside_temp").toNumber().toString();
-                dc.drawText(60, 130, Graphics.FONT_MEDIUM, "Temp: " + temp, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(60, 140, Graphics.FONT_MEDIUM, "Cabin: " + temp + " C", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
                 var on = _data._climate.get("is_climate_on") ? "On" : "Off";
-                dc.drawText(60, 170, Graphics.FONT_MEDIUM, "HVAC: " + on, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(60, 170, Graphics.FONT_MEDIUM, "Climate: " + on, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
-                dc.drawText(60, 130, Graphics.FONT_MEDIUM, "Temp: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-                dc.drawText(60, 170, Graphics.FONT_MEDIUM, "HVAC: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(60, 140, Graphics.FONT_MEDIUM, "Cabin: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(60, 170, Graphics.FONT_MEDIUM, "Climate: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             }
 
             dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-            dc.drawText(dc.getWidth() - 20, 60, Graphics.FONT_TINY, "AC", Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(5, center_y, Graphics.FONT_TINY, "Frunk", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(dc.getWidth() - 20, 60, Graphics.FONT_TINY, "Climate On", Graphics.TEXT_JUSTIFY_RIGHT);
+            dc.drawText(15, center_y, Graphics.FONT_TINY, "Frunk", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             dc.drawText(20, 150, Graphics.FONT_TINY, "Horn", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         }
     }
