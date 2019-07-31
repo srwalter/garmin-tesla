@@ -12,6 +12,7 @@ class SecondView extends Ui.View {
 
     //! Load your resources here
     function onLayout(dc) {
+        setLayout(Rez.Layouts.TeslaLayout(dc));
     }
 
     //! Called when this View is brought to the foreground. Restore
@@ -29,6 +30,9 @@ class SecondView extends Ui.View {
         if (_display != null) {
             dc.drawText(center_x, center_y, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
+            View.onUpdate(dc);
+            dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
+
             if (_data._vehicle != null) {
                 dc.drawText(center_x, 40, Graphics.FONT_SMALL, _data._vehicle.get("vehicle_name"), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
             }
@@ -69,11 +73,6 @@ class SecondView extends Ui.View {
                 dc.drawText(60, 140, Graphics.FONT_MEDIUM, "Cabin: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
                 dc.drawText(60, 170, Graphics.FONT_MEDIUM, "Climate: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             }
-
-            dc.setColor(Graphics.COLOR_BLUE, Graphics.COLOR_BLACK);
-            dc.drawText(dc.getWidth() - 20, 60, Graphics.FONT_TINY, "Climate On", Graphics.TEXT_JUSTIFY_RIGHT);
-            dc.drawText(15, center_y, Graphics.FONT_TINY, "Frunk", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-            dc.drawText(20, 150, Graphics.FONT_TINY, "Horn", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
         }
     }
 
