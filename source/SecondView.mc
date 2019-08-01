@@ -46,10 +46,12 @@ class SecondView extends Ui.View {
             dc.setPenWidth(5);
             dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 180, 0);
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+            var data_block_x = Application.AppBase.getProperty("DataBlockX");
+            var charge_y = Application.AppBase.getProperty("ChargeY");
             if (_data._charge != null) {
                 var charge = _data._charge.get("battery_level");
                 var requested_charge = _data._charge.get("charge_limit_soc");
-                dc.drawText(60, 110, Graphics.FONT_MEDIUM, "Charge: " + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(data_block_x, charge_y, Graphics.FONT_MEDIUM, "Charge: " + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
                 var angle = (180 - (charge * 180 / 100)) % 360;
                 System.println(angle.toString());
@@ -61,17 +63,19 @@ class SecondView extends Ui.View {
                 System.println("Angle " + angle.toString());
                 dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
             } else {
-                dc.drawText(60, 110, Graphics.FONT_MEDIUM, "Charge: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(data_block_x, charge_y, Graphics.FONT_MEDIUM, "Charge: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             }
 
+            var temp_y = Application.AppBase.getProperty("TempY");
+            var climate_y = Application.AppBase.getProperty("ClimateY");
             if (_data._climate != null) {
                 var temp = _data._climate.get("inside_temp").toNumber().toString();
-                dc.drawText(60, 140, Graphics.FONT_MEDIUM, "Cabin: " + temp + " C", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, "Cabin: " + temp + " C", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
                 var on = _data._climate.get("is_climate_on") ? "On" : "Off";
-                dc.drawText(60, 170, Graphics.FONT_MEDIUM, "Climate: " + on, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(data_block_x, climate_y, Graphics.FONT_MEDIUM, "Climate: " + on, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
-                dc.drawText(60, 140, Graphics.FONT_MEDIUM, "Cabin: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-                dc.drawText(60, 170, Graphics.FONT_MEDIUM, "Climate: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, "Cabin: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                dc.drawText(data_block_x, climate_y, Graphics.FONT_MEDIUM, "Climate: ", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             }
         }
     }
