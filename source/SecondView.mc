@@ -7,7 +7,7 @@ class SecondView extends Ui.View {
     function initialize(data) {
         View.initialize();
         _data = data;
-        _display = "";
+        _display = "Requesting data...";
     }
 
     //! Load your resources here

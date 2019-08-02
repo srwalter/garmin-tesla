@@ -41,8 +41,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _need_auth = true;
             _auth_done = false;
         }
-        _need_wake = true;
-        _wake_done = false;
+        _need_wake = false;
+        _wake_done = true;
 
         _set_climate = false;
         _get_climate = true;
@@ -107,6 +107,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_need_wake) {
             _need_wake = false;
+            _wake_done = false;
             _handler.invoke("Waking vehicle...");
             _tesla.wakeVehicle(_vehicle_id, method(:onReceiveAwake));
             return;
@@ -216,6 +217,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
+                _need_wake = true;
                 _get_climate = true;
                 stateMachine();
             } else {
@@ -231,6 +233,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
+                _need_wake = true;
                 _get_climate = true;
                 stateMachine();
             } else {
@@ -246,6 +249,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
+                _need_wake = true;
                 _get_charge = true;
                 stateMachine();
             } else {
