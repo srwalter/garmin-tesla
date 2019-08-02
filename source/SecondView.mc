@@ -51,6 +51,9 @@ class SecondView extends Ui.View {
             if (_data._charge != null) {
                 var charge = _data._charge.get("battery_level");
                 var requested_charge = _data._charge.get("charge_limit_soc");
+                if (_data._charge.get("charging_state").equals("Charging")) {
+                    dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
+                }
                 dc.drawText(data_block_x, charge_y, Graphics.FONT_MEDIUM, "Charge: " + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
                 var angle = (180 - (charge * 180 / 100)) % 360;
