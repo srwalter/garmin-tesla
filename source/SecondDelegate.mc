@@ -218,7 +218,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         } else {
             if (responseCode == 408) {
                 _need_wake = true;
-                _get_climate = true;
+                _get_vehicle = true;
                 stateMachine();
             } else {
                 _handler.invoke("Error: " + responseCode.toString());
@@ -261,7 +261,6 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
             _wake_done = true;
-            _handler.invoke("Vehicle awake");
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
