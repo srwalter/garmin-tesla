@@ -217,8 +217,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
-                _need_wake = true;
-                _get_vehicle = true;
+                if (_wake_done) {
+                    _need_wake = true;
+                }
                 stateMachine();
             } else {
                 _handler.invoke("Error: " + responseCode.toString());
@@ -233,8 +234,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
-                _need_wake = true;
-                _get_climate = true;
+                if (_wake_done) {
+                    _need_wake = true;
+                }
                 stateMachine();
             } else {
                 _handler.invoke("Error: " + responseCode.toString());
@@ -249,8 +251,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
-                _need_wake = true;
-                _get_charge = true;
+                if (_wake_done) {
+                    _need_wake = true;
+                }
                 stateMachine();
             } else {
                 _handler.invoke("Error: " + responseCode.toString());
@@ -261,11 +264,16 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
             _wake_done = true;
+            _get_vehicle = true;
+            _get_climate = true;
+            _get_charge = true;
             stateMachine();
         } else {
             _handler.invoke("Error: " + responseCode.toString());
             if (responseCode == 408) {
-                _need_wake = true;
+                if (_wake_done) {
+                    _need_wake = true;
+                }
                 stateMachine();
             }
         }
