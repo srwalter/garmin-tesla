@@ -7,7 +7,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _handler;
     var _token;
     var _tesla;
-    var _timer;
+    var _sleep_timer;
     var _vehicle_id;
     var _need_auth;
     var _auth_done;
@@ -29,8 +29,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _data = data;
         _token = Application.getApp().getProperty("token");
         _vehicle_id = Application.getApp().getProperty("vehicle");
-        _timer = new Timer.Timer();
-        _timer.start(method(:timerRefresh), 30000, true);
+        _sleep_timer = new Timer.Timer();
         _handler = handler;
         _tesla = null;
 
@@ -157,6 +156,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         stateMachine();
     }
 
+    function delayedWake() {
+        _need_wake = true;
+        stateMachine();
+    }
+
     function onSelect() {
         _set_climate = true;
         stateMachine();
@@ -177,9 +181,6 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onBack() {
         Ui.popView(Ui.SLIDE_DOWN);
-        if (_timer != null) {
-            _timer.stop();
-        }
         return true;
     }
 
@@ -217,11 +218,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
-                if (_wake_done) {
-                    _need_wake = true;
-                }
-                stateMachine();
+                _wake_done = false;
+                _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                System.println("error from onReceiveVehicle");
                 _handler.invoke("Error: " + responseCode.toString());
             }
         }
@@ -234,11 +234,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
-                if (_wake_done) {
-                    _need_wake = true;
-                }
-                stateMachine();
+                _wake_done = false;
+                _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                System.println("error from onReceiveClimate");
                 _handler.invoke("Error: " + responseCode.toString());
             }
         }
@@ -251,11 +250,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
         } else {
             if (responseCode == 408) {
-                if (_wake_done) {
-                    _need_wake = true;
-                }
-                stateMachine();
+                _wake_done = false;
+                _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                System.println("error from onReceiveCharge");
                 _handler.invoke("Error: " + responseCode.toString());
             }
         }
@@ -269,12 +267,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _get_charge = true;
             stateMachine();
         } else {
+            System.println("error from onReceiveAwake");
             _handler.invoke("Error: " + responseCode.toString());
             if (responseCode == 408) {
-                if (_wake_done) {
-                    _need_wake = true;
-                }
-                stateMachine();
+                _wake_done = false;
+                _sleep_timer.start(method(:delayedWake), 500, false);
             }
         }
     }
