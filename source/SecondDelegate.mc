@@ -176,7 +176,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onNextPage() {
-        _honk_horn = true;
+        _unlock = true;
         stateMachine();
         return true;
     }
