@@ -193,7 +193,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onMenu() {
-        Ui.pushView(new Rez.Menus.OptionMenu(), new OptionMenuDelegate(), Ui.SLIDE_UP);
+        Ui.pushView(new Rez.Menus.OptionMenu(), new OptionMenuDelegate(self), Ui.SLIDE_UP);
         return true;
     }
 
