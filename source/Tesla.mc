@@ -97,6 +97,12 @@ class Tesla {
         genericPost(url, notify);
     }
 
+    function doorUnlock(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/door_unlock";
+        System.println(url);
+        genericPost(url, notify);
+    }
+
     function openFrunk(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/actuate_trunk";
         System.println(url);

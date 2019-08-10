@@ -20,6 +20,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _get_vehicle;
     var _honk_horn;
     var _open_frunk;
+    var _unlock;
 
     var _data;
 
@@ -49,6 +50,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _get_vehicle = true;
         _honk_horn = false;
         _open_frunk = false;
+        _unlock = false;
 
         if(_dummy_mode) {
             _data._vehicle = {
@@ -141,6 +143,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _honk_horn = false;
             _handler.invoke("Honk");
             _tesla.honkHorn(_vehicle_id, method(:genericHandler));
+        }
+
+        if (_unlock) {
+            _unlock = false;
+            _handler.invoke("Unlock Doors");
+            _tesla.doorUnlock(_vehicle_id, method(:genericHandler));
         }
 
         if (_open_frunk) {
