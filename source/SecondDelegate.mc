@@ -268,7 +268,9 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         } else {
             System.println("error from onReceiveAwake");
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode != -101) {
+                _handler.invoke("Error: " + responseCode.toString());
+            }
             if (responseCode == 408) {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
