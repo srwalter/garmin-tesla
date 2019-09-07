@@ -21,6 +21,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _honk_horn;
     var _open_frunk;
     var _unlock;
+    var _lock;
 
     var _data;
 
@@ -51,6 +52,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _honk_horn = false;
         _open_frunk = false;
         _unlock = false;
+        _lock = false;
 
         if(_dummy_mode) {
             _data._vehicle = {
@@ -148,7 +150,13 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         if (_unlock) {
             _unlock = false;
             _handler.invoke("Unlock Doors");
-            _tesla.doorUnlock(_vehicle_id, method(:genericHandler));
+            _tesla.doorUnlock(_vehicle_id, method(:onLockDone));
+        }
+
+        if (_lock) {
+            _lock = false;
+            _handler.invoke("Lock Doors");
+            _tesla.doorLock(_vehicle_id, method(:onLockDone));
         }
 
         if (_open_frunk) {
@@ -176,7 +184,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onNextPage() {
-        _unlock = true;
+        if (_data._vehicle != null && !_data._vehicle.get("locked")) {
+            _lock = true;
+        } else {
+            _unlock = true;
+        }
         stateMachine();
         return true;
     }
@@ -289,6 +301,16 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onClimateDone(responseCode, data) {
         if (responseCode == 200) {
             _get_climate = true;
+            _handler.invoke(null);
+            stateMachine();
+        } else {
+            _handler.invoke("Error: " + responseCode.toString());
+        }
+    }
+
+    function onLockDone(responseCode, data) {
+        if (responseCode == 200) {
+            _get_vehicle = true;
             _handler.invoke(null);
             stateMachine();
         } else {
