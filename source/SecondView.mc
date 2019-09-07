@@ -35,6 +35,15 @@ class SecondView extends Ui.View {
 
             if (_data._vehicle != null) {
                 dc.drawText(center_x, 40, Graphics.FONT_SMALL, _data._vehicle.get("vehicle_name"), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+
+                var locked = _data._vehicle.get("locked");
+                if (locked) {
+                    dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
+                    dc.drawText(30, 75, Graphics.FONT_SMALL, "Locked", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                } else {
+                    dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
+                    dc.drawText(30, 75, Graphics.FONT_SMALL, "Unlocked", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                }
             }
             dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
             var radius;
