@@ -7,4 +7,5 @@
 
     <string id="menu_label_1">Reset...</string>
     <string id="menu_label_honk">Honk</string>
+    <string id="menu_label_toggle">Toggle C vs. F</string>
 </strings>

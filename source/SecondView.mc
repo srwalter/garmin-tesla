@@ -81,8 +81,17 @@ class SecondView extends Ui.View {
             var temp_y = Application.AppBase.getProperty("TempY");
             var climate_y = Application.AppBase.getProperty("ClimateY");
             if (_data._climate != null) {
-                var temp = _data._climate.get("inside_temp").toNumber().toString();
-                dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, "Cabin: " + temp + " C", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                var temp = _data._climate.get("inside_temp").toNumber();
+
+                var units = Application.getApp().getProperty("imperial");
+                if (units) {
+                    temp = temp * 9 / 5;
+                    temp = temp + 32;
+                    dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, "Cabin: " + temp.toString() + " F", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                } else {
+                    dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, "Cabin: " + temp.toString() + " C", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                }
+
                 var on = _data._climate.get("is_climate_on") ? "On" : "Off";
                 dc.drawText(data_block_x, climate_y, Graphics.FONT_MEDIUM, "Climate: " + on, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
             } else {
