@@ -19,6 +19,11 @@
             <iq:product id="fenix5x"/>
             <iq:product id="fenix5xplus"/>
             <iq:product id="fenixchronos"/>
+            <iq:product id="fenix6"/>
+            <iq:product id="fenix6pro"/>
+            <iq:product id="fenix6s"/>
+            <iq:product id="fenix6spro"/>
+            <iq:product id="fenix6xpro"/>
         </iq:products>
 
         <iq:permissions>
