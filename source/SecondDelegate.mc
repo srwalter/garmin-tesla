@@ -250,8 +250,13 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onReceiveClimate(responseCode, data) {
         if (responseCode == 200) {
             _data._climate = data.get("response");
-            System.println("Got climate");
-            _handler.invoke(null);
+            if (_data._climate.hasKey("inside_temp") && _data._climate.hasKey("is_climate_on")) {
+                System.println("Got climate");
+                _handler.invoke(null);
+            } else {
+                _wake_done = false;
+                _sleep_timer.start(method(:delayedWake), 500, false);
+            }
         } else {
             if (responseCode == 408) {
                 _wake_done = false;
@@ -266,8 +271,13 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onReceiveCharge(responseCode, data) {
         if (responseCode == 200) {
             _data._charge = data.get("response");
-            System.println("Got charge");
-            _handler.invoke(null);
+            if (_data._charge.hasKey("battery_level") && _data._charge.hasKey("charge_limit_soc") && _data._charge.hasKey("charging_state")) {
+                System.println("Got charge");
+                _handler.invoke(null);
+            } else {
+                _wake_done = false;
+                _sleep_timer.start(method(:delayedWake), 500, false);
+            }
         } else {
             if (responseCode == 408) {
                 _wake_done = false;
