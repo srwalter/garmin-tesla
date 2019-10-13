@@ -161,9 +161,15 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_open_frunk) {
             _open_frunk = false;
-            _handler.invoke("Frunk");
-            _tesla.openFrunk(_vehicle_id, method(:genericHandler));
+            var view = new Ui.Confirmation("Open frunk?");
+            var delegate = new SimpleConfirmDelegate(method(:frunkConfirmed));
+            Ui.pushView(view, delegate, Ui.SLIDE_UP);
         }
+    }
+
+    function frunkConfirmed() {
+        _handler.invoke("Frunk");
+        _tesla.openFrunk(_vehicle_id, method(:genericHandler));
     }
 
     function timerRefresh() {
