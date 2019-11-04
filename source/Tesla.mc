@@ -72,6 +72,12 @@ class Tesla {
         genericPost(url, notify);
     }
 
+    function climateOff(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/auto_conditioning_stop";
+        System.println(url);
+        genericPost(url, notify);
+    }
+
     function honkHorn(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/honk_horn";
         System.println(url);
