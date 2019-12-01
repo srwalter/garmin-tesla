@@ -29,7 +29,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         BehaviorDelegate.initialize();
         _dummy_mode = false;
         _data = data;
-        _token = Application.getApp().getProperty("token");
+        _token = Settings.getToken();
         _vehicle_id = Application.getApp().getProperty("vehicle");
         _sleep_timer = new Timer.Timer();
         _handler = handler;
@@ -217,9 +217,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
+            System.println("Auth OK");
             _auth_done = true;
             stateMachine();
         } else {
+            System.println("Auth failed: " + responseCode.toString());
+            _resetToken();
             _handler.invoke("Error: " + responseCode.toString());
         }
     }
@@ -227,10 +230,15 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     function onReceiveVehicles(responseCode, data) {
         System.println("on receive vehicles");
         if (responseCode == 200) {
+            System.println("Got vehicles");
             _vehicle_id = data.get("response")[0].get("id");
             Application.getApp().setProperty("vehicle", _vehicle_id);
             stateMachine();
         } else {
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
             _handler.invoke("Error: " + responseCode.toString());
             if (responseCode == 408) {
                 stateMachine();
@@ -240,6 +248,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveVehicle(responseCode, data) {
         if (responseCode == 200) {
+            System.println("Got vehicle");
             _data._vehicle = data.get("response");
             _handler.invoke(null);
         } else {
@@ -247,6 +256,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                if (responseCode == 401) {
+                    // Unauthorized
+                    _resetToken();
+                }
                 System.println("error from onReceiveVehicle");
                 _handler.invoke("Error: " + responseCode.toString());
             }
@@ -268,6 +281,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                if (responseCode == 401) {
+                    // Unauthorized
+                    _resetToken();
+                }
                 System.println("error from onReceiveClimate");
                 _handler.invoke("Error: " + responseCode.toString());
             }
@@ -289,6 +306,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                if (responseCode == 401) {
+                    // Unauthorized
+                    _resetToken();
+                }
                 System.println("error from onReceiveCharge");
                 _handler.invoke("Error: " + responseCode.toString());
             }
@@ -304,6 +325,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         } else {
             System.println("error from onReceiveAwake");
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
             if (responseCode != -101) {
                 _handler.invoke("Error: " + responseCode.toString());
             }
@@ -320,6 +345,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
             _handler.invoke("Error: " + responseCode.toString());
         }
     }
@@ -330,6 +359,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
             _handler.invoke("Error: " + responseCode.toString());
         }
     }
@@ -339,18 +372,34 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
             _handler.invoke("Error: " + responseCode.toString());
         }
     }
 
     function onOAuthMessage(message) {
         if (message.data != null) {
-            _token = message.data["OAUTH_CODE"];
-            Application.getApp().setProperty("token", _token);
-            _auth_done = true;
+            _saveToken(message.data["OAUTH_CODE"]);
             stateMachine();
         } else {
+            _resetToken();
             _handler.invoke("OAuth err");
         }
     }
+
+    function _saveToken(token) {
+        _token = token;
+        _auth_done = true;
+        Settings.setToken(token);
+    }
+
+    function _resetToken() {
+        _token = null;
+        _auth_done = false;
+        Settings.setToken(null);
+    }
+
 }
