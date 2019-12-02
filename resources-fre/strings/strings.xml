@@ -36,4 +36,8 @@
     <string id="label_unlock_doors">Déver. portes</string>
     <string id="label_unlocked">Ouverte</string>
     <string id="label_waking_vehicle">Réveil du vehicule...</string>
+
+	<!--  Settings -->
+    <string id="setting_token_label">Clé d'API</string>
+    <string id="setting_token_prompt">Entrer la clé d'API Tesla (Token)</string>
 </strings>
