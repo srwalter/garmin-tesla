@@ -36,4 +36,8 @@
     <string id="label_unlock_doors">Unlock Doors</string>
     <string id="label_unlocked">Unlocked</string>
     <string id="label_waking_vehicle">Waking vehicle...</string>
+
+	<!--  Settings -->
+    <string id="setting_token_label">API Token</string>
+    <string id="setting_token_prompt">Enter your Tesla Account token</string>
 </strings>
