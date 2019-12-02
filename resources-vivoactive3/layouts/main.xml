@@ -1,6 +1,6 @@
 <layout id="TeslaLayout">
     <!-- button labels -->
-    <label x="15" y="center" font="Graphics.FONT_XTINY" text="Frunk" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_LEFT" />
-    <label x="20" y="160" font="Graphics.FONT_XTINY" text="Door" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_LEFT" />
-    <label x="210" y="60" font="Graphics.FONT_XTINY" text="Climate On" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
+    <label x="15" y="center" font="Graphics.FONT_XTINY" text="@Strings.button_frunk" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+    <label x="20" y="160" font="Graphics.FONT_XTINY" text="@Strings.button_door" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_LEFT" />
+    <label x="210" y="60" font="Graphics.FONT_XTINY" text="@Strings.button_climate_on" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
 </layout>

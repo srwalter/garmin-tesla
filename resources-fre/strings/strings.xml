@@ -1,0 +1,39 @@
+<strings>
+    <string id="AppName">Tesla</string>
+
+	<!--  Main layout -->
+    <string id="prompt">Tesla</string>
+    <string id="press_start1">Appuyer pour</string>
+    <string id="press_start2">réveiller...</string>
+
+	<!--  Tesla layout -->
+    <string id="button_climate_on">Clim On</string>
+    <string id="button_door">Portes</string>
+    <string id="button_frunk">Coffre</string>
+
+	<!--  Option menu -->
+    <string id="menu_label_reset">Remise à zéro</string>
+    <string id="menu_label_honk">Klaxon</string>
+    <string id="menu_label_toggle">Temp. °C/°F</string>
+
+	<!--  Second view -->
+    <string id="label_cabin">Temp: </string>
+    <string id="label_charge">Charge: </string>
+    <string id="label_climate">Clim: </string>
+    <string id="label_error">Erreur: </string>
+    <string id="label_frunk">Frunk</string>
+    <string id="label_getting_vehicles">Liste vehicules...</string>
+    <string id="label_honk">Klaxon</string>
+    <string id="label_hvac_on">Clim On</string>
+    <string id="label_lock_doors">Vér. portes</string>
+    <string id="label_locked">Fermée</string>
+    <string id="label_login_on_phone">Connexion sur tél.</string>
+    <string id="label_oauth_error">Erreur OAuth</string>
+    <string id="label_off">Off</string>
+    <string id="label_on">On</string>
+    <string id="label_open_frunk">Ouvrir le coffre ?</string>
+    <string id="label_requesting_data">Récup. données...</string>
+    <string id="label_unlock_doors">Déver. portes</string>
+    <string id="label_unlocked">Ouverte</string>
+    <string id="label_waking_vehicle">Réveil du vehicule...</string>
+</strings>

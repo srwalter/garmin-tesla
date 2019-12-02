@@ -78,7 +78,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_need_auth) {
             _need_auth = false;
-            _handler.invoke("Login on Phone!");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_login_on_phone));
             //_tesla.authenticate(method(:onReceiveAuth));
             Communications.registerForOAuthMessages(method(:onOAuthMessage));
             Communications.makeOAuthRequest(
@@ -103,7 +103,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         }
 
         if (_vehicle_id == null) {
-            _handler.invoke("Getting vehicles...");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_getting_vehicles));
             _tesla.getVehicleId(method(:onReceiveVehicles));
             return;
         }
@@ -111,7 +111,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         if (_need_wake) {
             _need_wake = false;
             _wake_done = false;
-            _handler.invoke("Waking vehicle...");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_waking_vehicle));
             _tesla.wakeVehicle(_vehicle_id, method(:onReceiveAwake));
             return;
         }
@@ -137,38 +137,38 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_set_climate) {
             _set_climate = false;
-            _handler.invoke("HVAC On");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_hvac_on));
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
         }
 
         if (_honk_horn) {
             _honk_horn = false;
-            _handler.invoke("Honk");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_honk));
             _tesla.honkHorn(_vehicle_id, method(:genericHandler));
         }
 
         if (_unlock) {
             _unlock = false;
-            _handler.invoke("Unlock Doors");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_unlock_doors));
             _tesla.doorUnlock(_vehicle_id, method(:onLockDone));
         }
 
         if (_lock) {
             _lock = false;
-            _handler.invoke("Lock Doors");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_lock_doors));
             _tesla.doorLock(_vehicle_id, method(:onLockDone));
         }
 
         if (_open_frunk) {
             _open_frunk = false;
-            var view = new Ui.Confirmation("Open frunk?");
+            var view = new Ui.Confirmation(Ui.loadResource(Rez.Strings.label_open_frunk));
             var delegate = new SimpleConfirmDelegate(method(:frunkConfirmed));
             Ui.pushView(view, delegate, Ui.SLIDE_UP);
         }
     }
 
     function frunkConfirmed() {
-        _handler.invoke("Frunk");
+        _handler.invoke(Ui.loadResource(Rez.Strings.label_frunk));
         _tesla.openFrunk(_vehicle_id, method(:genericHandler));
     }
 
@@ -220,7 +220,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _auth_done = true;
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
@@ -231,7 +231,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             Application.getApp().setProperty("vehicle", _vehicle_id);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             if (responseCode == 408) {
                 stateMachine();
             }
@@ -248,7 +248,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
                 System.println("error from onReceiveVehicle");
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
@@ -269,7 +269,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
                 System.println("error from onReceiveClimate");
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
@@ -290,7 +290,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
                 System.println("error from onReceiveCharge");
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
@@ -305,7 +305,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         } else {
             System.println("error from onReceiveAwake");
             if (responseCode != -101) {
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
             if (responseCode == 408) {
                 _wake_done = false;
@@ -320,7 +320,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
@@ -330,7 +330,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
@@ -339,7 +339,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
@@ -350,7 +350,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _auth_done = true;
             stateMachine();
         } else {
-            _handler.invoke("OAuth err");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
     }
 }
