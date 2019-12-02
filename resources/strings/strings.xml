@@ -8,4 +8,7 @@
     <string id="menu_label_1">Reset...</string>
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_toggle">Toggle C vs. F</string>
+
+    <string id="setting_token_label">API Token</string>
+    <string id="setting_token_prompt">Enter your Tesla Account token</string>
 </strings>

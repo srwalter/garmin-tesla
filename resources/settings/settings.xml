@@ -1,0 +1,5 @@
+<settings>
+	<setting propertyKey="@Properties.token" title="@Strings.setting_token_label" prompt="@Strings.setting_token_prompt">
+		<settingConfig type="alphaNumeric" />
+	</setting>
+</settings>
