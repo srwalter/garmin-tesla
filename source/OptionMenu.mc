@@ -16,6 +16,12 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
         } else if (item == :honk) {
             _controller._honk_horn = true;
             _controller.stateMachine();
+        } else if (item == :frunk) {
+            _controller._open_frunk = true;
+            _controller.stateMachine();
+        } else if (item == :trunk) {
+            _controller._open_trunk = true;
+            _controller.stateMachine();
         } else if (item == :toggle_units) {
             var units = Application.getApp().getProperty("imperial");
             if (units) {

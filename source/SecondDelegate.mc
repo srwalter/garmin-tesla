@@ -21,6 +21,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _get_vehicle;
     var _honk_horn;
     var _open_frunk;
+    var _open_trunk;
     var _unlock;
     var _lock;
 
@@ -53,6 +54,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _get_vehicle = true;
         _honk_horn = false;
         _open_frunk = false;
+        _open_trunk = false;
         _unlock = false;
         _lock = false;
 
@@ -173,11 +175,23 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             var delegate = new SimpleConfirmDelegate(method(:frunkConfirmed));
             Ui.pushView(view, delegate, Ui.SLIDE_UP);
         }
+
+        if (_open_trunk) {
+            _open_trunk = false;
+            var view = new Ui.Confirmation(Ui.loadResource(Rez.Strings.label_open_trunk));
+            var delegate = new SimpleConfirmDelegate(method(:trunkConfirmed));
+            Ui.pushView(view, delegate, Ui.SLIDE_UP);
+        }
     }
 
     function frunkConfirmed() {
         _handler.invoke(Ui.loadResource(Rez.Strings.label_frunk));
         _tesla.openFrunk(_vehicle_id, method(:genericHandler));
+    }
+
+    function trunkConfirmed() {
+        _handler.invoke(Ui.loadResource(Rez.Strings.label_trunk));
+        _tesla.actuateTrunk(_vehicle_id, method(:genericHandler));
     }
 
     function timerRefresh() {

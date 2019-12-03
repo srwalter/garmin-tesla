@@ -15,6 +15,8 @@
     <string id="menu_label_reset">Reset...</string>
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_toggle">Toggle C vs. F</string>
+    <string id="menu_label_frunk">Frunk</string>
+    <string id="menu_label_trunk">Trunk</string>
 
 	<!--  Second view -->
     <string id="label_cabin">Cabin: </string>
@@ -22,6 +24,7 @@
     <string id="label_climate">Climate: </string>
     <string id="label_error">Error: </string>
     <string id="label_frunk">Frunk</string>
+    <string id="label_trunk">Trunk</string>
     <string id="label_getting_vehicles">Getting vehicles...</string>
     <string id="label_honk">Honk</string>
     <string id="label_hvac_on">HVAC On</string>
@@ -33,6 +36,7 @@
     <string id="label_off">Off</string>
     <string id="label_on">On</string>
     <string id="label_open_frunk">Open Frunk?</string>
+    <string id="label_open_trunk">Open Trunk?</string>
     <string id="label_requesting_data">Requesting data...</string>
     <string id="label_unlock_doors">Unlock Doors</string>
     <string id="label_unlocked">Unlocked</string>
