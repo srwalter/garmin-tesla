@@ -30,7 +30,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         BehaviorDelegate.initialize();
         _dummy_mode = false;
         _data = data;
-        _token = Application.getApp().getProperty("token");
+        _token = Settings.getToken();
         _vehicle_id = Application.getApp().getProperty("vehicle");
         _sleep_timer = new Timer.Timer();
         _handler = handler;
@@ -80,7 +80,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_need_auth) {
             _need_auth = false;
-            _handler.invoke("Login on Phone!");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_login_on_phone));
             //_tesla.authenticate(method(:onReceiveAuth));
             Communications.registerForOAuthMessages(method(:onOAuthMessage));
             Communications.makeOAuthRequest(
@@ -105,7 +105,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         }
 
         if (_vehicle_id == null) {
-            _handler.invoke("Getting vehicles...");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_getting_vehicles));
             _tesla.getVehicleId(method(:onReceiveVehicles));
             return;
         }
@@ -113,7 +113,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         if (_need_wake) {
             _need_wake = false;
             _wake_done = false;
-            _handler.invoke("Waking vehicle...");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_waking_vehicle));
             _tesla.wakeVehicle(_vehicle_id, method(:onReceiveAwake));
             return;
         }
@@ -140,6 +140,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         if (_set_climate_on) {
             _set_climate_on = false;
             _handler.invoke("HVAC On");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_hvac_on));
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
         }
 
@@ -151,32 +152,32 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_honk_horn) {
             _honk_horn = false;
-            _handler.invoke("Honk");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_honk));
             _tesla.honkHorn(_vehicle_id, method(:genericHandler));
         }
 
         if (_unlock) {
             _unlock = false;
-            _handler.invoke("Unlock Doors");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_unlock_doors));
             _tesla.doorUnlock(_vehicle_id, method(:onLockDone));
         }
 
         if (_lock) {
             _lock = false;
-            _handler.invoke("Lock Doors");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_lock_doors));
             _tesla.doorLock(_vehicle_id, method(:onLockDone));
         }
 
         if (_open_frunk) {
             _open_frunk = false;
-            var view = new Ui.Confirmation("Open frunk?");
+            var view = new Ui.Confirmation(Ui.loadResource(Rez.Strings.label_open_frunk));
             var delegate = new SimpleConfirmDelegate(method(:frunkConfirmed));
             Ui.pushView(view, delegate, Ui.SLIDE_UP);
         }
     }
 
     function frunkConfirmed() {
-        _handler.invoke("Frunk");
+        _handler.invoke(Ui.loadResource(Rez.Strings.label_frunk));
         _tesla.openFrunk(_vehicle_id, method(:genericHandler));
     }
 
@@ -229,21 +230,30 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
+            System.println("Auth OK");
             _auth_done = true;
             stateMachine();
         } else {
+            System.println("Auth failed: " + responseCode.toString());
+            _resetToken();
             _handler.invoke("Error: " + responseCode.toString());
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
     function onReceiveVehicles(responseCode, data) {
         System.println("on receive vehicles");
         if (responseCode == 200) {
+            System.println("Got vehicles");
             _vehicle_id = data.get("response")[0].get("id");
             Application.getApp().setProperty("vehicle", _vehicle_id);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             if (responseCode == 408) {
                 stateMachine();
             }
@@ -252,6 +262,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveVehicle(responseCode, data) {
         if (responseCode == 200) {
+            System.println("Got vehicle");
             _data._vehicle = data.get("response");
             _handler.invoke(null);
         } else {
@@ -259,8 +270,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                if (responseCode == 401) {
+                    // Unauthorized
+                    _resetToken();
+                }
                 System.println("error from onReceiveVehicle");
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
@@ -280,8 +295,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                if (responseCode == 401) {
+                    // Unauthorized
+                    _resetToken();
+                }
                 System.println("error from onReceiveClimate");
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
@@ -301,8 +320,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
+                if (responseCode == 401) {
+                    // Unauthorized
+                    _resetToken();
+                }
                 System.println("error from onReceiveCharge");
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
@@ -316,8 +339,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         } else {
             System.println("error from onReceiveAwake");
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
             if (responseCode != -101) {
-                _handler.invoke("Error: " + responseCode.toString());
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
             if (responseCode == 408) {
                 _wake_done = false;
@@ -332,7 +359,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
@@ -342,7 +373,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
@@ -351,18 +386,34 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(null);
             stateMachine();
         } else {
-            _handler.invoke("Error: " + responseCode.toString());
+            if (responseCode == 401) {
+                // Unauthorized
+                _resetToken();
+            }
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
     function onOAuthMessage(message) {
         if (message.data != null) {
-            _token = message.data["OAUTH_CODE"];
-            Application.getApp().setProperty("token", _token);
-            _auth_done = true;
+            _saveToken(message.data["OAUTH_CODE"]);
             stateMachine();
         } else {
-            _handler.invoke("OAuth err");
+            _resetToken();
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
     }
+
+    function _saveToken(token) {
+        _token = token;
+        _auth_done = true;
+        Settings.setToken(token);
+    }
+
+    function _resetToken() {
+        _token = null;
+        _auth_done = false;
+        Settings.setToken(null);
+    }
+
 }
