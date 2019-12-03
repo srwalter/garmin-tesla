@@ -7,7 +7,7 @@
     <string id="press_start2">wake vehicle...</string>
 
 	<!--  Tesla layout -->
-    <string id="button_climate_on">Climate On</string>
+    <string id="button_climate_on">Climate</string>
     <string id="button_door">Door</string>
     <string id="button_frunk">Frunk</string>
 
@@ -25,6 +25,7 @@
     <string id="label_getting_vehicles">Getting vehicles...</string>
     <string id="label_honk">Honk</string>
     <string id="label_hvac_on">HVAC On</string>
+    <string id="label_hvac_off">HVAC Off</string>
     <string id="label_lock_doors">Lock Doors</string>
     <string id="label_locked">Locked</string>
     <string id="label_login_on_phone">Login on Phone!</string>

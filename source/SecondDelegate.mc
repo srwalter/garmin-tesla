@@ -15,7 +15,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _wake_done;
 
     var _get_climate;
-    var _set_climate;
+    var _set_climate_on;
+    var _set_climate_off;
     var _get_charge;
     var _get_vehicle;
     var _honk_horn;
@@ -45,7 +46,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _need_wake = false;
         _wake_done = true;
 
-        _set_climate = false;
+        _set_climate_on = false;
+        _set_climate_off = false;
         _get_climate = true;
         _get_charge = true;
         _get_vehicle = true;
@@ -135,10 +137,16 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _tesla.getChargeState(_vehicle_id, method(:onReceiveCharge));
         }
 
-        if (_set_climate) {
-            _set_climate = false;
+        if (_set_climate_on) {
+            _set_climate_on = false;
             _handler.invoke(Ui.loadResource(Rez.Strings.label_hvac_on));
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
+        }
+
+        if (_set_climate_off) {
+            _set_climate_off = false;
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_hvac_off));
+            _tesla.climateOff(_vehicle_id, method(:onClimateDone));
         }
 
         if (_honk_horn) {
@@ -184,7 +192,11 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onSelect() {
-        _set_climate = true;
+        if (_data._climate != null && _data._climate.hasKey("is_climate_on") && !_data._climate.get("is_climate_on")) {
+            _set_climate_on = true;
+        } else {
+            _set_climate_off = true;
+        }
         stateMachine();
         return true;
     }
