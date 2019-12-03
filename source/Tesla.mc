@@ -58,10 +58,20 @@ class Tesla {
         _genericPost(url, null, notify);
     }
 
+    //! Opens front trunk (frunk).
     function openFrunk(vehicle, notify) {
         var url = TESLA_API + vehicle.toString() + "/command/actuate_trunk";
         var params = {
             "which_trunk" => "front"
+        };
+        _genericPost(url, params, notify);
+    }
+
+    //! Opens rear trunk. On the Model S and X, it will also close the rear trunk.
+    function actuateTrunk(vehicle, notify) {
+        var url = TESLA_API + vehicle.toString() + "/command/actuate_trunk";
+        var params = {
+            "which_trunk" => "rear"
         };
         _genericPost(url, params, notify);
     }

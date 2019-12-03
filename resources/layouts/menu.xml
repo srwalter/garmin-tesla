@@ -1,5 +1,7 @@
 <menu id="OptionMenu">
+    <menu-item id="trunk" label="@Strings.menu_label_trunk" />
+    <menu-item id="frunk" label="@Strings.menu_label_frunk" />
     <menu-item id="honk" label="@Strings.menu_label_honk" />
-    <menu-item id="reset" label="@Strings.menu_label_reset" />
     <menu-item id="toggle_units" label="@Strings.menu_label_toggle" />
+    <menu-item id="reset" label="@Strings.menu_label_reset" />
 </menu>
