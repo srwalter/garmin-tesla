@@ -1,7 +1,6 @@
 <strings>
     <string id="AppName">Tesla</string>
 
-    <string id="prompt">Tesla</string>
     <string id="press_start1">Press start to</string>
     <string id="press_start2">wake vehicle...</string>
 
