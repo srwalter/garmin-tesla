@@ -1,5 +1,6 @@
 using Toybox.Application as App;
 using Toybox.WatchUi as Ui;
+using Toybox.System as Sys;
 
 class QuickTesla extends App.AppBase {
 
@@ -17,6 +18,9 @@ class QuickTesla extends App.AppBase {
 
     //! Return the initial view of your application here
     function getInitialView() {
+        if (!Sys.getDeviceSettings().connectionAvailable) {
+            return [ new OfflineView() ];
+        }
         return [ new SimpleView(), new SimpleDelegate() ];
     }
 
