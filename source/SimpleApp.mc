@@ -18,7 +18,7 @@ class QuickTesla extends App.AppBase {
 
     //! Return the initial view of your application here
     function getInitialView() {
-        if (!Sys.getDeviceSettings().connectionAvailable) {
+        if (!Sys.getDeviceSettings().phoneConnected) {
             return [ new OfflineView() ];
         }
         return [ new SimpleView(), new SimpleDelegate() ];
