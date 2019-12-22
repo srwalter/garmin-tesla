@@ -1,0 +1,5 @@
+<layout id="OfflineLayout">
+    <label x="center" y="80" font="Graphics.FONT_LARGE" text="@Strings.prompt" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+    <label x="center" y="120" font="Graphics.FONT_SMALL" text="@Strings.label_offline1" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+    <label x="center" y="150" font="Graphics.FONT_SMALL" text="@Strings.label_offline2" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+</layout>
