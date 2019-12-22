@@ -1,14 +1,42 @@
 <strings>
     <string id="AppName">Tesla</string>
 
+	<!--  Main layout -->
     <string id="prompt">Tesla</string>
     <string id="press_start1">Press start to</string>
     <string id="press_start2">wake vehicle...</string>
 
-    <string id="menu_label_1">Reset...</string>
+	<!--  Tesla layout -->
+    <string id="button_climate_on">Climate On</string>
+    <string id="button_door">Door</string>
+    <string id="button_frunk">Frunk</string>
+
+	<!--  Option menu -->
+    <string id="menu_label_reset">Reset...</string>
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_toggle">Toggle C vs. F</string>
 
     <string id="setting_token_label">API Token</string>
     <string id="setting_token_prompt">Enter your Tesla Account token</string>
+
+	<!--  Second view -->
+    <string id="label_cabin">Cabin: </string>
+    <string id="label_charge">Charge: </string>
+    <string id="label_climate">Climate: </string>
+    <string id="label_error">Error: </string>
+    <string id="label_frunk">Frunk</string>
+    <string id="label_getting_vehicles">Getting vehicles...</string>
+    <string id="label_honk">Honk</string>
+    <string id="label_hvac_on">HVAC On</string>
+    <string id="label_lock_doors">Lock Doors</string>
+    <string id="label_locked">Locked</string>
+    <string id="label_login_on_phone">Login on Phone!</string>
+    <string id="label_oauth_error">OAuth error</string>
+    <string id="label_off">Off</string>
+    <string id="label_on">On</string>
+    <string id="label_open_frunk">Open Frunk?</string>
+    <string id="label_requesting_data">Requesting data...</string>
+    <string id="label_unlock_doors">Unlock Doors</string>
+    <string id="label_unlocked">Unlocked</string>
+    <string id="label_waking_vehicle">Waking vehicle...</string>
 </strings>
