@@ -11,7 +11,7 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
     function onMenuItem(item) {
         if (item == :reset) {
             System.println("menu");
-            Application.getApp().setProperty("token", null);
+            Settings.setToken(null);
             Application.getApp().setProperty("vehicle", null);
         } else if (item == :honk) {
             _controller._honk_horn = true;

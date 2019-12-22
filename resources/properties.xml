@@ -3,5 +3,7 @@
     <property id="ChargeY" type="number">110</property>
     <property id="TempY" type="number">140</property>
     <property id="ClimateY" type="number">170</property>
-</properties>
 
+	<!--  Settings -->
+	<property id="token" type="string"></property>
+</properties>
