@@ -2,7 +2,6 @@
     <string id="AppName">Tesla</string>
 
 	<!--  Main layout -->
-    <string id="prompt">Tesla</string>
     <string id="press_start1">Appuyer pour</string>
     <string id="press_start2">réveiller...</string>
 
