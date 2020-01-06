@@ -25,7 +25,9 @@
             <iq:product id="fenix6spro"/>
             <iq:product id="fenix6xpro"/>
             <iq:product id="marqaviator"/>
+            <iq:product id="marqcommander"/>
             <iq:product id="vivoactive3"/>
+            <iq:product id="vivoactive3m"/>
         </iq:products>
 
         <iq:permissions>
