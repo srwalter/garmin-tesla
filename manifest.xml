@@ -28,6 +28,7 @@
             <iq:product id="marqcommander"/>
             <iq:product id="vivoactive3"/>
             <iq:product id="vivoactive3m"/>
+            <iq:product id="venu"/>
         </iq:products>
 
         <iq:permissions>
