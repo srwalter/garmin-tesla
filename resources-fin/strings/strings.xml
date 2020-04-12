@@ -9,8 +9,8 @@
     <string id="label_offline2">tarvitaan</string>
 
 	<!--  Tesla layout -->
-    <string id="button_climate_on">Ilmastointi päällä</string>
-    <string id="button_door">Ovi</string>
+    <string id="button_climate_on">AC päälle</string>
+    <string id="button_door">Ovet</string>
     <string id="button_frunk">Etukontti</string>
 
 	<!--  Option menu -->
@@ -31,12 +31,12 @@
     <string id="label_getting_vehicles">Haetaan autoja...</string>
     <string id="label_honk">Töötti</string>
     <string id="label_open_port">Avaa portti</string>
-    <string id="label_hvac_on">Ilmastointi päällä</string>
+    <string id="label_hvac_on">AC päällä</string>
     <string id="label_lock_doors">Lukitse ovet</string>
     <string id="label_locked">Lukossa</string>
     <string id="label_login_on_phone">Kirjaudu puhelimella</string>
     <string id="label_oauth_error">OAuth virhe</string>
-    <string id="label_off">Pois päältä</string>
+    <string id="label_off">Pois</string>
     <string id="label_on">Päällä</string>
     <string id="label_open_frunk">Avaa etukontti?</string>
     <string id="label_requesting_data">Haetaan dataa...</string>
