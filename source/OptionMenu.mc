@@ -20,6 +20,9 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
             System.println("select car 1");
             _controller._tesla.getVehicleId(method(:onReceiveVehicles));
             System.println("select car 2");
+        } else if (item == :open_port) {
+            _controller._open_port = true;
+            _controller.stateMachine();
         } else if (item == :toggle_units) {
             var units = Application.getApp().getProperty("imperial");
             if (units) {

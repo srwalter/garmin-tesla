@@ -1,5 +1,6 @@
 <menu id="OptionMenu">
     <menu-item id="honk" label="@Strings.menu_label_honk" />
+    <menu-item id="open_port" label="@Strings.menu_label_open_port" />
     <menu-item id="reset" label="@Strings.menu_label_reset" />
     <menu-item id="toggle_units" label="@Strings.menu_label_toggle" />
     <menu-item id="select_car" label="@Strings.menu_label_select_car" />

@@ -21,6 +21,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _get_charge;
     var _get_vehicle;
     var _honk_horn;
+    var _open_port;
     var _open_frunk;
     var _unlock;
     var _lock;
@@ -55,6 +56,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _get_charge = true;
         _get_vehicle = true;
         _honk_horn = false;
+        _open_port = false;
         _open_frunk = false;
         _unlock = false;
         _lock = false;
@@ -156,6 +158,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _honk_horn = false;
             _handler.invoke(Ui.loadResource(Rez.Strings.label_honk));
             _tesla.honkHorn(_vehicle_id, method(:genericHandler));
+        }
+
+        if (_open_port) {
+            _open_port = false;
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_open_port));
+            _tesla.openPort(_vehicle_id, method(:genericHandler));
         }
 
         if (_unlock) {
