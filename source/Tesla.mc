@@ -83,6 +83,13 @@ class Tesla {
         System.println(url);
         genericPost(url, notify);
     }
+    
+    //Opens vehicle charge port. Also unlocks the charge port if it is locked.
+    function openPort(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/charge_port_door_open";
+        System.println(url);
+        genericPost(url, notify);
+    }
 
     function doorUnlock(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/door_unlock";

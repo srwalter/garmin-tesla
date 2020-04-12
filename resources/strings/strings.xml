@@ -16,6 +16,7 @@
 	<!--  Option menu -->
     <string id="menu_label_reset">Reset...</string>
     <string id="menu_label_honk">Honk</string>
+    <string id="menu_label_open_port">Open Port</string>
     <string id="menu_label_toggle">Toggle C vs. F</string>
 
     <string id="setting_token_label">API Token</string>
@@ -29,6 +30,7 @@
     <string id="label_frunk">Frunk</string>
     <string id="label_getting_vehicles">Getting vehicles...</string>
     <string id="label_honk">Honk</string>
+    <string id="label_open_port">Open Port</string>
     <string id="label_hvac_on">HVAC On</string>
     <string id="label_lock_doors">Lock Doors</string>
     <string id="label_locked">Locked</string>
