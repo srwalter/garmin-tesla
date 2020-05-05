@@ -1,5 +1,6 @@
 <strings>
     <string id="AppName">Tesla</string>
+    <string id="car_chooser_title">Choose a VIN</string>
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
@@ -17,6 +18,7 @@
     <string id="menu_label_reset">Reset...</string>
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_toggle">Toggle C vs. F</string>
+    <string id="menu_label_select_car">Select Vehicle...</string>
 
     <string id="setting_token_label">API Token</string>
     <string id="setting_token_prompt">Enter your Tesla Account token</string>
