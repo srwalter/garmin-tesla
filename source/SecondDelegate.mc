@@ -243,9 +243,15 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         System.println("on receive vehicles");
         if (responseCode == 200) {
             System.println("Got vehicles");
-            _vehicle_id = data.get("response")[0].get("id");
-            Application.getApp().setProperty("vehicle", _vehicle_id);
-            stateMachine();
+            var vehicles = data.get("response");
+            System.println(vehicles);
+            if (vehicles.size() > 0) {
+                _vehicle_id = vehicles[0].get("id");
+                Application.getApp().setProperty("vehicle", _vehicle_id);
+                stateMachine();
+            } else {
+                _handler.invoke("No vehicles!");
+            }
         } else {
             if (responseCode == 401) {
                 // Unauthorized
