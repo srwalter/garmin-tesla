@@ -27,6 +27,7 @@
             <iq:product id="marqaviator"/>
             <iq:product id="marqcommander"/>
             <iq:product id="vivoactive3"/>
+            <iq:product id="vivoactive4"/>
             <iq:product id="vivoactive3m"/>
             <iq:product id="venu"/>
         </iq:products>
