@@ -1,5 +1,6 @@
 using Toybox.WatchUi as Ui;
 using Toybox.Timer;
+using Toybox.System;
 using Toybox.Communications as Communications;
 
 class SecondDelegate extends Ui.BehaviorDelegate {
@@ -23,12 +24,14 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _open_frunk;
     var _unlock;
     var _lock;
+    var _settings;
 
     var _data;
 
     function initialize(data, handler) {
         BehaviorDelegate.initialize();
         _dummy_mode = false;
+        _settings = System.getDeviceSettings();
         _data = data;
         _token = Settings.getToken();
         _vehicle_id = Application.getApp().getProperty("vehicle");
@@ -192,29 +195,53 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onSelect() {
+        if (_settings.isTouchScreen) {
+            return false;
+        }
+
+        doSelect();
+        return true;
+    }
+
+    function doSelect() {
         if (_data._climate != null && _data._climate.get("is_climate_on")) {
             _set_climate_off = true;
         } else {
             _set_climate = true;
         }
         stateMachine();
-        return true;
     }
 
     function onNextPage() {
+        if (_settings.isTouchScreen) {
+            return false;
+        }
+
+        doNextPage();
+        return true;
+    }
+
+    function doNextPage() {
         if (_data._vehicle != null && !_data._vehicle.get("locked")) {
             _lock = true;
         } else {
             _unlock = true;
         }
         stateMachine();
-        return true;
     }
 
     function onPreviousPage() {
+        if (_settings.isTouchScreen) {
+            return false;
+        }
+
+        doPreviousPage();
+        return true;
+    }
+
+    function doPreviousPage() {
         _open_frunk = true;
         stateMachine();
-        return true;
     }
 
     function onBack() {
@@ -223,7 +250,38 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function onMenu() {
+        if (_settings.isTouchScreen) {
+            return false;
+        }
+
+        doMenu();
+        return true;
+    }
+
+    function doMenu() {
         Ui.pushView(new Rez.Menus.OptionMenu(), new OptionMenuDelegate(self), Ui.SLIDE_UP);
+    }
+
+    function onTap(click) {
+        System.println("Got click");
+        var coords = click.getCoordinates();
+        var x = coords[0];
+        var y = coords[1];
+
+        if (x < _settings.screenWidth/2) {
+            if (y < _settings.screenHeight/2) {
+                doPreviousPage();
+            } else {
+                doNextPage();
+            }
+        } else {
+            if (y < _settings.screenHeight/2) {
+                doSelect();
+            } else {
+                doMenu();
+            }
+        }
+
         return true;
     }
 
