@@ -259,6 +259,10 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     }
 
     function doMenu() {
+        if (!_auth_done) {
+            return;
+        }
+
         Ui.pushView(new Rez.Menus.OptionMenu(), new OptionMenuDelegate(self), Ui.SLIDE_UP);
     }
 
