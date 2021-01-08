@@ -7,6 +7,8 @@
             <iq:product id="d2charlie"/>
             <iq:product id="d2delta"/>
             <iq:product id="descentmk1"/>
+            <iq:product id="fr245"/>
+            <iq:product id="fr245m"/>
             <iq:product id="fr645"/>
             <iq:product id="fr645m"/>
             <iq:product id="fr935"/>
@@ -27,6 +29,7 @@
             <iq:product id="fenix6xpro"/>
             <iq:product id="marqaviator"/>
             <iq:product id="marqcommander"/>
+            <iq:product id="marqadventurer"/>
             <iq:product id="vivoactive3"/>
             <iq:product id="vivoactive4"/>
             <iq:product id="vivoactive4s"/>
