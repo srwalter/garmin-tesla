@@ -25,6 +25,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _unlock;
     var _lock;
     var _settings;
+    dnl THIS IS HOW TO COMMENT IN CONFIGURATION FILES
+    dnl Template: var _%lower_case%
 
     var _data;
 
