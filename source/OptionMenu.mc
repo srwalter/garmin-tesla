@@ -27,6 +27,11 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
             } else {
                 Application.getApp().setProperty("imperial", true);
             }
+        /* Template:
+        } else if (item == :"%snake_case%) {
+            _controller._"%snake_case% = true;
+            _controller.stateMachine();
+        */
         }
     }
 
