@@ -122,4 +122,12 @@ class Tesla {
     //    }
     //    _notify.invoke(responseCode, data);
     //}
+    
+    /* Template:
+    function %camelCase%(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/command/%snake_case%";
+        System.println(url);
+        genericPost(url, notify);
+    }
+    */
 }
