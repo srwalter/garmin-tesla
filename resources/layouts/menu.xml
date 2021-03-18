@@ -3,4 +3,6 @@
     <menu-item id="reset" label="@Strings.menu_label_reset" />
     <menu-item id="toggle_units" label="@Strings.menu_label_toggle" />
     <menu-item id="select_car" label="@Strings.menu_label_select_car" />
+    <!--  Template:  <menu-item id="%snake_case%" label="@Strings.menu_label_%snake_case%" /> -->
+
 </menu>

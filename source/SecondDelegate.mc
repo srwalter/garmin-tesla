@@ -25,6 +25,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _unlock;
     var _lock;
     var _settings;
+    // Template: // var _%lower_case% dnl
 
     var _data;
 
@@ -58,6 +59,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _open_frunk = false;
         _unlock = false;
         _lock = false;
+        // Template: // _%snake_case% = false
+        
 
         if(_dummy_mode) {
             _data._vehicle = {
@@ -157,6 +160,13 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(Ui.loadResource(Rez.Strings.label_honk));
             _tesla.honkHorn(_vehicle_id, method(:genericHandler));
         }
+
+        /* Template: 
+        if (_%snake_case%) {
+            _%snake_case% = false;
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_%snake_case%));
+            _tesla.%camelCase%(_vehicle_id, method(:genericHandler));
+        } */
 
         if (_unlock) {
             _unlock = false;
