@@ -15,6 +15,8 @@
     <string id="menu_label_reset">Remise à zéro</string>
     <string id="menu_label_honk">Klaxon</string>
     <string id="menu_label_toggle">Temp. °C/°F</string>
+    <string id="menu_label_flash_lights">Flash Lights</string>
+
 <!--  Template:  <string id="menu_label_%snake_case%">%Title Case%</string>-->
 
 	<!--  Second view -->
@@ -37,6 +39,8 @@
     <string id="label_unlock_doors">Déver. portes</string>
     <string id="label_unlocked">Ouverte</string>
     <string id="label_waking_vehicle">Réveil du vehicule...</string>
+	<string id="label_flash_lights">Flash Lights</string>
+
 <!--  Template:  <string id="label_%snake_case%">%Title Case%</string> -->
 
 </strings>

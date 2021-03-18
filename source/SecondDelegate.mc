@@ -26,6 +26,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _lock;
     var _settings;
     // Template: // var _%lower_case% dnl
+    var _flash_lights;
 
     var _data;
 
@@ -60,6 +61,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _unlock = false;
         _lock = false;
         // Template: // _%snake_case% = false
+        _flash_lights = false;
         
 
         if(_dummy_mode) {
@@ -167,6 +169,12 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _handler.invoke(Ui.loadResource(Rez.Strings.label_%snake_case%));
             _tesla.%camelCase%(_vehicle_id, method(:genericHandler));
         } */
+
+        if (_flash_lights) {
+            _flash_lights = false;
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_flash_lights));
+            _tesla.%camelCase%(_vehicle_id, method(:genericHandler));
+        }
 
         if (_unlock) {
             _unlock = false;

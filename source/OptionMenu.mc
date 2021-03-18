@@ -27,9 +27,13 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
             } else {
                 Application.getApp().setProperty("imperial", true);
             }
+        } else if (item == :flash_lights) {
+            _controller._flash_lights = true;
+            _controller.stateMachine();
+        
         /* Template:
-        } else if (item == :"%snake_case%) {
-            _controller._"%snake_case% = true;
+        } else if (item == :%snake_case%) {
+            _controller._%snake_case% = true;
             _controller.stateMachine();
         */
         }
