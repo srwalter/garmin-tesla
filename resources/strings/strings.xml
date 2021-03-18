@@ -19,6 +19,7 @@
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_toggle">Toggle C vs. F</string>
     <string id="menu_label_select_car">Select Vehicle...</string>
+	<!--  Template:  <string id="menu_label_%snake_case%">%Title Case%</string>
 
     <string id="setting_token_label">API Token</string>
     <string id="setting_token_prompt">Enter your Tesla Account token</string>
@@ -43,4 +44,6 @@
     <string id="label_unlock_doors">Unlock Doors</string>
     <string id="label_unlocked">Unlocked</string>
     <string id="label_waking_vehicle">Waking vehicle...</string>
+	<!--  Template:  <string id="label_%snake_case%">%Title Case%</string>
+
 </strings>
