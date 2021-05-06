@@ -40,6 +40,7 @@
             <iq:product id="vivoactive3m"/>
             <iq:product id="venu"/>
             <iq:product id="venusq"/>
+            <iq:product id="venusqm"/>
         </iq:products>
 
         <iq:permissions>
