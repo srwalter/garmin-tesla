@@ -39,9 +39,12 @@
             <iq:product id="vivoactive4"/>
             <iq:product id="vivoactive4s"/>
             <iq:product id="vivoactive3m"/>
+            <iq:product id="d2air"/>
             <iq:product id="venu"/>
             <iq:product id="venusq"/>
             <iq:product id="venusqm"/>
+            <iq:product id="legacysagadarthvader"/>
+            <iq:product id="approachs62"/>
         </iq:products>
 
         <iq:permissions>
