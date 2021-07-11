@@ -2,6 +2,10 @@ using Toybox.WatchUi as Ui;
 using Toybox.Timer;
 using Toybox.System;
 using Toybox.Communications as Communications;
+using Toybox.Cryptography;
+
+const OAUTH_CODE = "myOAuthCode";
+const OAUTH_ERROR = "myOAuthError";
 
 class SecondDelegate extends Ui.BehaviorDelegate {
     var _dummy_mode;
@@ -28,6 +32,8 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _settings;
 
     var _data;
+
+    var _code_verifier;
 
     function initialize(data, handler) {
         BehaviorDelegate.initialize();
@@ -77,6 +83,74 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         stateMachine();
     }
 
+    function bearerForAccessOnReceive(responseCode, data) {
+        if (responseCode == 200) {
+            _saveToken(data["access_token"]);
+            stateMachine();
+        }
+        else {
+            System.println("Receiving access response: " + responseCode);
+            _resetToken();
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
+        }
+    }
+
+    function codeForBearerOnReceive(responseCode, data) {
+        if (responseCode == 200) {
+            var bearerForAccessUrl = "https://owner-api.teslamotors.com/oauth/token";
+            var bearerForAccessParams = {
+                "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer",
+                "client_id" => "81527cff06843c8634fdc09e8ac0abefb46ac849f38fe1e431c2ef2106796384",
+                "client_secret" => "c7257eb71a564034f9419ee651c7d0e5f7aa6bfbd18bafb5c5c033b093bb2fa3"
+            };
+
+            var bearerForAccessOptions = {
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
+                :headers => {
+                   "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON,
+                   "Authorization" => "Bearer " + data["access_token"]
+                },
+                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+            };
+
+            Communications.makeWebRequest(bearerForAccessUrl, bearerForAccessParams, bearerForAccessOptions, method(:bearerForAccessOnReceive));
+        }
+        else {
+            System.println("Receiving bearer response: " + responseCode);
+            _resetToken();
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
+        }
+    }
+
+    function onOAuthMessage(message) {
+        var code = message.data[$.OAUTH_CODE];
+        var error = message.data[$.OAUTH_ERROR];
+        if (message.data != null) {
+            var codeForBearerUrl = "https://auth.tesla.com/oauth2/v3/token";
+            var codeForBearerParams = {
+                "grant_type" => "authorization_code",
+                "client_id" => "ownerapi",
+                "code" => code,
+                "code_verifier" => _code_verifier,
+                "redirect_uri" => "https://auth.tesla.com/void/callback"
+            };
+
+            var codeForBearerOptions = {
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
+                :headers => {
+                   "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON
+                },
+                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+            };
+
+            Communications.makeWebRequest(codeForBearerUrl, codeForBearerParams, codeForBearerOptions, method(:codeForBearerOnReceive));
+        } else {
+            System.println("Oauth: Message data is null!");
+            _resetToken();
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
+        }
+    }
+
     function stateMachine() {
         if(_dummy_mode) {
             _handler.invoke(null);
@@ -84,18 +158,50 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         }
 
         if (_need_auth) {
+
             _need_auth = false;
+
+            _code_verifier = StringUtil.convertEncodedString(Cryptography.randomBytes(86/2), {
+                :fromRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
+                :toRepresentation => StringUtil.REPRESENTATION_STRING_HEX,
+            });
+
+            var code_verifier_bytes = StringUtil.convertEncodedString(_code_verifier, {
+                :fromRepresentation => StringUtil.REPRESENTATION_STRING_PLAIN_TEXT,
+                :toRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
+            });
+            
+            var hmac = new Cryptography.HashBasedMessageAuthenticationCode({
+                :algorithm => Cryptography.HASH_SHA256,
+                :key => code_verifier_bytes
+            });
+
+            var code_challenge = StringUtil.convertEncodedString(hmac.digest(), {
+                :fromRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
+                :toRepresentation => StringUtil.REPRESENTATION_STRING_BASE64,
+            });
+
+            var params = {
+                "client_id" => "ownerapi",
+                "code_challenge" => code_challenge,
+                "code_challenge_method" => "S256",
+                "redirect_uri" => "https://auth.tesla.com/void/callback",
+                "response_type" => "code",
+                "scope" => "openid email offline_access",
+                "state" => "123"                
+            };
+            
             _handler.invoke(Ui.loadResource(Rez.Strings.label_login_on_phone));
-            //_tesla.authenticate(method(:onReceiveAuth));
+
             Communications.registerForOAuthMessages(method(:onOAuthMessage));
             Communications.makeOAuthRequest(
-                "https://dasbrennen.org/tesla/tesla.html",
-                {},
-                "https://dasbrennen.org/tesla/tesla-done.html",
+                "https://auth.tesla.com/oauth2/v3/authorize",
+                params,
+                "https://auth.tesla.com/void/callback",
                 Communications.OAUTH_RESULT_TYPE_URL,
                 {
-                    "responseCode" => "OAUTH_CODE",
-                    "responseError" => "OAUTH_ERROR"
+                    "code" => $.OAUTH_CODE,
+                    "responseError" => $.OAUTH_ERROR
                 }
             );
             return;
@@ -465,16 +571,6 @@ class SecondDelegate extends Ui.BehaviorDelegate {
                 _resetToken();
             }
             _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
-        }
-    }
-
-    function onOAuthMessage(message) {
-        if (message.data != null) {
-            _saveToken(message.data["OAUTH_CODE"]);
-            stateMachine();
-        } else {
-            _resetToken();
-            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
     }
 
