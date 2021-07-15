@@ -21,6 +21,8 @@ class SecondView extends Ui.View {
         var center_x = dc.getWidth()/2;
         var center_y = dc.getHeight()/2;
         
+        // Redraw the layout and wipe the canvas        
+        setLayout(Rez.Layouts.TeslaLayout(dc));
         dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
         dc.clear();
         
