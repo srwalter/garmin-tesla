@@ -52,11 +52,11 @@ class SecondView extends Ui.View {
             dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
             var radius;
             if (center_x < center_y) {
-                radius = center_x-5;
+                radius = center_x-3;
             } else {
-                radius = center_y-5;
+                radius = center_y-3;
             }
-            dc.setPenWidth(5);
+            dc.setPenWidth(6);
             dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, 315);
             
             // Draw the charge limit marker, arc and set charge text if we have the data
@@ -72,12 +72,10 @@ class SecondView extends Ui.View {
 
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
                 var angle = (225 - (battery_level * 270 / 100)) % 360;
-                System.println("Angle " + angle);
                 dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, angle.abs());
 
                 dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
                 angle = 225 - (charge_limit * 270 / 100);
-                System.println("Angle 2 " + angle);
                 dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle.abs()-1, angle.abs()-4);
             }
 
@@ -97,14 +95,10 @@ class SecondView extends Ui.View {
 
                 var climate_state = Ui.loadResource(Rez.Strings.label_climate) + (_data._climate.get("is_climate_on") ? Ui.loadResource(Rez.Strings.label_on) : Ui.loadResource(Rez.Strings.label_off));
                 climate_state_drawable.setText(climate_state);
-            }
-            else
-            {
-                //inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + "?");
-                //climate_state_drawable.setText( Ui.loadResource(Rez.Strings.label_climate) + "?");
-            }
-            inside_temp_drawable.draw(dc);
-            climate_state_drawable.draw(dc);
+
+                inside_temp_drawable.draw(dc);
+                climate_state_drawable.draw(dc);
+            }            
         }
     }
 
