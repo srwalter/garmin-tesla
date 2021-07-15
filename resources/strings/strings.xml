@@ -34,7 +34,8 @@
     <string id="label_getting_vehicles">Getting vehicles</string>
     <string id="label_honk">Honk</string>
     <string id="label_open_port">Open Port</string>
-    <string id="label_hvac_on">HVAC On</string>
+    <string id="label_hvac_on">Climate On</string>
+    <string id="label_hvac_off">Climate Off</string>
     <string id="label_lock_doors">Lock Doors</string>
     <string id="label_locked">Locked</string>
     <string id="label_login_on_phone">Login on Phone!</string>
