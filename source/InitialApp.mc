@@ -8,20 +8,25 @@ class QuickTesla extends App.AppBase {
         AppBase.initialize();
     }
 
-    //! onStart() is called on application start up
     function onStart(state) {
     }
 
-    //! onStop() is called when your application is exiting
     function onStop(state) {
     }
 
-    //! Return the initial view of your application here
+    (:glance)
+    function getGlanceView() {
+        return [ new WidgetGlanceView() ];
+    }
+
     function getInitialView() {
         if (!Sys.getDeviceSettings().phoneConnected) {
             return [ new OfflineView() ];
         }
-        return [ new SimpleView(), new SimpleDelegate() ];
-    }
 
+        var data = new TeslaData();
+        var view = new MainView(data);
+
+        return [ view, new MainDelegate(data, view.method(:onReceive)) ];
+    }
 }

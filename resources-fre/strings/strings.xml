@@ -2,11 +2,12 @@
     <string id="AppName">Tesla</string>
     <string id="car_chooser_title">Choisir un VIN</string>
 
+    <!--  Glance view -->
+    <string id="wake" scope="glance">Wake </string>
+    <string id="vehicle" scope="glance">vehicle</string>
+
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
-    <string id="wake_press_start">Appuyer pour</string>
-    <string id="wake_touch">Appuyer pour</string>
-    <string id="wake_vehicle">réveiller</string>
     <string id="label_offline1">Une connexion téléphonique</string>
     <string id="label_offline2">est requise</string>
 

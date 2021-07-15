@@ -7,7 +7,7 @@ using Toybox.Cryptography;
 const OAUTH_CODE = "myOAuthCode";
 const OAUTH_ERROR = "myOAuthError";
 
-class SecondDelegate extends Ui.BehaviorDelegate {
+class MainDelegate extends Ui.BehaviorDelegate {
     var _dummy_mode;
     var _handler;
     var _token;

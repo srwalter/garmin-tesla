@@ -1,6 +1,6 @@
 using Toybox.WatchUi as Ui;
 
-class SecondView extends Ui.View {
+class MainView extends Ui.View {
     hidden var _display;
     var _data;
 
@@ -34,7 +34,9 @@ class SecondView extends Ui.View {
             // Draw labels from the vehicle object if available
             if (_data._vehicle != null) {
                 var name_drawable = View.findDrawableById("name");
-                name_drawable.setText(_data._vehicle.get("vehicle_name"));
+                var vehicle_name = _data._vehicle.get("vehicle_name");
+                Application.getApp().setProperty("vehicle_name", vehicle_name);
+                name_drawable.setText(vehicle_name);
                 name_drawable.draw(dc);
 
                 var locked_drawable = View.findDrawableById("locked");
