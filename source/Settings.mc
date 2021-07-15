@@ -17,7 +17,6 @@ module Settings {
         return value;
     }
 
-
     // Settings name, see resources/settings/settings.xml
     const TOKEN = "token";
 }

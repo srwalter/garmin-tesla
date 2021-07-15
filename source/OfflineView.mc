@@ -6,7 +6,6 @@ class OfflineView extends Ui.View {
         View.initialize();
     }
 
-    //! Load your resources here
     function onLayout(dc) {
         setLayout(Rez.Layouts.OfflineLayout(dc));
     }

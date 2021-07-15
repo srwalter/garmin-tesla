@@ -121,12 +121,4 @@ class Tesla {
             notify
         );
     }
-
-    //function authCallback(responseCode, data) {
-    //    if (responseCode == 200) {
-    //        Application.getApp().setProperty("token", data.get("access_token"));
-    //        _token = "Bearer " + data.get("access_token");
-    //    }
-    //    _notify.invoke(responseCode, data);
-    //}
 }

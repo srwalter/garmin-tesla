@@ -518,7 +518,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _get_charge = true;
             stateMachine();
         } else {
-            System.println("error from onReceiveAwake");
+            System.println("error from onReceiveAwake - responseCode " + responseCode);
             if (responseCode == 401) {
                 // Unauthorized
                 _resetToken();
