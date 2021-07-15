@@ -6,26 +6,31 @@ class SimpleView extends Ui.View {
         View.initialize();
     }
 
-    //! Load your resources here
     function onLayout(dc) {
         setLayout(Rez.Layouts.MainLayout(dc));
     }
 
-    //! Called when this View is brought to the foreground. Restore
-    //! the state of this View and prepare it to be shown. This includes
-    //! loading resources into memory.
     function onShow() {
     }
 
-    //! Update the view
     function onUpdate(dc) {
-        // Call the parent onUpdate function to redraw the layout
         View.onUpdate(dc);
+
+        var wake_line_1_drawable = View.findDrawableById("wake_line_1");
+        var wake_line_2_drawable = View.findDrawableById("wake_line_2");
+        if (System.getDeviceSettings().isTouchScreen)
+        {
+                wake_line_1_drawable.setText(Ui.loadResource(Rez.Strings.wake_touch));
+        }
+        else
+        {
+                wake_line_1_drawable.setText(Ui.loadResource(Rez.Strings.wake_press_start));
+        }
+        wake_line_2_drawable.setText(Ui.loadResource(Rez.Strings.wake_vehicle));
+        wake_line_1_drawable.draw(dc);
+        wake_line_2_drawable.draw(dc);
     }
 
-    //! Called when this View is removed from the screen. Save the
-    //! state of this View here. This includes freeing resources from
-    //! memory.
     function onHide() {
     }
 

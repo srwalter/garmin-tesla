@@ -4,8 +4,9 @@
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
-    <string id="press_start1">Press start to</string>
-    <string id="press_start2">wake vehicle...</string>
+    <string id="wake_press_start">Press start to</string>
+    <string id="wake_touch">Touch screen to</string>
+    <string id="wake_vehicle">wake vehicle</string>
     <string id="label_offline1">Phone connection</string>
     <string id="label_offline2">is required</string>
 

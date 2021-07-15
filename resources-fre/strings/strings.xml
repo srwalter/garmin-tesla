@@ -3,8 +3,9 @@
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
-    <string id="press_start1">Appuyer pour</string>
-    <string id="press_start2">réveiller...</string>
+    <string id="wake_press_start">Appuyer pour</string>
+    <string id="wake_touch">Appuyer pour</string>
+    <string id="wake_vehicle">réveiller</string>
 
 	<!--  Tesla layout -->
     <string id="button_climate_on">Clim On</string>
