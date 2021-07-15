@@ -445,7 +445,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
             System.println("Got vehicle");
             _data._vehicle = data.get("response");
             _handler.invoke(null);
-        } else {
+        } else if (responseCode != -101) {
             if (responseCode == 408) {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
@@ -470,7 +470,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             }
-        } else {
+        } else if (responseCode != -101) {
             if (responseCode == 408) {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
@@ -495,7 +495,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             }
-        } else {
+        } else if (responseCode != -101) {
             if (responseCode == 408) {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
