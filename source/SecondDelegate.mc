@@ -46,7 +46,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _handler = handler;
         _tesla = null;
 
-        if (_token != null) {
+        if (_token != null && _token.length() != 0) {
             _need_auth = false;
             _auth_done = true;
         } else {
