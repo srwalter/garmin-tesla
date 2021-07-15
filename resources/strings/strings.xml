@@ -10,7 +10,7 @@
     <string id="label_offline2">is required</string>
 
 	<!--  Tesla layout -->
-    <string id="button_climate_on">Climate On</string>
+    <string id="button_climate_on">Climate</string>
     <string id="button_door">Door</string>
     <string id="button_frunk">Frunk</string>
 
