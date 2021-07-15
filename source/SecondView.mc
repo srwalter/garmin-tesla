@@ -10,41 +10,43 @@ class SecondView extends Ui.View {
         _display = Ui.loadResource(Rez.Strings.label_requesting_data);
     }
 
-    //! Load your resources here
     function onLayout(dc) {
         setLayout(Rez.Layouts.TeslaLayout(dc));
     }
 
-    //! Called when this View is brought to the foreground. Restore
-    //! the state of this View and prepare it to be shown. This includes
-    //! loading resources into memory.
     function onShow() {
     }
 
-    //! Update the view
     function onUpdate(dc) {
         var center_x = dc.getWidth()/2;
         var center_y = dc.getHeight()/2;
+        
         dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
         dc.clear();
+        
         if (_display != null) {
             dc.drawText(center_x, center_y, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
             View.onUpdate(dc);
-            dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
 
+            // Draw labels from the vehicle object if available
             if (_data._vehicle != null) {
-                dc.drawText(center_x, 40, Graphics.FONT_SMALL, _data._vehicle.get("vehicle_name"), Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+                var name_drawable = View.findDrawableById("name");
+                name_drawable.setText(_data._vehicle.get("vehicle_name"));
+                name_drawable.draw(dc);
 
-                var locked = _data._vehicle.get("locked");
-                if (locked) {
-                    dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
-                    dc.drawText(30, 75, Graphics.FONT_SMALL, Ui.loadResource(Rez.Strings.label_locked), Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                var locked_drawable = View.findDrawableById("locked");
+                if (_data._vehicle.get("locked")) {
+                    locked_drawable.setColor(Graphics.COLOR_GREEN);
+                    locked_drawable.setText(Rez.Strings.label_locked);
                 } else {
-                    dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
-                    dc.drawText(30, 75, Graphics.FONT_SMALL, Ui.loadResource(Rez.Strings.label_unlocked), Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-                }
+                    locked_drawable.setColor(Graphics.COLOR_RED);
+                    locked_drawable.setText(Rez.Strings.label_unlocked);
+                }              
+                locked_drawable.draw(dc);
             }
+
+            // Draw the grey arc
             dc.setColor(Graphics.COLOR_LT_GRAY, Graphics.COLOR_BLACK);
             var radius;
             if (center_x < center_y) {
@@ -53,57 +55,57 @@ class SecondView extends Ui.View {
                 radius = center_y-5;
             }
             dc.setPenWidth(5);
-            dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 180, 0);
-            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-            var data_block_x = Application.AppBase.getProperty("DataBlockX");
-            var charge_y = Application.AppBase.getProperty("ChargeY");
+            dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, 315);
+            
+            // Draw the charge limit marker, arc and set charge text if we have the data
+            var battery_level_drawable = View.findDrawableById("battery_level");       
             if (_data._charge != null) {
-                var charge = _data._charge.get("battery_level");
-                var requested_charge = _data._charge.get("charge_limit_soc");
-                if (_data._charge.get("charging_state").equals("Charging")) {
-                    dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
-                }
-                dc.drawText(data_block_x, charge_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_charge) + charge.toString() + "%", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                var battery_level = _data._charge.get("battery_level");
+                var charge_limit = _data._charge.get("charge_limit_soc");
+                var charging_state = _data._charge.get("charging_state");
+                
+                battery_level_drawable.setColor((charging_state.equals("Charging")) ? Graphics.COLOR_RED : Graphics.COLOR_WHITE);
+                battery_level_drawable.setText(Ui.loadResource(Rez.Strings.label_charge) + battery_level.toString() + "%");
+                battery_level_drawable.draw(dc);
+
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
-                var angle = (180 - (charge * 180 / 100)) % 360;
-                System.println(angle.toString());
-                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 180, angle);
+                var angle = (225 - (battery_level * 270 / 100)) % 360;
+                System.println("Angle " + angle);
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, angle.abs());
+
                 dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
-                angle = 180 - (requested_charge * 180 / 100);
-                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle-1, angle-4);
-                System.println("Requested " + requested_charge.toString());
-                System.println("Angle " + angle.toString());
-                dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
-            } else {
-                dc.drawText(data_block_x, charge_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_charge), Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                angle = 225 - (charge_limit * 270 / 100);
+                System.println("Angle 2 " + angle);
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle.abs()-1, angle.abs()-4);
             }
 
-            var temp_y = Application.AppBase.getProperty("TempY");
-            var climate_y = Application.AppBase.getProperty("ClimateY");
-            if (_data._climate != null) {
-                var temp = _data._climate.get("inside_temp").toNumber();
+            // Draw labels from the climate object if available
+            var climate_state_drawable = View.findDrawableById("climate_state");
+            var inside_temp_drawable = View.findDrawableById("inside_temp");
 
-                var units = Application.getApp().getProperty("imperial");
-                if (units) {
-                    temp = temp * 9 / 5;
-                    temp = temp + 32;
-                    dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_cabin) + temp.toString() + "°F", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+            if (_data._climate != null) {
+                var inside_temp = _data._climate.get("inside_temp").toNumber();
+
+                if (Application.getApp().getProperty("imperial")) {
+                    inside_temp = (inside_temp * 9 / 5) + 32;
+                    inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + inside_temp.toString() + "°F");
                 } else {
-                    dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_cabin) + temp.toString() + "°C", Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                    inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + inside_temp.toString() + "°C");
                 }
 
-                var on = _data._climate.get("is_climate_on") ? Ui.loadResource(Rez.Strings.label_on) : Ui.loadResource(Rez.Strings.label_off);
-                dc.drawText(data_block_x, climate_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_climate) + on, Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-            } else {
-                dc.drawText(data_block_x, temp_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_cabin), Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
-                dc.drawText(data_block_x, climate_y, Graphics.FONT_MEDIUM, Ui.loadResource(Rez.Strings.label_climate), Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER);
+                var climate_state = Ui.loadResource(Rez.Strings.label_climate) + (_data._climate.get("is_climate_on") ? Ui.loadResource(Rez.Strings.label_on) : Ui.loadResource(Rez.Strings.label_off));
+                climate_state_drawable.setText(climate_state);
             }
+            else
+            {
+                //inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + "?");
+                //climate_state_drawable.setText( Ui.loadResource(Rez.Strings.label_climate) + "?");
+            }
+            inside_temp_drawable.draw(dc);
+            climate_state_drawable.draw(dc);
         }
     }
 
-    //! Called when this View is removed from the screen. Save the
-    //! state of this View here. This includes freeing resources from
-    //! memory.
     function onHide() {
     }
 
