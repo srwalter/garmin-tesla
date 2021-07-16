@@ -76,7 +76,7 @@ class SecondView extends Ui.View {
 
                 dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
                 angle = 225 - (charge_limit * 270 / 100);
-                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle.abs()-1, angle.abs()-4);
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle.abs()+2, angle.abs()-2);
             }
 
             // Draw labels from the climate object if available
