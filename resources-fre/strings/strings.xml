@@ -20,7 +20,8 @@
     <string id="menu_label_reset">Remise à zéro</string>
     <string id="menu_label_honk">Klaxon</string>
     <string id="menu_label_open_port">Port ouvert</string>
-    <string id="menu_label_toggle">Temp. °C/°F</string>
+    <string id="menu_label_toggle_units">Temp. °C/°F</string>
+    <string id="menu_label_toggle_view">Change de vue</string>
     <string id="menu_label_select_car">Sélectionnez le véhicule</string>
 
     <string id="setting_token_label">Jeton d'API</string>
@@ -32,7 +33,7 @@
     <string id="label_climate">Clim: </string>
     <string id="label_error">Erreur: </string>
     <string id="label_frunk">Frunk</string>
-    <string id="label_getting_vehicles">Liste vehicules...</string>
+    <string id="label_getting_vehicles">Liste vehicules</string>
     <string id="label_honk">Klaxon</string>
     <string id="label_open_port">Port ouvert</string>
     <string id="label_hvac_on">Clim Sur</string>
@@ -44,8 +45,9 @@
     <string id="label_off">Off</string>
     <string id="label_on">On</string>
     <string id="label_open_frunk">Ouvrir le coffre ?</string>
-    <string id="label_requesting_data">Récup. données...</string>
+    <string id="label_requesting_data">Récup. données</string>
     <string id="label_unlock_doors">Déver. portes</string>
     <string id="label_unlocked">Ouverte</string>
-    <string id="label_waking_vehicle">Réveil du vehicule...</string>
+    <string id="label_waking_vehicle">Réveil du vehicule</string>
+    <string id="label_no_vehicles">Pas de véhicules</string>
 </strings>
