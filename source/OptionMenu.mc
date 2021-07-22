@@ -30,6 +30,13 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
             } else {
                 Application.getApp().setProperty("imperial", true);
             }
+        } else if (item == :toggle_view) {
+            var view = Application.getApp().getProperty("image_view");
+            if (view) {
+                Application.getApp().setProperty("image_view", false);
+            } else {
+                Application.getApp().setProperty("image_view", true);
+            }
         }
     }
 
