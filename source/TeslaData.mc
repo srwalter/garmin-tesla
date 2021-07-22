@@ -1,5 +1,4 @@
 class TeslaData {
-    var _climate;
-    var _charge;
-    var _vehicle;
+    var _vehicle_data;
+    var _ready;
 }

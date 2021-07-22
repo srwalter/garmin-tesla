@@ -8,7 +8,6 @@ const OAUTH_CODE = "myOAuthCode";
 const OAUTH_ERROR = "myOAuthError";
 
 class MainDelegate extends Ui.BehaviorDelegate {
-    var _dummy_mode;
     var _handler;
     var _token;
     var _tesla;
@@ -19,11 +18,9 @@ class MainDelegate extends Ui.BehaviorDelegate {
     var _need_wake;
     var _wake_done;
 
-    var _get_climate;
-    var _set_climate;
+    var _set_climate_on;
     var _set_climate_off;
-    var _get_charge;
-    var _get_vehicle;
+    var _get_vehicle_data;
     var _honk_horn;
     var _open_port;
     var _open_frunk;
@@ -37,7 +34,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
     function initialize(data, handler) {
         BehaviorDelegate.initialize();
-        _dummy_mode = false;
         _settings = System.getDeviceSettings();
         _data = data;
         _token = Settings.getToken();
@@ -56,30 +52,15 @@ class MainDelegate extends Ui.BehaviorDelegate {
         _need_wake = false;
         _wake_done = true;
 
-        _set_climate = false;
+        _set_climate_on = false;
         _set_climate_off = false;
-        _get_climate = true;
-        _get_charge = true;
-        _get_vehicle = true;
+        _get_vehicle_data = true;
         _honk_horn = false;
         _open_port = false;
         _open_frunk = false;
         _unlock = false;
         _lock = false;
 
-        if(_dummy_mode) {
-            _data._vehicle = {
-                "vehicle_name" => "Janet"
-            };
-            _data._charge = {
-                "battery_level" => 65,
-                "charge_limit_soc" => 80
-            };
-            _data._climate = {
-                "inside_temp" => 25,
-                "is_climate_on" => true
-            };
-        }
         stateMachine();
     }
 
@@ -152,11 +133,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function stateMachine() {
-        if(_dummy_mode) {
-            _handler.invoke(null);
-            return;
-        }
-
         if (_need_auth) {
 
             _need_auth = false;
@@ -233,23 +209,13 @@ class MainDelegate extends Ui.BehaviorDelegate {
             return;
         }
 
-        if (_get_vehicle) {
-            _get_vehicle = false;
-            _tesla.getVehicleState(_vehicle_id, method(:onReceiveVehicle));
+        if (_get_vehicle_data) {
+            _get_vehicle_data = false;
+            _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
         }
 
-        if (_get_climate) {
-            _get_climate = false;
-            _tesla.getClimateState(_vehicle_id, method(:onReceiveClimate));
-        }
-
-        if (_get_charge) {
-            _get_charge = false;
-            _tesla.getChargeState(_vehicle_id, method(:onReceiveCharge));
-        }
-
-        if (_set_climate) {
-            _set_climate = false;
+        if (_set_climate_on) {
+            _set_climate_on = false;
             _handler.invoke(Ui.loadResource(Rez.Strings.label_hvac_on));
             _tesla.climateOn(_vehicle_id, method(:onClimateDone));
         }
@@ -298,8 +264,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function timerRefresh() {
-        _get_climate = true;
-        _get_charge = true;
+        _get_vehicle_data = true;
         stateMachine();
     }
 
@@ -318,10 +283,10 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function doSelect() {
-        if (_data._climate != null && _data._climate.get("is_climate_on")) {
+        if (_data._vehicle_data != null && _data._vehicle_data.get("climate_state").get("is_climate_on")) {
             _set_climate_off = true;
         } else {
-            _set_climate = true;
+            _set_climate_on = true;
         }
         stateMachine();
     }
@@ -336,7 +301,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function doNextPage() {
-        if (_data._vehicle != null && !_data._vehicle.get("locked")) {
+        if (_data._vehicle_data != null && !_data._vehicle_data.get("vehicle_state").get("locked")) {
             _lock = true;
         } else {
             _unlock = true;
@@ -381,6 +346,11 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function onTap(click) {
+        if (!_data._ready)
+        {
+            return true;
+        }
+        
         System.println("Got click");
         var coords = click.getCoordinates();
         var x = coords[0];
@@ -426,7 +396,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
                 Application.getApp().setProperty("vehicle", _vehicle_id);
                 stateMachine();
             } else {
-                _handler.invoke("No vehicles!");
+                _handler.invoke(Ui.loadResource(Rez.Strings.label_no_vehicles));
             }
         } else {
             if (responseCode == 401) {
@@ -440,31 +410,11 @@ class MainDelegate extends Ui.BehaviorDelegate {
         }
     }
 
-    function onReceiveVehicle(responseCode, data) {
+    function onReceiveVehicleData(responseCode, data) {
         if (responseCode == 200) {
-            System.println("Got vehicle");
-            _data._vehicle = data.get("response");
-            _handler.invoke(null);
-        } else if (responseCode != -101) {
-            if (responseCode == 408) {
-                _wake_done = false;
-                _sleep_timer.start(method(:delayedWake), 500, false);
-            } else {
-                if (responseCode == 401) {
-                    // Unauthorized
-                    _resetToken();
-                }
-                System.println("error from onReceiveVehicle");
-                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
-            }
-        }
-    }
-
-    function onReceiveClimate(responseCode, data) {
-        if (responseCode == 200) {
-            _data._climate = data.get("response");
-            if (_data._climate.hasKey("inside_temp") && _data._climate.hasKey("is_climate_on")) {
-                System.println("Got climate");
+            _data._vehicle_data = data.get("response");
+            if (_data._vehicle_data.get("climate_state").hasKey("inside_temp") && _data._vehicle_data.get("charge_state").hasKey("battery_level")) {
+                System.println("Got vehicle data");
                 _handler.invoke(null);
             } else {
                 _wake_done = false;
@@ -479,43 +429,17 @@ class MainDelegate extends Ui.BehaviorDelegate {
                     // Unauthorized
                     _resetToken();
                 }
-                System.println("error from onReceiveClimate");
+                System.println("error from onReceiveVehicleData");
                 _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
     }
 
-    function onReceiveCharge(responseCode, data) {
-        if (responseCode == 200) {
-            _data._charge = data.get("response");
-            if (_data._charge.hasKey("battery_level") && _data._charge.hasKey("charge_limit_soc") && _data._charge.hasKey("charging_state")) {
-                System.println("Got charge");
-                _handler.invoke(null);
-            } else {
-                _wake_done = false;
-                _sleep_timer.start(method(:delayedWake), 500, false);
-            }
-        } else if (responseCode != -101) {
-            if (responseCode == 408) {
-                _wake_done = false;
-                _sleep_timer.start(method(:delayedWake), 500, false);
-            } else {
-                if (responseCode == 401) {
-                    // Unauthorized
-                    _resetToken();
-                }
-                System.println("error from onReceiveCharge");
-                _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
-            }
-        }
-    }
 
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
             _wake_done = true;
-            _get_vehicle = true;
-            _get_climate = true;
-            _get_charge = true;
+            _get_vehicle_data = true;
             stateMachine();
         } else {
             System.println("error from onReceiveAwake - responseCode " + responseCode);
@@ -535,7 +459,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
     function onClimateDone(responseCode, data) {
         if (responseCode == 200) {
-            _get_climate = true;
+            _get_vehicle_data = true;
             _handler.invoke(null);
             stateMachine();
         } else {
@@ -549,7 +473,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
     function onLockDone(responseCode, data) {
         if (responseCode == 200) {
-            _get_vehicle = true;
+            _get_vehicle_data = true;
             _handler.invoke(null);
             stateMachine();
         } else {

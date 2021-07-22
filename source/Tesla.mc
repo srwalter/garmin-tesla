@@ -22,30 +22,7 @@ class Tesla {
         );
     }
 
-    function getVehicleId(notify) {
-        System.println(_token);
-        genericGet("https://owner-api.teslamotors.com/api/1/vehicles", notify);
-    }
-
-    function getClimateState(vehicle, notify) {
-        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/data_request/climate_state";
-        System.println(url);
-        genericGet(url, notify);
-    }
-
-    function getChargeState(vehicle, notify) {
-        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/data_request/charge_state";
-        System.println(url);
-        genericGet(url, notify);
-    }
-
-    function getVehicleState(vehicle, notify) {
-        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/data_request/vehicle_state";
-        System.println(url);
-        genericGet(url, notify);
-    }
-
-    function genericPost(url, notify) {
+    hidden function genericPost(url, notify) {
         Communications.makeWebRequest(
             url,
             null,
@@ -58,6 +35,17 @@ class Tesla {
             },
             notify
         );
+    }
+
+    function getVehicleId(notify) {
+        System.println(_token);
+        genericGet("https://owner-api.teslamotors.com/api/1/vehicles", notify);
+    }
+
+    function getVehicleData(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/vehicle_data";
+        System.println(url);
+        genericGet(url, notify);
     }
 
     function wakeVehicle(vehicle, notify) {
