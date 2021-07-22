@@ -1,0 +1,65 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="../../resources/drawables/launcher_icon.png" />
+    <bitmap id="frunk_icon_white" filename="../../resources/drawables/frunk.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FFFFFF</color>
+            <color>000000</color>
+            <color>AAAAAA</color>
+        </palette>
+    </bitmap>
+    <bitmap id="climate_off_icon" filename="../../resources/drawables/climateoff.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>00FF00</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="climate_on_icon_red" filename="../../resources/drawables/climateon.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FF0000</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="climate_on_icon_blue" filename="../../resources/drawables/climateon.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>00AAFF</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+
+    <bitmap id="climate_on_icon_white" filename="../../resources/drawables/climateon.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FFFFFF</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="locked_icon" filename="../../resources/drawables/locked.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>00FF00</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="locked_icon_white" filename="../../resources/drawables/locked.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FFFFFF</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="unlocked_icon" filename="../../resources/drawables/unlocked.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FF0000</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="settings_icon" filename="../../resources/drawables/settings.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FFFFFF</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+    <bitmap id="back_icon" filename="../../resources/drawables/back.png" dithering="none" scaleX="24%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FFFFFF</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
+</drawables>

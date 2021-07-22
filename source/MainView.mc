@@ -20,6 +20,8 @@ class MainView extends Ui.View {
 
     function onUpdate(dc) {
         var width = dc.getWidth();
+        var height = dc.getHeight();
+        var extra = (width/7+width/28) * ((width.toFloat()/height.toFloat())-1);
         var center_x = dc.getWidth()/2;
         var center_y = dc.getHeight()/2;
         
@@ -31,8 +33,7 @@ class MainView extends Ui.View {
             font_montserrat=Graphics.FONT_SMALL;
         }
 
-        // Redraw the layout and wipe the canvas        
-        
+        // Redraw the layout and wipe the canvas              
         if (_display != null) 
         {
             _data._ready = false;
@@ -55,10 +56,10 @@ class MainView extends Ui.View {
                 dc.clear();
                 View.onUpdate(dc);
 
-                dc.drawBitmap((width/7+width/28).toNumber(),(width/7+width/21).toNumber(),Ui.loadResource(Rez.Drawables.frunk_icon_white));
-                dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(),Ui.loadResource(Rez.Drawables.climate_on_icon_white));
-                dc.drawBitmap((width/7+width/28).toNumber(),(width/7*4-width/21).toNumber(),Ui.loadResource(Rez.Drawables.locked_icon_white));
-                dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7*4-width/21).toNumber(),Ui.loadResource(is_touchscreen? Rez.Drawables.settings_icon : Rez.Drawables.back_icon));
+                dc.drawBitmap((width/7+width/28+extra).toNumber(),(height/7+height/21).toNumber(),Ui.loadResource(Rez.Drawables.frunk_icon_white));
+                dc.drawBitmap((width/7*4-width/28+extra).toNumber(),(height/7+height/21).toNumber(),Ui.loadResource(Rez.Drawables.climate_on_icon_white));
+                dc.drawBitmap((width/7+width/28+extra).toNumber(),(height/7*4-height/21).toNumber(),Ui.loadResource(Rez.Drawables.locked_icon_white));
+                dc.drawBitmap((width/7*4-width/28+extra).toNumber(),(height/7*4-height/21).toNumber(),Ui.loadResource(is_touchscreen? Rez.Drawables.settings_icon : Rez.Drawables.back_icon));
             }
             else
             {
@@ -104,7 +105,7 @@ class MainView extends Ui.View {
 
                 if (use_image_layout)
                 {
-                    dc.drawBitmap((width/7+width/28).toNumber(),(width/7*4-width/21).toNumber(),(_data._vehicle_data.get("vehicle_state").get("locked") ? Ui.loadResource(Rez.Drawables.locked_icon) : Ui.loadResource(Rez.Drawables.unlocked_icon)));
+                    dc.drawBitmap((width/7+width/28+extra).toNumber(),(height/7*4-height/21).toNumber(),(_data._vehicle_data.get("vehicle_state").get("locked") ? Ui.loadResource(Rez.Drawables.locked_icon) : Ui.loadResource(Rez.Drawables.unlocked_icon)));
 
                     var status_drawable = View.findDrawableById("status");
                     status_drawable.setText(battery_level + (charging_state ? "% / " : "+ / ") + inside_temp_local);
@@ -114,15 +115,15 @@ class MainView extends Ui.View {
                                
                     if (climate_state == false)
                     {
-                        dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_off_icon));
+                        dc.drawBitmap((width/7*4-width/28+extra).toNumber(),(height/7+height/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_off_icon));
                     }
                     else if (climate_state == true && driver_temp > inside_temp)
                     {
-                        dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_on_icon_blue));
+                        dc.drawBitmap((width/7*4-width/28+extra).toNumber(),(height/7+height/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_on_icon_blue));
                     }
                     else
                     {
-                        dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_on_icon_red));
+                        dc.drawBitmap((width/7*4-width/28+extra).toNumber(),(height/7+height/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_on_icon_red));
                     }
                 }
                 else
