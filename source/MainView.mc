@@ -58,7 +58,8 @@ class MainView extends Ui.View {
             } else {
                 radius = center_y-3;
             }
-            dc.setPenWidth(6);
+
+            dc.setPenWidth(((dc.getWidth()/33)).toNumber());
             dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, 315);
             
             // Draw the charge limit marker, arc and set charge text if we have the data
