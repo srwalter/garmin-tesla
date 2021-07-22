@@ -16,8 +16,16 @@ class WidgetGlanceView extends Ui.GlanceView {
     dc.setColor(Gfx.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
     dc.drawText(
       0,
-      dc.getHeight() / 2,
-      Graphics.FONT_SMALL,
+      (dc.getHeight() / 8) * 2,
+      Graphics.FONT_TINY,
+      "TESLA",
+      Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
+    );
+
+    dc.drawText(
+      0,
+      (dc.getHeight() / 8) * 6,
+      Graphics.FONT_TINY,
       wake + vehicle_name,
       Graphics.TEXT_JUSTIFY_LEFT | Graphics.TEXT_JUSTIFY_VCENTER
     );
