@@ -1,9 +1,9 @@
-<layout id="TeslaLayout">
-    <label id="name" x="center" y="30" font="Graphics.FONT_SMALL" color="Gfx.COLOR_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+<layout id="TextLayout">
+    <label id="name" x="center" y="25" font="Graphics.FONT_SMALL" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
     <label id="climate" x="300" y="75" font="Graphics.FONT_XTINY" text="@Strings.button_climate_on" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_RIGHT" />
     <label id="frunk" x="64" y="75" font="Graphics.FONT_XTINY" text="@Strings.button_frunk" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_LEFT" />
     <label id="door" x="64" y="255" font="Graphics.FONT_XTINY" text="@Strings.button_door" color="Gfx.COLOR_BLUE" justification="Gfx.TEXT_JUSTIFY_LEFT" />
-    <label id="locked" x="center" y="300" font="Graphics.FONT_SMALL" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+    <label id="status" x="center" y="297" font="Graphics.FONT_SMALL" justification="Gfx.TEXT_JUSTIFY_CENTER" />
     <label id="battery_level" x="center" y="117" font="Graphics.FONT_MEDIUM" justification="Gfx.TEXT_JUSTIFY_CENTER" />
     <label id="inside_temp" x="center" y="157" font="Graphics.FONT_MEDIUM" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
     <label id="climate_state" x="center" y="197" font="Graphics.FONT_MEDIUM" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />

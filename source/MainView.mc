@@ -1,4 +1,5 @@
 using Toybox.WatchUi as Ui;
+using Toybox.System;
 
 class MainView extends Ui.View {
     hidden var _display;
@@ -11,43 +12,60 @@ class MainView extends Ui.View {
     }
 
     function onLayout(dc) {
-        setLayout(Rez.Layouts.TeslaLayout(dc));
+        setLayout(Rez.Layouts.ImageLayout(dc));
     }
 
     function onShow() {
     }
 
     function onUpdate(dc) {
+        var width = dc.getWidth();
         var center_x = dc.getWidth()/2;
         var center_y = dc.getHeight()/2;
         
-        // Redraw the layout and wipe the canvas        
-        setLayout(Rez.Layouts.TeslaLayout(dc));
-        dc.setColor(Graphics.COLOR_RED, Graphics.COLOR_BLACK);
-        dc.clear();
-        
-        if (_display != null) {
-            dc.drawText(center_x, center_y, Graphics.FONT_MEDIUM, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        // Load our custom font if it's there
+        var font_montserrat;
+        if (Rez.Fonts has :montserrat) {
+            font_montserrat=Ui.loadResource(Rez.Fonts.montserrat);
         } else {
-            View.onUpdate(dc);
+            font_montserrat=Graphics.FONT_SMALL;
+        }
 
-            // Draw labels from the vehicle object if available
-            if (_data._vehicle != null) {
-                var name_drawable = View.findDrawableById("name");
-                var vehicle_name = _data._vehicle.get("vehicle_name");
-                Application.getApp().setProperty("vehicle_name", vehicle_name);
-                name_drawable.setText(vehicle_name);
-                name_drawable.draw(dc);
+        // Redraw the layout and wipe the canvas        
+        
+        if (_display != null) 
+        {
+            _data._ready = false;
 
-                var locked_drawable = View.findDrawableById("locked");
-                if (_data._vehicle.get("locked")) {
-                    locked_drawable.setColor(Graphics.COLOR_GREEN);
-                    locked_drawable.setText(Rez.Strings.label_locked);
-                } else {
-                    locked_drawable.setColor(Graphics.COLOR_RED);
-                    locked_drawable.setText(Rez.Strings.label_unlocked);
-                }              
-                locked_drawable.draw(dc);
+            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+            dc.clear();
+            dc.drawText(center_x, center_y, font_montserrat, _display, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+        } else {           
+            _data._ready = true;
+
+            var is_touchscreen = System.getDeviceSettings().isTouchScreen;
+            
+            var use_image_layout = Application.getApp().getProperty("image_view") == null ? System.getDeviceSettings().isTouchScreen : Application.getApp().getProperty("image_view");
+            Application.getApp().setProperty("image_view", use_image_layout);
+
+            if (use_image_layout)
+            {
+                setLayout(Rez.Layouts.ImageLayout(dc));
+                dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+                dc.clear();
+                View.onUpdate(dc);
+
+                dc.drawBitmap((width/7+width/28).toNumber(),(width/7+width/21).toNumber(),Ui.loadResource(Rez.Drawables.frunk_icon_white));
+                dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(),Ui.loadResource(Rez.Drawables.climate_on_icon_white));
+                dc.drawBitmap((width/7+width/28).toNumber(),(width/7*4-width/21).toNumber(),Ui.loadResource(Rez.Drawables.locked_icon_white));
+                dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7*4-width/21).toNumber(),Ui.loadResource(is_touchscreen? Rez.Drawables.settings_icon : Rez.Drawables.back_icon));
+            }
+            else
+            {
+                setLayout(Rez.Layouts.TextLayout(dc));
+                dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
+                dc.clear();
+                View.onUpdate(dc);
             }
 
             // Draw the grey arc
@@ -61,18 +79,21 @@ class MainView extends Ui.View {
 
             dc.setPenWidth(((dc.getWidth()/33)).toNumber());
             dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, 315);
-            
-            // Draw the charge limit marker, arc and set charge text if we have the data
-            var battery_level_drawable = View.findDrawableById("battery_level");       
-            if (_data._charge != null) {
-                var battery_level = _data._charge.get("battery_level");
-                var charge_limit = _data._charge.get("charge_limit_soc");
-                var charging_state = _data._charge.get("charging_state");
-                
-                battery_level_drawable.setColor((charging_state.equals("Charging")) ? Graphics.COLOR_RED : Graphics.COLOR_WHITE);
-                battery_level_drawable.setText(Ui.loadResource(Rez.Strings.label_charge) + battery_level.toString() + "%");
-                battery_level_drawable.draw(dc);
 
+            if (_data._vehicle_data != null) {
+                var name_drawable = View.findDrawableById("name");
+                var vehicle_name = _data._vehicle_data.get("display_name");
+                Application.getApp().setProperty("vehicle_name", vehicle_name);
+                name_drawable.setText(vehicle_name);
+                name_drawable.draw(dc);
+
+                var battery_level = _data._vehicle_data.get("charge_state").get("battery_level");
+                var charge_limit = _data._vehicle_data.get("charge_state").get("charge_limit_soc");
+                var charging_state = _data._vehicle_data.get("charge_state").get("charging_state");
+                var inside_temp = _data._vehicle_data.get("climate_state").get("inside_temp").toNumber();
+                var inside_temp_local = Application.getApp().getProperty("imperial") ? inside_temp + "°F" : inside_temp + "°C";
+                var driver_temp = _data._vehicle_data.get("climate_state").get("driver_temp_setting");
+                
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
                 var angle = (225 - (battery_level * 270 / 100)) % 360;
                 dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, angle.abs());
@@ -80,28 +101,58 @@ class MainView extends Ui.View {
                 dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
                 angle = 225 - (charge_limit * 270 / 100);
                 dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle.abs()+2, angle.abs()-2);
-            }
 
-            // Draw labels from the climate object if available
-            var climate_state_drawable = View.findDrawableById("climate_state");
-            var inside_temp_drawable = View.findDrawableById("inside_temp");
+                if (use_image_layout)
+                {
+                    dc.drawBitmap((width/7+width/28).toNumber(),(width/7*4-width/21).toNumber(),(_data._vehicle_data.get("vehicle_state").get("locked") ? Ui.loadResource(Rez.Drawables.locked_icon) : Ui.loadResource(Rez.Drawables.unlocked_icon)));
 
-            if (_data._climate != null) {
-                var inside_temp = _data._climate.get("inside_temp").toNumber();
+                    var status_drawable = View.findDrawableById("status");
+                    status_drawable.setText(battery_level + (charging_state ? "% / " : "+ / ") + inside_temp_local);
+                    status_drawable.draw(dc);
 
-                if (Application.getApp().getProperty("imperial")) {
-                    inside_temp = (inside_temp * 9 / 5) + 32;
-                    inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + inside_temp.toString() + "°F");
-                } else {
-                    inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + inside_temp.toString() + "°C");
+                    var climate_state = _data._vehicle_data.get("climate_state").get("is_climate_on");
+                               
+                    if (climate_state == false)
+                    {
+                        dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_off_icon));
+                    }
+                    else if (climate_state == true && driver_temp > inside_temp)
+                    {
+                        dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_on_icon_blue));
+                    }
+                    else
+                    {
+                        dc.drawBitmap((width/7*4-width/28).toNumber(),(width/7+width/21).toNumber(), Ui.loadResource(Rez.Drawables.climate_on_icon_red));
+                    }
                 }
+                else
+                {              
+                    var status_drawable = View.findDrawableById("status");
+                    if (_data._vehicle_data.get("vehicle_state").get("locked")) {
+                        status_drawable.setColor(Graphics.COLOR_GREEN);
+                        status_drawable.setText(Rez.Strings.label_locked);
+                    } else {
+                        status_drawable.setColor(Graphics.COLOR_RED);
+                        status_drawable.setText(Rez.Strings.label_unlocked);
+                    }              
+                    status_drawable.draw(dc);
+                    
+                    var inside_temp_drawable = View.findDrawableById("inside_temp");
+                    inside_temp_drawable.setText(Ui.loadResource(Rez.Strings.label_cabin) + inside_temp_local.toString());
 
-                var climate_state = Ui.loadResource(Rez.Strings.label_climate) + (_data._climate.get("is_climate_on") ? Ui.loadResource(Rez.Strings.label_on) : Ui.loadResource(Rez.Strings.label_off));
-                climate_state_drawable.setText(climate_state);
+                    var climate_state_drawable = View.findDrawableById("climate_state");
+                    var climate_state = Ui.loadResource(Rez.Strings.label_climate) + (_data._vehicle_data.get("climate_state").get("is_climate_on") ? Ui.loadResource(Rez.Strings.label_on) : Ui.loadResource(Rez.Strings.label_off));
+                    climate_state_drawable.setText(climate_state);
 
-                inside_temp_drawable.draw(dc);
-                climate_state_drawable.draw(dc);
-            }            
+                    var battery_level_drawable = View.findDrawableById("battery_level");  
+                    battery_level_drawable.setColor((charging_state.equals("Charging")) ? Graphics.COLOR_RED : Graphics.COLOR_WHITE);
+                    battery_level_drawable.setText(Ui.loadResource(Rez.Strings.label_charge) + battery_level.toString() + "%");
+                    battery_level_drawable.draw(dc);
+                    
+                    inside_temp_drawable.draw(dc);
+                    climate_state_drawable.draw(dc);
+                }               
+            }
         }
     }
 
