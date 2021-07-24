@@ -2,12 +2,12 @@ using Toybox.WatchUi as Ui;
 using Toybox.Graphics as Gfx;
 
 (:glance)
-class WidgetGlanceView extends Ui.GlanceView {
+class GlanceView extends Ui.GlanceView {
 	
   function initialize() {
     GlanceView.initialize();
   }
-    
+
   function onUpdate(dc) {
     var vehicle_name = Application.getApp().getProperty("vehicle_name");
     vehicle_name = (vehicle_name == null) ? Ui.loadResource(Rez.Strings.vehicle) : vehicle_name;

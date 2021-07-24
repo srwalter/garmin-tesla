@@ -1,26 +1,38 @@
 using Toybox.Application as App;
+using Toybox.Background;
+using Toybox.System;
+using Toybox.Time;
 using Toybox.WatchUi as Ui;
-using Toybox.System as Sys;
 
+(:background)
 class QuickTesla extends App.AppBase {
 
     function initialize() {
         AppBase.initialize();
     }
 
-    function onStart(state) {
+    function getServiceDelegate(){
+        return [ new MyServiceDelegate() ];
     }
 
-    function onStop(state) {
-    }
+    function onBackgroundData(data) {
+        Application.getApp().setProperty("vehicle_name", data["time"]);
+        System.println("OBD: " + data["time"]);
+        Ui.requestUpdate();
+    }  
 
     (:glance)
     function getGlanceView() {
-        return [ new WidgetGlanceView() ];
+        return [ new GlanceView() ];
     }
 
     function getInitialView() {
-        if (!Sys.getDeviceSettings().phoneConnected) {
+
+        if(Background.getTemporalEventRegisteredTime() != null) {
+            Background.registerForTemporalEvent(new Time.Duration(60*5));
+        }
+
+        if (!System.getDeviceSettings().phoneConnected) {
             return [ new OfflineView() ];
         }
 
