@@ -15,9 +15,13 @@ class MyServiceDelegate extends System.ServiceDelegate {
     function onTemporalEvent() {
         var _token = Settings.getToken();
         var _vehicle_id = Application.getApp().getProperty("vehicle");
-        var _tesla = new Tesla(_token);
-        System.println("Getting vehicle data");
-        _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
+
+        if (_token != null && _vehicle_id != null)
+        {
+            var _tesla = new Tesla(_token);
+            System.println("Getting vehicle data");
+            _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
+        }
     }   
 
     function onReceiveVehicleData(responseCode, responseData) {
@@ -33,17 +37,18 @@ class MyServiceDelegate extends System.ServiceDelegate {
 
             var vehicle_data = responseData.get("response");    
             var battery_level = vehicle_data.get("charge_state").get("battery_level");
-            data.put("background", battery_level + "% at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            var charging_state = vehicle_data.get("charge_state").get("charging_state");
+            data.put("status", battery_level + "%" + (charging_state == "true" ? "+" : "") + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         } else if (responseCode == 408) {
             System.println("Asleep");
 
-            data.put("background", "Asleep" + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            data.put("status", "Asleep" + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         } else {
             System.println("Problem");
 
-            data.put("background", "Problem" + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            data.put("status", "Problem" + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         }
     }
