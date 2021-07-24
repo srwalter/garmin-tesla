@@ -24,6 +24,8 @@ class MyServiceDelegate extends System.ServiceDelegate {
 
         if (_token != null && _vehicle_id != null)
         {
+            // We have two options here - either call getVehicle to see if the car is online first, or go straight in with getVehicleData
+            // Not sure which is best yet, need to monitor if the latter affects sleep! 
             //_tesla.getVehicle(_vehicle_id, method(:onReceiveVehicle));
             _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
         }
@@ -37,8 +39,6 @@ class MyServiceDelegate extends System.ServiceDelegate {
     //
     //    // Deal with appropriately - we care about OK! (200)
     //    if (responseCode == 200) {
-    //        System.println(responseData.get("response"));
-    //
     //        var vehicle = responseData.get("response");
     //        var vehicle_state = vehicle.get("state");
     //
@@ -72,7 +72,7 @@ class MyServiceDelegate extends System.ServiceDelegate {
             data.put("status", "Asleep" + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         } else {
-            data.put("status", "Problem" + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            data.put("status", "Problem " + responseCode + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         }
     }
