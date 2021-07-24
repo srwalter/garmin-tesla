@@ -110,7 +110,7 @@ class MainView extends Ui.View {
                 var charge_limit = _data._vehicle_data.get("charge_state").get("charge_limit_soc");
                 var charging_state = _data._vehicle_data.get("charge_state").get("charging_state");
                 var inside_temp = _data._vehicle_data.get("climate_state").get("inside_temp").toNumber();
-                var inside_temp_local = Application.getApp().getProperty("imperial") ? inside_temp + "°F" : inside_temp + "°C";
+                var inside_temp_local = Application.getApp().getProperty("imperial") ? ((inside_temp*9/5) + 32) + "°F" : inside_temp + "°C";
                 var driver_temp = _data._vehicle_data.get("climate_state").get("driver_temp_setting");
                 
                 // Draw the charge status
