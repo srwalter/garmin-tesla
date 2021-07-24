@@ -130,7 +130,7 @@ class MainView extends Ui.View {
 
                     // Update the text at the bottom of the screen with charge and temperature
                     var status_drawable = View.findDrawableById("status");
-                    status_drawable.setText(battery_level + (charging_state ? "% / " : "+ / ") + inside_temp_local);
+                    status_drawable.setText(battery_level + (charging_state.equals("Charging") ? "%+ / " : "% / ") + inside_temp_local);
                     status_drawable.draw(dc);
 
                     // Update the climate state indicator, note we have blue or red icons depending on heating or cooling
