@@ -15,9 +15,10 @@ class QuickTesla extends App.AppBase {
         return [ new MyServiceDelegate() ];
     }
 
+    // This fires when the background service returns
     function onBackgroundData(data) {
-        Application.getApp().setProperty("vehicle_name", data["time"]);
-        System.println("OBD: " + data["time"]);
+        Application.getApp().setProperty("vehicle_name", data["background"]);
+        System.println("Background OBD: " + data["background"]);
         Ui.requestUpdate();
     }  
 
@@ -27,11 +28,9 @@ class QuickTesla extends App.AppBase {
     }
 
     function getInitialView() {
+        Background.registerForTemporalEvent(new Time.Duration(60*5));
 
-        if(Background.getTemporalEventRegisteredTime() != null) {
-            Background.registerForTemporalEvent(new Time.Duration(60*5));
-        }
-
+        // No phone? This widget ain't gonna work! Show the offline view
         if (!System.getDeviceSettings().phoneConnected) {
             return [ new OfflineView() ];
         }

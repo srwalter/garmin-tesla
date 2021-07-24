@@ -436,7 +436,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
         }
     }
 
-
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
             _wake_done = true;

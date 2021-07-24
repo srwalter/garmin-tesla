@@ -2,6 +2,7 @@ using Toybox.Application as Application;
 using Toybox.System as System;
 
 //! Settings utility.
+(:background)
 module Settings {
 
     //! Store auth token

@@ -9,16 +9,42 @@ class MyServiceDelegate extends System.ServiceDelegate {
 
     function initialize() {
         System.ServiceDelegate.initialize();
-        System.println("Init");
     }
 
+    // This fires on our temporal event - we're going to go off and get the vehicle data, only if we have a token and vehicle ID
     function onTemporalEvent() {
-        var data = Background.getBackgroundData();
-        if (data == null) {
-			data = {};
-		}
-        data.put("time", System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
-        Background.exit(data);
+        var _token = Settings.getToken();
+        var _vehicle_id = Application.getApp().getProperty("vehicle");
+        var _tesla = new Tesla(_token);
+        System.println("Getting vehicle data");
+        _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
     }   
 
+    function onReceiveVehicleData(responseCode, responseData) {
+        // The API request has returned check for any other background data waiting (we don't want to lose it)
+        var data = Background.getBackgroundData();
+        if (data == null) {
+            data = {};
+		}
+
+        // Deal with appropriately - we care about awake (200) or asleep (408)
+        if (responseCode == 200) {
+            System.println("Got vehicle data");
+
+            var vehicle_data = responseData.get("response");    
+            var battery_level = vehicle_data.get("charge_state").get("battery_level");
+            data.put("background", battery_level + "% at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            Background.exit(data);
+        } else if (responseCode == 408) {
+            System.println("Asleep");
+
+            data.put("background", "Asleep" + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            Background.exit(data);
+        } else {
+            System.println("Problem");
+
+            data.put("background", "Problem" + " at " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            Background.exit(data);
+        }
+    }
 }
