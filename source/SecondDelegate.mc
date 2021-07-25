@@ -46,7 +46,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
         _handler = handler;
         _tesla = null;
 
-        if (_token != null) {
+        if (_token != null && _token.length() != 0) {
             _need_auth = false;
             _auth_done = true;
         } else {
@@ -256,7 +256,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
 
         if (_set_climate_off) {
             _set_climate_off = false;
-            _handler.invoke("HVAC Off");
+            _handler.invoke(Ui.loadResource(Rez.Strings.label_hvac_off));
             _tesla.climateOff(_vehicle_id, method(:onClimateDone));
         }
 
@@ -518,7 +518,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
             _get_charge = true;
             stateMachine();
         } else {
-            System.println("error from onReceiveAwake");
+            System.println("error from onReceiveAwake - responseCode " + responseCode);
             if (responseCode == 401) {
                 // Unauthorized
                 _resetToken();

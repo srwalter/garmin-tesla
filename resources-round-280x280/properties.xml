@@ -1,7 +1,0 @@
-<properties>
-    <property id="DataBlockX" type="number">80</property>
-    <property id="ChargeY" type="number">120</property>
-    <property id="TempY" type="number">160</property>
-    <property id="ClimateY" type="number">200</property>
-</properties>
-

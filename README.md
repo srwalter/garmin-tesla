@@ -1,21 +1,43 @@
-# Garmin Connect IQ seed
-This is a seed project for writing [Garmin Connect IQ](http://developer.garmin.com/connect-iq/) applications. Instead of using the Eclipse plugin (which works rather poorly...),
-you can use any text editor of your choice and **compile**, **run** or **package** your project using *make*.
+# Quick Tesla Widget
 
-## Setup
-All you'll need to get started is edit the ```properties.mk``` file. Here's a description of the variables:
+Quick Tesla Widget is a Garmin ConnectIQ widget for Tesla vehicle control.
 
-- **DEVICE** - device type you want to use for simulation (e.g. fenix3, vivoactive, epix...)
-- **SDK_HOME** - home folder of your SDK (e.g. /Users/me/connectiq-sdk-mac-3.0.4)
-- **PRIVATE_KEY** - path to your generated RSA private key for signing apps (needed since CIQ 1.3) (e.g. /home/.ssh/key/id_rsa_garmin.der)
-- **DEPLOY** - if you want to hot-deploy to your device, that's the mounted path for the APPS folder (e.g. /Volumes/GARMIN/GARMIN/APPS/)
+<p align="center">
+  <img src="https://github.com/paulobrien/garmin-tesla/blob/develop/blob/venu2.png?raw=true" />
+</p>
 
-## Targets
-- **build** - compiles the app
-- **buildall** - compiles the app separately for every device in the SUPPORTED_DEVICES_LIST, packaging appropriate resources. Make sure to have your resource folders named correctly (e.g. /resources-fenix3_hr)
-- **run** - compiles and starts the simulator
-- **deploy** - if your device is connected via USB, compile and deploy the app to the device
-- **package** - create an .iq file for app store submission
+## Installation
 
-## How to use?
-To execute the **run** target, run ```make run``` from the home folder of your app
+Install the widget from the [Connect IQ Store](https://apps.garmin.com/en-US/apps/f5f8b74f-f04a-4ad9-9575-231a33640475).
+
+## Description
+
+Quick Tesla Widget allows you to quickly see and control your Tesla vehicle.
+
+It is designed to load very fast and work reliably.
+
+Features include:
+
+- displaying battery charge (as a number and graphically), climate control and door lock status.
+- control climate and remotely operate the door locks, frunk and charge port.
+- support for temperatures in Celsius and Fahrenheit.
+
+Please raise an issue if anything doesn't work correctly, or if you use an unsupported Garmin device, via the [Github issues page](https://github.com/srwalter/garmin-tesla/issues).
+
+If you like the widget, please consider [leaving a positive review](https://apps.garmin.com/en-US/apps/f5f8b74f-f04a-4ad9-9575-231a33640475).
+
+## Donations
+
+Donations to support future development are welcome:
+
+BTC: 3GqrBxtno67ddEaCVx9V3UkukoUpN9gd4U
+
+BCH: qp8ckxjddevyq965u6ewdnx09xavad6umyzkyh0ajn
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Many thanks to those who have contributed to the development so far, including [srwalter](https://github.com/srwalter), [paulobrien](https://github.com/paulobrien), [danielsiwiec](https://github.com/danielsiwiec), [hobbe](https://github.com/hobbe) and [Artaud](https://github.com/Artaud)! 
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
