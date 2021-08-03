@@ -115,13 +115,18 @@ class MainView extends Ui.View {
                 
                 // Draw the charge status
                 dc.setColor(Graphics.COLOR_GREEN, Graphics.COLOR_BLACK);
-                var angle = (225 - (battery_level * 270 / 100)) % 360;
-                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, angle.abs());
+                var charge_angle = 225 - (battery_level * 270 / 100);
+                charge_angle = charge_angle < 0 ? 360 + charge_angle : charge_angle;
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, 225, charge_angle);
 
                 // Draw the charge limit indicator
                 dc.setColor(Graphics.COLOR_DK_GRAY, Graphics.COLOR_BLACK);
-                angle = 225 - (charge_limit * 270 / 100);
-                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, angle.abs()+2, angle.abs()-2);
+                var limit_angle = 225 - (charge_limit * 270 / 100);
+                var limit_start_angle = limit_angle + 2;
+                limit_start_angle = limit_start_angle < 0 ? 360 + limit_start_angle : limit_start_angle;
+                var limit_end_angle = limit_angle - 2;
+                limit_end_angle = limit_end_angle < 0 ? 360 + limit_end_angle : limit_end_angle;
+                dc.drawArc(center_x, center_y, radius, Graphics.ARC_CLOCKWISE, limit_start_angle, limit_end_angle);
 
                 if (use_image_layout)
                 {
