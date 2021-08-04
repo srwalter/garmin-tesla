@@ -1,5 +1,7 @@
+using Toybox.Background;
 using Toybox.WatchUi as Ui;
 using Toybox.System;
+using Toybox.Time;
 
 class MainView extends Ui.View {
     hidden var _display;
@@ -41,6 +43,9 @@ class MainView extends Ui.View {
         } else {
             font_montserrat=Graphics.FONT_SMALL;
         }
+
+        // Next background update in 5 mins!
+        Background.registerForTemporalEvent(new Time.Duration(60*5));
 
         // Redraw the layout and wipe the canvas              
         if (_display != null) 
