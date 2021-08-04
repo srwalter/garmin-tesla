@@ -3,11 +3,11 @@ using Toybox.Graphics;
 
 class CarPicker extends WatchUi.Picker {
     function initialize (cars) {
-        System.println("CarPicker initialize");
+        logMessage("CarPicker initialize");
         var title = new WatchUi.Text({:text=>Rez.Strings.car_chooser_title, :locX =>WatchUi.LAYOUT_HALIGN_CENTER, :locY=>WatchUi.LAYOUT_VALIGN_BOTTOM, :color=>Graphics.COLOR_WHITE});
         var factory = new WordFactory(cars);
         Picker.initialize({:pattern => [factory], :title => title});
-        System.println("CarPicker end initialize");
+        logMessage("CarPicker end initialize");
     }
 
     function onUpdate(dc) {
@@ -23,9 +23,9 @@ class CarPickerDelegate extends WatchUi.PickerDelegate {
 
     function initialize (controller) {
         _controller = controller;
-        System.println("CarPickerDelegate initialize");
+        logMessage("CarPickerDelegate initialize");
         PickerDelegate.initialize();
-        System.println("CarPickerDelegate end initialize");
+        logMessage("CarPickerDelegate end initialize");
     }
 
     function onCancel () {
@@ -33,15 +33,15 @@ class CarPickerDelegate extends WatchUi.PickerDelegate {
     }
 
     function onAccept (values) {
-        System.println("onAccept " + values[0]);
+        logMessage("onAccept " + values[0]);
         _selected = values[0];
         _controller._tesla.getVehicleId(method(:onReceiveVehicles));
     }
 
     function onReceiveVehicles(responseCode, data) {
-        System.println("on receive vehicles");
+        logMessage("on receive vehicles");
         if (responseCode == 200) {
-            System.println("Got vehicles");
+            logMessage("Got vehicles");
             var vehicles = data.get("response");
             for (var i = 0; i < vehicles.size(); i++) {
                 if (_selected.equals(vehicles[i].get("display_name"))) {
@@ -50,8 +50,18 @@ class CarPickerDelegate extends WatchUi.PickerDelegate {
                 }
             }
         } else {
-            System.println("error " + responseCode.toString());
+            logMessage("error " + responseCode.toString());
             _controller._handler.invoke(WatchUi.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
+    }
+    
+    (:debug)
+    function logMessage(message) {
+        System.println(message);
+    }
+
+    (:release)
+    function logMessage(message) {
+        
     }
 }

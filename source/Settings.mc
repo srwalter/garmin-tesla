@@ -8,14 +8,24 @@ module Settings {
     //! Store auth token
     function setToken(token) {
         Application.getApp().setProperty(TOKEN, token);
-        System.println("Settings: token set to " + token);
+        logMessage("Settings: token set to " + token);
     }
 
     //! Get auth token
     function getToken() {
         var value = Application.getApp().getProperty(TOKEN);
-        System.println("Settings: token value is " + value);
+        logMessage("Settings: token value is " + value);
         return value;
+    }
+
+    (:debug)
+    function logMessage(message) {
+        System.println(message);
+    }
+
+    (:release)
+    function logMessage(message) {
+        
     }
 
     // Settings name, see resources/settings/settings.xml
