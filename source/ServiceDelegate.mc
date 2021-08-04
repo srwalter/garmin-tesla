@@ -24,35 +24,9 @@ class MyServiceDelegate extends System.ServiceDelegate {
 
         if (_token != null && _vehicle_id != null)
         {
-            // We have two options here - either call getVehicle to see if the car is online first, or go straight in with getVehicleData
-            // Not sure which is best yet, need to monitor if the latter affects sleep! 
-            //_tesla.getVehicle(_vehicle_id, method(:onReceiveVehicle));
             _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
         }
     }
-
-    //function onReceiveVehicle(responseCode, responseData) {
-    //    var data = Background.getBackgroundData();
-    //    if (data == null) {
-    //        data = {};
-	//	}
-    //
-    //    // Deal with appropriately - we care about OK! (200)
-    //    if (responseCode == 200) {
-    //        var vehicle = responseData.get("response");
-    //        var vehicle_state = vehicle.get("state");
-    //
-    //        if (vehicle_state.equals("online"))
-    //        {
-    //            _tesla.getVehicleData(_vehicle_id, method(:onReceiveVehicleData));
-    //        }
-    //        else
-    //        {
-    //            data.put("status", vehicle_state + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
-    //            Background.exit(data);
-    //        }
-    //    }
-    //}
 
     function onReceiveVehicleData(responseCode, responseData) {
         // The API request has returned check for any other background data waiting (we don't want to lose it)
