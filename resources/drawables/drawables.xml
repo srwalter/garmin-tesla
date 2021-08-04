@@ -62,4 +62,10 @@
             <color>000000</color>
         </palette>
     </bitmap>
+    <bitmap id="charge_icon" filename="charge.png" dithering="none" scaleX="28.6%" scaleY="28.6%" scaleRelativeTo="screen">
+        <palette disableTransparency="true">
+            <color>FFFFFF</color>
+            <color>000000</color>
+        </palette>
+    </bitmap>
 </drawables>

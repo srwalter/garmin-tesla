@@ -316,7 +316,14 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function doPreviousPage() {
-        _open_frunk = true;
+        if (Application.getApp().getProperty("swap_frunk_for_port"))
+        {
+            _open_port = true;
+        }
+        else
+        {
+            _open_frunk = true;
+        }
         stateMachine();
     }
 

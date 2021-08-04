@@ -20,8 +20,10 @@
     <string id="menu_label_reset">Reset</string>
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_open_port">Open Port</string>
-    <string id="menu_label_toggle_units">Toggle C vs. F</string>
+    <string id="menu_label_open_frunk">Open Frunk</string>
+    <string id="menu_label_toggle_units">Toggle °C/°F</string>
     <string id="menu_label_toggle_view">Toggle View</string>
+    <string id="menu_label_swap_frunk_for_port">Swap Frunk/Port</string>
     <string id="menu_label_select_car">Select Vehicle</string>
 
     <string id="setting_token_label">API Token</string>
@@ -33,6 +35,7 @@
     <string id="label_climate">Climate: </string>
     <string id="label_error">Error: </string>
     <string id="label_frunk">Frunk</string>
+    <string id="label_port">Port</string>
     <string id="label_getting_vehicles">Getting vehicles</string>
     <string id="label_honk">Honk</string>
     <string id="label_open_port">Open Port</string>

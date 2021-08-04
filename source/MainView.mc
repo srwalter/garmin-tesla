@@ -65,6 +65,9 @@ class MainView extends Ui.View {
             var use_image_layout = Application.getApp().getProperty("image_view") == null ? System.getDeviceSettings().isTouchScreen : Application.getApp().getProperty("image_view");
             Application.getApp().setProperty("image_view", use_image_layout);
 
+            // Swap frunk for port?
+            var swap_frunk_for_port = Application.getApp().getProperty("swap_frunk_for_port") == true ? true : false;
+
             if (use_image_layout)
             {
                 // We're loading the image layout
@@ -74,7 +77,7 @@ class MainView extends Ui.View {
                 View.onUpdate(dc);
             
                 // Draw the initial icons (in white) in case we don't have vehicle data
-                dc.drawBitmap(image_x_left,image_y_top,Ui.loadResource(Rez.Drawables.frunk_icon_white));
+                dc.drawBitmap(image_x_left,image_y_top,swap_frunk_for_port ?  Ui.loadResource(Rez.Drawables.charge_icon) : Ui.loadResource(Rez.Drawables.frunk_icon_white));
                 dc.drawBitmap(image_x_right,image_y_top,Ui.loadResource(Rez.Drawables.climate_on_icon_white));
                 dc.drawBitmap(image_x_left,image_y_bottom,Ui.loadResource(Rez.Drawables.locked_icon_white));
                 dc.drawBitmap(image_x_right,image_y_bottom,Ui.loadResource(is_touchscreen? Rez.Drawables.settings_icon : Rez.Drawables.back_icon));
@@ -83,6 +86,8 @@ class MainView extends Ui.View {
             {
                 // We're loading the text based layout
                 setLayout(Rez.Layouts.TextLayout(dc));
+                var frunk_drawable = View.findDrawableById("frunk");
+                frunk_drawable.setText(swap_frunk_for_port ? Rez.Strings.label_port : Rez.Strings.label_frunk);
                 dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_BLACK);
                 dc.clear();
                 View.onUpdate(dc);

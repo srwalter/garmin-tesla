@@ -20,6 +20,9 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
         } else if (item == :open_port) {
             _controller._open_port = true;
             _controller.stateMachine();
+        } else if (item == :open_frunk) {
+            _controller._open_frunk = true;
+            _controller.stateMachine();
         } else if (item == :toggle_units) {
             var units = Application.getApp().getProperty("imperial");
             if (units) {
@@ -33,6 +36,13 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
                 Application.getApp().setProperty("image_view", false);
             } else {
                 Application.getApp().setProperty("image_view", true);
+            }
+        } else if (item == :swap_frunk_for_port) {
+            var swap = Application.getApp().getProperty("swap_frunk_for_port");
+            if (swap) {
+                Application.getApp().setProperty("swap_frunk_for_port", false);
+            } else {
+                Application.getApp().setProperty("swap_frunk_for_port", true);
             }
         }
     }

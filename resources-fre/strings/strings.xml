@@ -20,8 +20,10 @@
     <string id="menu_label_reset">Remise à zéro</string>
     <string id="menu_label_honk">Klaxon</string>
     <string id="menu_label_open_port">Port ouvert</string>
+    <string id="menu_label_open_frunk">Frunk ouvert</string>
     <string id="menu_label_toggle_units">Temp. °C/°F</string>
     <string id="menu_label_toggle_view">Change de vue</string>
+    <string id="menu_label_swap_frunk_for_port">Frunk/Port</string>
     <string id="menu_label_select_car">Sélectionnez le véhicule</string>
 
     <string id="setting_token_label">Jeton d'API</string>
@@ -33,6 +35,7 @@
     <string id="label_climate">Clim: </string>
     <string id="label_error">Erreur: </string>
     <string id="label_frunk">Frunk</string>
+    <string id="label_port">Port</string>
     <string id="label_getting_vehicles">Liste vehicules</string>
     <string id="label_honk">Klaxon</string>
     <string id="label_open_port">Port ouvert</string>
