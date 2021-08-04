@@ -10,16 +10,13 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
 
     function onMenuItem(item) {
         if (item == :reset) {
-            logMessage("menu");
             Settings.setToken(null);
             Application.getApp().setProperty("vehicle", null);
         } else if (item == :honk) {
             _controller._honk_horn = true;
             _controller.stateMachine();
         } else if (item == :select_car) {
-            logMessage("select car 1");
             _controller._tesla.getVehicleId(method(:onReceiveVehicles));
-            logMessage("select car 2");
         } else if (item == :open_port) {
             _controller._open_port = true;
             _controller.stateMachine();
@@ -41,9 +38,7 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
     }
 
     function onReceiveVehicles(responseCode, data) {
-        logMessage("on receive vehicles");
         if (responseCode == 200) {
-            logMessage("Got vehicles");
             var vehicles = data.get("response");
             var vins = new [vehicles.size()];
             for (var i = 0; i < vehicles.size(); i++) {
@@ -51,18 +46,7 @@ class OptionMenuDelegate extends Ui.MenuInputDelegate {
             }
             Ui.pushView(new CarPicker(vins), new CarPickerDelegate(_controller), Ui.SLIDE_UP);
         } else {
-            logMessage("error " + responseCode.toString());
             _controller._handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
-    }
-
-    (:debug)
-    function logMessage(message) {
-        System.println(message);
-    }
-
-    (:release)
-    function logMessage(message) {
-        
     }
 }

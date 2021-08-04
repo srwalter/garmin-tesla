@@ -70,7 +70,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
             stateMachine();
         }
         else {
-            logMessage("Receiving access response: " + responseCode);
             _resetToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
@@ -97,7 +96,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
             Communications.makeWebRequest(bearerForAccessUrl, bearerForAccessParams, bearerForAccessOptions, method(:bearerForAccessOnReceive));
         }
         else {
-            logMessage("Receiving bearer response: " + responseCode);
             _resetToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
@@ -126,7 +124,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
             Communications.makeWebRequest(codeForBearerUrl, codeForBearerParams, codeForBearerOptions, method(:codeForBearerOnReceive));
         } else {
-            logMessage("Oauth: Message data is null!");
             _resetToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
@@ -351,7 +348,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
             return true;
         }
         
-        logMessage("Got click");
         var coords = click.getCoordinates();
         var x = coords[0];
         var y = coords[1];
@@ -375,22 +371,17 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
     function onReceiveAuth(responseCode, data) {
         if (responseCode == 200) {
-            logMessage("Auth OK");
             _auth_done = true;
             stateMachine();
         } else {
-            logMessage("Auth failed: " + responseCode.toString());
             _resetToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
 
     function onReceiveVehicles(responseCode, data) {
-        logMessage("on receive vehicles");
         if (responseCode == 200) {
-            logMessage("Got vehicles");
             var vehicles = data.get("response");
-            logMessage(vehicles);
             if (vehicles.size() > 0) {
                 _vehicle_id = vehicles[0].get("id");
                 Application.getApp().setProperty("vehicle", _vehicle_id);
@@ -413,9 +404,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
     function onReceiveVehicleData(responseCode, data) {
         if (responseCode == 200) {
             _data._vehicle_data = data.get("response");
-            logMessage("Got vehicle data");
             if (_data._vehicle_data.get("climate_state").hasKey("inside_temp") && _data._vehicle_data.get("charge_state").hasKey("battery_level")) {
-                logMessage("Got vehicle data");
                 _handler.invoke(null);
             } else {
                 _wake_done = false;
@@ -430,7 +419,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
                     // Unauthorized
                     _resetToken();
                 }
-                logMessage("error from onReceiveVehicleData");
                 _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
             }
         }
@@ -442,7 +430,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
             _get_vehicle_data = true;
             stateMachine();
         } else {
-            logMessage("error from onReceiveAwake - responseCode " + responseCode);
             if (responseCode == 401) {
                 // Unauthorized
                 _resetToken();
@@ -508,15 +495,5 @@ class MainDelegate extends Ui.BehaviorDelegate {
         _token = null;
         _auth_done = false;
         Settings.setToken(null);
-    }
-
-    (:debug)
-    function logMessage(message) {
-        System.println(message);
-    }
-
-    (:release)
-    function logMessage(message) {
-        
     }
 }

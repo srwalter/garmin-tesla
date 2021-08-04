@@ -18,7 +18,7 @@ class QuickTesla extends App.AppBase {
     // This fires when the background service returns
     function onBackgroundData(data) {
         Application.getApp().setProperty("status", data["status"]);
-        logMessage("Background OBD: " + data["status"]);
+        logMessage("onBackgroundData: " + data["status"]);
         Ui.requestUpdate();
     }  
 
