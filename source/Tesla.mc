@@ -22,6 +22,7 @@ class Tesla {
         );
     }
 
+    (:background)
     hidden function genericPost(url, notify) {
         Communications.makeWebRequest(
             url,
@@ -42,6 +43,14 @@ class Tesla {
         genericGet("https://owner-api.teslamotors.com/api/1/vehicles", notify);
     }
 
+    (:background)
+    function getVehicle(vehicle, notify) {
+        var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString();
+        System.println(url);
+        genericGet(url, notify);
+    }
+
+    (:background)
     function getVehicleData(vehicle, notify) {
         var url = "https://owner-api.teslamotors.com/api/1/vehicles/" + vehicle.toString() + "/vehicle_data";
         System.println(url);

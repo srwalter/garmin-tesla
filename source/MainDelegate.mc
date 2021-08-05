@@ -413,6 +413,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
     function onReceiveVehicleData(responseCode, data) {
         if (responseCode == 200) {
             _data._vehicle_data = data.get("response");
+            System.println("Got vehicle data");
             if (_data._vehicle_data.get("climate_state").hasKey("inside_temp") && _data._vehicle_data.get("charge_state").hasKey("battery_level")) {
                 System.println("Got vehicle data");
                 _handler.invoke(null);
@@ -434,7 +435,6 @@ class MainDelegate extends Ui.BehaviorDelegate {
             }
         }
     }
-
 
     function onReceiveAwake(responseCode, data) {
         if (responseCode == 200) {
@@ -509,5 +509,4 @@ class MainDelegate extends Ui.BehaviorDelegate {
         _auth_done = false;
         Settings.setToken(null);
     }
-
 }
