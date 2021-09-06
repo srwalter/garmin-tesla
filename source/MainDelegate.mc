@@ -328,8 +328,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
     }
 
     function onBack() {
-        Ui.popView(Ui.SLIDE_DOWN);
-        return true;
+        return false;
     }
 
     function onMenu() {
