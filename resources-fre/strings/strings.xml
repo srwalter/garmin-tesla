@@ -54,5 +54,5 @@
     <string id="label_unlock_doors">Déver. portes</string>
     <string id="label_unlocked">Ouverte</string>
     <string id="label_waking_vehicle">Réveil du vehicule</string>
-    <string id="label_no_vehicles">Pas de véhicules</string>
+    <string id="label_no_vehicles">Pas de véhicule</string>
 </strings>
