@@ -3,8 +3,10 @@
     <string id="car_chooser_title">Choisir un VIN</string>
 
     <!--  Glance view -->
-    <string id="wake" scope="glance">Wake </string>
-    <string id="vehicle" scope="glance">vehicle</string>
+    <string id="wake" scope="glance">Rréveiller </string>
+    <string id="vehicle" scope="glance">véhicule</string>
+    <string id="label_asleep" scope="background">Endormie</string>
+    <string id="label_status_unknown" scope="glance">Statut inconnu</string>
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
@@ -45,8 +47,8 @@
     <string id="label_locked">Fermée</string>
     <string id="label_login_on_phone">Connexion sur tél.</string>
     <string id="label_oauth_error">Erreur OAuth</string>
-    <string id="label_off">Off</string>
-    <string id="label_on">On</string>
+    <string id="label_off">Désactivé</string>
+    <string id="label_on">Arrêter</string>
     <string id="label_open_frunk">Ouvrir le coffre ?</string>
     <string id="label_requesting_data">Récup. données</string>
     <string id="label_unlock_doors">Déver. portes</string>

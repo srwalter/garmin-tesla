@@ -5,6 +5,8 @@
     <!--  Glance view -->
     <string id="wake" scope="glance">Wake </string>
     <string id="vehicle" scope="glance">vehicle</string>
+    <string id="label_asleep" scope="background">Asleep</string>
+    <string id="label_status_unknown" scope="glance">Status unknown</string>
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
