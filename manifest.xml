@@ -68,11 +68,13 @@
             <iq:product id="vivoactive4s"/>
         </iq:products>
         <iq:permissions>
+            <iq:uses-permission id="Background"/>
             <iq:uses-permission id="Communications"/>
         </iq:permissions>
         <iq:languages>
             <iq:language>eng</iq:language>
             <iq:language>fre</iq:language>
+            <iq:language>swe</iq:language>
         </iq:languages>
         <iq:barrels/>
     </iq:application>
