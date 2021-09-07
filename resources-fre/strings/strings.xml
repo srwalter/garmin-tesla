@@ -6,7 +6,7 @@
     <string id="wake" scope="glance">Réveiller </string>
     <string id="vehicle" scope="glance">véhicule</string>
     <string id="label_asleep" scope="background">En veille</string>
-    <string id="label_status_unknown" scope="glance">Statut inconnu</string>
+    <string id="label_status_unknown" scope="glance">État inconnu</string>
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
