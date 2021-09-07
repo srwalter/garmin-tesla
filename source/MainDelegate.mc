@@ -417,7 +417,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
                 _sleep_timer.start(method(:delayedWake), 500, false);
             }
         } else if (responseCode != -101) {
-            if (responseCode == 408) {
+            if (responseCode == 408 || responseCode == -5) {
                 _wake_done = false;
                 _sleep_timer.start(method(:delayedWake), 500, false);
             } else {
