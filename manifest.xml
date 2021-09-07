@@ -74,6 +74,7 @@
         <iq:languages>
             <iq:language>eng</iq:language>
             <iq:language>fre</iq:language>
+            <iq:language>swe</iq:language>
         </iq:languages>
         <iq:barrels/>
     </iq:application>
