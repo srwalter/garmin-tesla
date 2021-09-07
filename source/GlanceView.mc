@@ -13,7 +13,7 @@ class GlanceView extends Ui.GlanceView {
     var vehicle_name = Application.getApp().getProperty("vehicle_name");
     var status = Application.getApp().getProperty("status");
     vehicle_name = (vehicle_name == null) ? Ui.loadResource(Rez.Strings.vehicle) : vehicle_name;
-    status = (status == null) ? "Status unknown" : status;
+    status = (status == null) ? Ui.loadResource(Rez.Strings.label_status_unknown) : status;
 
     // Draw the two rows of text on the glance widget
     dc.setColor(Gfx.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);

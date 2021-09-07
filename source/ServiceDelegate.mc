@@ -44,10 +44,9 @@ class MyServiceDelegate extends System.ServiceDelegate {
             data.put("status", battery_level + "%" + (charging_state.equals("Charging") ? "+" : "") + " / " + battery_range.toNumber() + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         } else if (responseCode == 408) {
-            data.put("status", "Asleep" + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
+            data.put("status", Application.loadResource(Rez.Strings.label_asleep) + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         } else {
-            //data.put("status", "Problem " + responseCode + " @ " + System.getClockTime().hour.format("%d")+":"+System.getClockTime().min.format("%02d"));
             Background.exit(data);
         }
     }
