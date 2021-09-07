@@ -3,7 +3,7 @@
     <string id="car_chooser_title">Choisir un VIN</string>
 
     <!--  Glance view -->
-    <string id="wake" scope="glance">Rréveiller </string>
+    <string id="wake" scope="glance">Réveiller </string>
     <string id="vehicle" scope="glance">véhicule</string>
     <string id="label_asleep" scope="background">Endormie</string>
     <string id="label_status_unknown" scope="glance">Statut inconnu</string>
