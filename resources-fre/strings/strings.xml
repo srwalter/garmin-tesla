@@ -5,7 +5,7 @@
     <!--  Glance view -->
     <string id="wake" scope="glance">Réveiller </string>
     <string id="vehicle" scope="glance">véhicule</string>
-    <string id="label_asleep" scope="background">Endormie</string>
+    <string id="label_asleep" scope="background">En veille</string>
     <string id="label_status_unknown" scope="glance">Statut inconnu</string>
 
 	<!--  Main layout -->
