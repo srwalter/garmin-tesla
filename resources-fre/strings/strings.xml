@@ -9,6 +9,7 @@
     <string id="label_status_unknown" scope="glance">État inconnu</string>
 
 	<!--  Main layout -->
+    <string id="connect">Relier</string>
     <string id="prompt">Tesla</string>
     <string id="label_offline1">Une connexion téléphonique</string>
     <string id="label_offline2">est requise</string>

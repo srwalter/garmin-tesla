@@ -18,12 +18,13 @@ class QuickTesla extends App.AppBase {
     // This fires when the background service returns
     function onBackgroundData(data) {
         Application.getApp().setProperty("status", data["status"]);
-        logMessage("onBackgroundData: " + data["status"]);
         Ui.requestUpdate();
     }  
 
     (:glance)
     function getGlanceView() {
+        Application.getApp().setProperty("canGlance", true);
+        logMessage("canGlance set to true!");
         return [ new GlanceView() ];
     }
 
@@ -36,9 +37,17 @@ class QuickTesla extends App.AppBase {
         }
 
         var data = new TeslaData();
-        var view = new MainView(data);
-
-        return [ view, new MainDelegate(data, view.method(:onReceive)) ];
+        
+        if (Application.getApp().getProperty("canGlance"))
+        {
+            var view = new MainView(data);
+            return [ view, new MainDelegate(data, view.method(:onReceive)) ];
+        }
+        else
+        {
+            var view = new NoGlanceView();
+            return [ view, new NoGlanceDelegate(data) ];
+        }        
     }
 
     (:debug)

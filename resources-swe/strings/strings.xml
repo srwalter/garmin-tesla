@@ -9,6 +9,7 @@
     <string id="label_status_unknown" scope="glance">Status okänd</string>
 
     <!--  Main layout -->
+    <string id="connect">Ansluta</string>
     <string id="prompt">Tesla</string>
     <string id="label_offline1">Telefonkontakt </string>
     <string id="label_offline2">krävs</string>
