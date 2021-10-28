@@ -18,27 +18,34 @@ class QuickTesla extends App.AppBase {
     // This fires when the background service returns
     function onBackgroundData(data) {
         Application.getApp().setProperty("status", data["status"]);
-        logMessage("onBackgroundData: " + data["status"]);
         Ui.requestUpdate();
     }  
 
     (:glance)
     function getGlanceView() {
+        Application.getApp().setProperty("canGlance", true);
+        Background.registerForTemporalEvent(new Time.Duration(60*5));
         return [ new GlanceView() ];
     }
 
     function getInitialView() {
-        Background.registerForTemporalEvent(new Time.Duration(60*5));
-
         // No phone? This widget ain't gonna work! Show the offline view
         if (!System.getDeviceSettings().phoneConnected) {
             return [ new OfflineView() ];
         }
 
         var data = new TeslaData();
-        var view = new MainView(data);
-
-        return [ view, new MainDelegate(data, view.method(:onReceive)) ];
+        
+        if (Application.getApp().getProperty("canGlance"))
+        {
+            var view = new MainView(data);
+            return [ view, new MainDelegate(data, view.method(:onReceive)) ];
+        }
+        else
+        {
+            var view = new NoGlanceView();
+            return [ view, new NoGlanceDelegate(data) ];
+        }        
     }
 
     (:debug)

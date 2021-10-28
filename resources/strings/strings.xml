@@ -8,6 +8,11 @@
     <string id="label_asleep" scope="background">Asleep</string>
     <string id="label_status_unknown" scope="glance">Status unknown</string>
 
+    <!-- No glance view -->
+    <string id="label_touch">Touch Screen</string>
+    <string id="label_press">Press Start</string>
+    <string id="label_connect">to Connect</string>
+    
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
     <string id="label_offline1">Phone connection</string>

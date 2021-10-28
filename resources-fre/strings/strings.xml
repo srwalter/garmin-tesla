@@ -3,10 +3,15 @@
     <string id="car_chooser_title">Choisir un VIN</string>
 
     <!--  Glance view -->
-    <string id="wake" scope="glance">Rréveiller </string>
+    <string id="wake" scope="glance">Réveiller </string>
     <string id="vehicle" scope="glance">véhicule</string>
-    <string id="label_asleep" scope="background">Endormie</string>
-    <string id="label_status_unknown" scope="glance">Statut inconnu</string>
+    <string id="label_asleep" scope="background">En veille</string>
+    <string id="label_status_unknown" scope="glance">État inconnu</string>
+
+    <!-- No glance view -->
+    <string id="label_touch">Toucher l'écran</string>
+    <string id="label_press">Appuyer sur démarrer</string>
+    <string id="label_connect">pour vous connecter</string>
 
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
@@ -47,12 +52,12 @@
     <string id="label_locked">Fermée</string>
     <string id="label_login_on_phone">Connexion sur tél.</string>
     <string id="label_oauth_error">Erreur OAuth</string>
-    <string id="label_off">Désactivé</string>
-    <string id="label_on">Arrêter</string>
+    <string id="label_off">Off</string>
+    <string id="label_on">On</string>
     <string id="label_open_frunk">Ouvrir le coffre ?</string>
     <string id="label_requesting_data">Récup. données</string>
     <string id="label_unlock_doors">Déver. portes</string>
     <string id="label_unlocked">Ouverte</string>
     <string id="label_waking_vehicle">Réveil du vehicule</string>
-    <string id="label_no_vehicles">Pas de véhicules</string>
+    <string id="label_no_vehicles">Pas de véhicule</string>
 </strings>

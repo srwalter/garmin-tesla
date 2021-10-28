@@ -8,6 +8,11 @@
     <string id="label_asleep" scope="background">Somnade</string>
     <string id="label_status_unknown" scope="glance">Status okänd</string>
 
+    <!-- No glance view -->
+    <string id="label_touch">Pekskärm</string>
+    <string id="label_press">Tryck på start</string>
+    <string id="label_connect">för att ansluta</string>
+
     <!--  Main layout -->
     <string id="prompt">Tesla</string>
     <string id="label_offline1">Telefonkontakt </string>
