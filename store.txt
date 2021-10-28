@@ -1,0 +1,148 @@
+Quick Tesla Widget allows you to quickly see and control your Tesla vehicle.
+
+It is designed to load very fast and work reliably.
+
+Features include:
+
+- displaying battery charge (as a number and graphically), climate control and door lock status
+- control climate and remotely operate the door locks, frunk and charge port
+- support for temperatures in Celsius and Fahrenheit
+- text and graphics display modes to suit your device
+- touch and button based controls to suit your device
+- battery status in glance view with background service on supported devices
+
+Please raise an issue if anything doesn't work correctly, or if you use an unsupported Garmin device, via the Github issues page - https://github.com/srwalter/garmin-tesla/issues. If you use the 'Contact Developer' form, please ensure you include an e-mail address so that we can respond.
+
+If you like the widget, please consider leaving a positive review.
+
+Donations to support future development are welcome:
+
+- srwalter (original developer) BTC: 3GqrBxtno67ddEaCVx9V3UkukoUpN9gd4U
+- srwalter (original developer) BCH: qp8ckxjddevyq965u6ewdnx09xavad6umyzkyh0ajn
+- paulobrien (contributor) PayPal: https://paypal.me/paulobrien
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Many thanks to those who have contributed to the development so far.
+
+What’s New
+
+vX.X
+
+- Swapped to the vehicle data API to reduce from 3 API calls to 1 (much more responsive on load!)
+- Added image view (default for touchscreen devices, switchable for all devices)
+- Added the option to swap the frunk action for the port action
+- Enhanced the glance view for supported devices
+- Added a background service for supported devices to support the glance view, does NOT keep vehicle awake
+- Enabled dynamic arc thickness based on device
+- Added custom font for venu2
+- Reduced the logging (as it's expensive on low power devices) and added 'debug' and 'release' loggers
+- Prevented touchscreen being used when a message is being displayed
+- Fixed some localisations
+- Fixed some issues where errors (e.g. -101) were displayed on screen
+- Fixed crash issue where car name was blank
+- Added Swedish support
+- Removed support for devices pre API 3 (required for Tesla OAuth)
+
+v5.2
+
+- Added support for Venu 2
+- Added support for Descent Mk2s, Fr55, Fr945LTE
+
+v5.1
+
+- Improved layout on many devices
+- Added support for approachs60, d2deltapx, d2deltas, endura, fenixchronos, a bunch of Legacies, and Marq Aviator, Marq Captain, Marq Driver, and Marq Expedition
+- Thanks to Paul O'Brien for his significant contributions!
+
+v5.0
+
+- Supports Tesla's login directly on phone!
+- New devices: D2 Air, Darth Vader Legacy, Approach S62
+
+v4.4
+
+- Add Forerunner 745
+
+v4.3
+
+- Add Venu SQ Music
+
+v4.2
+
+- Add more devices (Descent Mk2, Marq Golfer, Marq Athlete, Venu SQ, Forerunner 735)
+
+v4.0
+
+- Better touch screen support. Tap top-right to toggle HVAC, top-left for Frunk, bottom-left for Doors, and bottom-right for Menu
+
+v3.2
+
+- Added Vivoactive 4S
+
+v3.1
+
+- Added D2 Delta
+
+v3.0
+
+- Improved Venu Layout
+- Added Vivoactive 4
+- Support for accounts with multiple cars
+
+v2.2
+
+- Added Venu
+
+v2.1
+
+- Added MARQ Commander
+- Added Vivoactive 3 Music
+
+v2.0
+
+- Improved start-up screen
+- Improved handling of no-BLE connection
+- French language translation
+- Support providing an OAuth token via widget settings
+
+v1.9
+
+- Make HVAC control an on/off toggle, like door locks
+
+v1.8
+
+- Add support for vivoactive 3. Swipe up for Frunk, down for Doors, and tap for AC
+
+v1.7
+
+- Add support for the MARQ Aviator
+
+v1.6
+
+- Improve layout for Fenix 6x Pro devices
+- Add confirmation for opening the frunk
+
+v1.5
+
+- Improve layout on Fenix 6 family
+
+v1.4
+
+- Add support for Fenix 6 family
+
+v1.3
+
+- "Door" button now toggles between Lock and Unlock
+- Current Locked/Unlocked state is displayed
+- Support showing temperature in Fahrenheit
+
+v1.2
+
+- Now even quicker (only try to wake if car is actually asleep)
+- Door unlock! By popular demand! Horn is still available in the menu
+
+v1.1
+
+- Added support for Forerunner 945
+- Improved layout on round 240x240 devices
