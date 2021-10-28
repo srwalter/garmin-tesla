@@ -24,13 +24,11 @@ class QuickTesla extends App.AppBase {
     (:glance)
     function getGlanceView() {
         Application.getApp().setProperty("canGlance", true);
-        logMessage("canGlance set to true!");
+        Background.registerForTemporalEvent(new Time.Duration(60*5));
         return [ new GlanceView() ];
     }
 
     function getInitialView() {
-        Background.registerForTemporalEvent(new Time.Duration(60*5));
-
         // No phone? This widget ain't gonna work! Show the offline view
         if (!System.getDeviceSettings().phoneConnected) {
             return [ new OfflineView() ];

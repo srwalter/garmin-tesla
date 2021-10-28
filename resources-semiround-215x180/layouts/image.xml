@@ -1,4 +1,0 @@
-<layout id="ImageLayout">
-    <label id="name" x="center" y="13" font="Graphics.FONT_SMALL" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
-    <label id="status" x="center" y="148" font="Graphics.FONT_SMALL" justification="Gfx.TEXT_JUSTIFY_CENTER" />
-</layout>

@@ -8,8 +8,12 @@
     <string id="label_asleep" scope="background">En veille</string>
     <string id="label_status_unknown" scope="glance">État inconnu</string>
 
+    <!-- No glance view -->
+    <string id="label_touch">Toucher l'écran</string>
+    <string id="label_press">Appuyer sur démarrer</string>
+    <string id="label_connect">pour vous connecter</string>
+
 	<!--  Main layout -->
-    <string id="connect">Relier</string>
     <string id="prompt">Tesla</string>
     <string id="label_offline1">Une connexion téléphonique</string>
     <string id="label_offline2">est requise</string>

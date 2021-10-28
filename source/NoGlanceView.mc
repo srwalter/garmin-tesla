@@ -7,6 +7,13 @@ class NoGlanceView extends Ui.View {
     }
 
     function onLayout(dc) {
-        setLayout(Rez.Layouts.NoGlanceLayout(dc));
+        if (System.getDeviceSettings().isTouchScreen)
+        {
+            setLayout(Rez.Layouts.NoGlanceTouchLayout(dc));
+        }
+        else
+        {
+            setLayout(Rez.Layouts.NoGlancePressLayout(dc));
+        }
     }
 }
