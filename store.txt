@@ -27,7 +27,7 @@ Many thanks to those who have contributed to the development so far.
 
 What’s New
 
-vX.X
+v6.0
 
 - Swapped to the vehicle data API to reduce from 3 API calls to 1 (much more responsive on load!)
 - Added image view (default for touchscreen devices, switchable for all devices)
