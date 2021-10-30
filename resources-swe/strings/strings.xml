@@ -1,0 +1,63 @@
+<strings>
+    <string id="AppName">Tesla</string>
+    <string id="car_chooser_title">Välj ett VIN</string>
+
+    <!--  Glance view -->
+    <string id="wake" scope="glance">Väck </string>
+    <string id="vehicle" scope="glance">fordon</string>
+    <string id="label_asleep" scope="background">Somnade</string>
+    <string id="label_status_unknown" scope="glance">Status okänd</string>
+
+    <!-- No glance view -->
+    <string id="label_touch">Pekskärm</string>
+    <string id="label_press">Tryck på start</string>
+    <string id="label_connect">för att ansluta</string>
+
+    <!--  Main layout -->
+    <string id="prompt">Tesla</string>
+    <string id="label_offline1">Telefonkontakt </string>
+    <string id="label_offline2">krävs</string>
+
+    <!--  Tesla layout -->
+    <string id="button_climate_on">Klimat</string>
+    <string id="button_door">Dörr</string>
+    <string id="button_frunk">Frunk</string>
+
+    <!--  Option menu -->
+    <string id="menu_label_reset">Reset</string>
+    <string id="menu_label_honk">Tuta</string>
+    <string id="menu_label_open_port">Öppna laddlucka</string>
+    <string id="menu_label_open_frunk">Öppna Frunk</string>
+    <string id="menu_label_toggle_units">Växla °C/°F</string>
+    <string id="menu_label_toggle_view">Växla vy</string>
+    <string id="menu_label_swap_frunk_for_port">Byt Frunk/Laddlucka</string>
+    <string id="menu_label_select_car">Välj Fordon</string>
+
+    <string id="setting_token_label">API Token</string>
+    <string id="setting_token_prompt">Skriv in ditt Teslakontos token</string>
+
+    <!--  Second view -->
+    <string id="label_cabin">Kupé: </string>
+    <string id="label_charge">Batteri: </string>
+    <string id="label_climate">Klimat: </string>
+    <string id="label_error">Error: </string>
+    <string id="label_frunk">Frunk</string>
+    <string id="label_port">Laddlucka</string>
+    <string id="label_getting_vehicles">Hämtar fordon</string>
+    <string id="label_honk">Tuta</string>
+    <string id="label_open_port">Öppna laddlucka</string>
+    <string id="label_hvac_on">Klimatanläggning på</string>
+    <string id="label_hvac_off">Klimatanläggning av</string>
+    <string id="label_lock_doors">Låser dörrar</string>
+    <string id="label_locked">Låst</string>
+    <string id="label_login_on_phone">Logga in på telefonen!</string>
+    <string id="label_oauth_error">OAuth error</string>
+    <string id="label_off">Av</string>
+    <string id="label_on">På</string>
+    <string id="label_open_frunk">Öppna Frunk?</string>
+    <string id="label_requesting_data">Hämtar data</string>
+    <string id="label_unlock_doors">Låser upp dörrar</string>
+    <string id="label_unlocked">Olåst</string>
+    <string id="label_waking_vehicle">Väcker fordon</string>
+    <string id="label_no_vehicles">Inga fordon</string>
+</strings>

@@ -2,11 +2,19 @@
     <string id="AppName">Tesla</string>
     <string id="car_chooser_title">Choose a VIN</string>
 
+    <!--  Glance view -->
+    <string id="wake" scope="glance">Wake </string>
+    <string id="vehicle" scope="glance">vehicle</string>
+    <string id="label_asleep" scope="background">Asleep</string>
+    <string id="label_status_unknown" scope="glance">Status unknown</string>
+
+    <!-- No glance view -->
+    <string id="label_touch">Touch Screen</string>
+    <string id="label_press">Press Start</string>
+    <string id="label_connect">to Connect</string>
+    
 	<!--  Main layout -->
     <string id="prompt">Tesla</string>
-    <string id="wake_press_start">Press start to</string>
-    <string id="wake_touch">Touch screen to</string>
-    <string id="wake_vehicle">wake vehicle</string>
     <string id="label_offline1">Phone connection</string>
     <string id="label_offline2">is required</string>
 
@@ -19,7 +27,10 @@
     <string id="menu_label_reset">Reset</string>
     <string id="menu_label_honk">Honk</string>
     <string id="menu_label_open_port">Open Port</string>
-    <string id="menu_label_toggle">Toggle C vs. F</string>
+    <string id="menu_label_open_frunk">Open Frunk</string>
+    <string id="menu_label_toggle_units">Toggle °C/°F</string>
+    <string id="menu_label_toggle_view">Toggle View</string>
+    <string id="menu_label_swap_frunk_for_port">Swap Frunk/Port</string>
     <string id="menu_label_select_car">Select Vehicle</string>
 
     <string id="setting_token_label">API Token</string>
@@ -31,6 +42,7 @@
     <string id="label_climate">Climate: </string>
     <string id="label_error">Error: </string>
     <string id="label_frunk">Frunk</string>
+    <string id="label_port">Port</string>
     <string id="label_getting_vehicles">Getting vehicles</string>
     <string id="label_honk">Honk</string>
     <string id="label_open_port">Open Port</string>
@@ -47,4 +59,5 @@
     <string id="label_unlock_doors">Unlock Doors</string>
     <string id="label_unlocked">Unlocked</string>
     <string id="label_waking_vehicle">Waking vehicle</string>
+    <string id="label_no_vehicles">No vehicles</string>
 </strings>

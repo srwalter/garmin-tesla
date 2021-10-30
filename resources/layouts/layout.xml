@@ -1,5 +1,0 @@
-<layout id="MainLayout">
-    <bitmap id="logo" x="center" y="43" filename="../drawables/logo.png" dithering="none" />
-    <label id="wake_line_1" x="center" y="117" font="Gfx.FONT_TINY" color="Gfx.COLOR_DK_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
-    <label id="wake_line_2" x="center" y="138" font="Gfx.FONT_TINY" color="Gfx.COLOR_DK_RED" justification="Gfx.TEXT_JUSTIFY_CENTER" />
-</layout>

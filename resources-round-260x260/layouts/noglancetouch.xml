@@ -1,0 +1,9 @@
+<layout id="NoGlanceTouchLayout">
+    <drawable id="tesla_logo" class="WatchUi.Bitmap">
+        <param name="locX">center</param>
+        <param name="locY">54</param>
+        <param name="rezId">@Drawables.LauncherIcon</param>
+    </drawable>
+    <label x="center" y="113" font="Graphics.FONT_SMALL" text="@Strings.label_touch" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+    <label x="center" y="151" font="Graphics.FONT_SMALL" text="@Strings.label_connect" color="Gfx.COLOR_WHITE" justification="Gfx.TEXT_JUSTIFY_CENTER" />
+</layout>
