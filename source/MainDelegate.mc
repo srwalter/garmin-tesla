@@ -64,38 +64,11 @@ class MainDelegate extends Ui.BehaviorDelegate {
         stateMachine();
     }
 
-    function bearerForAccessOnReceive(responseCode, data) {
+    function codeForBearerOnReceive(responseCode, data) {
         if (responseCode == 200) {
             _saveToken(data["access_token"]);
             stateMachine();
-        }
-        else {
-            _resetToken();
-            _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
-        }
-    }
-
-    function codeForBearerOnReceive(responseCode, data) {
-        if (responseCode == 200) {
-            var bearerForAccessUrl = "https://owner-api.teslamotors.com/oauth/token";
-            var bearerForAccessParams = {
-                "grant_type" => "urn:ietf:params:oauth:grant-type:jwt-bearer",
-                "client_id" => "81527cff06843c8634fdc09e8ac0abefb46ac849f38fe1e431c2ef2106796384",
-                "client_secret" => "c7257eb71a564034f9419ee651c7d0e5f7aa6bfbd18bafb5c5c033b093bb2fa3"
-            };
-
-            var bearerForAccessOptions = {
-                :method => Communications.HTTP_REQUEST_METHOD_POST,
-                :headers => {
-                   "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON,
-                   "Authorization" => "Bearer " + data["access_token"]
-                },
-                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
-            };
-
-            Communications.makeWebRequest(bearerForAccessUrl, bearerForAccessParams, bearerForAccessOptions, method(:bearerForAccessOnReceive));
-        }
-        else {
+        } else {
             _resetToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
