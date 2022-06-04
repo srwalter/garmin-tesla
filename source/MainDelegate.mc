@@ -10,6 +10,7 @@ const OAUTH_ERROR = "myOAuthError";
 class MainDelegate extends Ui.BehaviorDelegate {
     var _handler;
     var _token;
+    var _refresh_token;
     var _tesla;
     var _sleep_timer;
     var _vehicle_id;
@@ -37,6 +38,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
         _settings = System.getDeviceSettings();
         _data = data;
         _token = Settings.getToken();
+        _refresh_token = Settings.getRefreshToken();
         _vehicle_id = Application.getApp().getProperty("vehicle");
         _sleep_timer = new Timer.Timer();
         _handler = handler;
@@ -66,10 +68,10 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
     function codeForBearerOnReceive(responseCode, data) {
         if (responseCode == 200) {
-            _saveToken(data["access_token"]);
+            _saveToken(data["access_token"], data["refresh_token"]);
             stateMachine();
         } else {
-            _resetToken();
+            _resetAllToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
     }
@@ -97,15 +99,38 @@ class MainDelegate extends Ui.BehaviorDelegate {
 
             Communications.makeWebRequest(codeForBearerUrl, codeForBearerParams, codeForBearerOptions, method(:codeForBearerOnReceive));
         } else {
-            _resetToken();
+            _resetAllToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_oauth_error));
         }
+    }
+
+    function refreshOAuth() {
+        var url = "https://auth.tesla.com/oauth2/v3/token";
+        Communications.makeWebRequest(
+            url,
+            {
+				"grant_type" => "refresh_token",
+				"client_id" => "ownerapi",
+				"refresh_token" => _refresh_token,
+				"scope" => "openid email offline_access"
+            },
+            {
+                :method => Communications.HTTP_REQUEST_METHOD_POST,
+                :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
+            },
+            method(:codeForBearerOnReceive)
+        );
     }
 
     function stateMachine() {
         if (_need_auth) {
 
             _need_auth = false;
+
+            if (_refresh_token) {
+                refreshOAuth();
+                return;
+            }
 
             _code_verifier = StringUtil.convertEncodedString(Cryptography.randomBytes(86/2), {
                 :fromRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
@@ -353,7 +378,7 @@ class MainDelegate extends Ui.BehaviorDelegate {
             _auth_done = true;
             stateMachine();
         } else {
-            _resetToken();
+            _resetAllToken();
             _handler.invoke(Ui.loadResource(Rez.Strings.label_error) + responseCode.toString());
         }
     }
@@ -464,15 +489,25 @@ class MainDelegate extends Ui.BehaviorDelegate {
         }
     }
 
-    function _saveToken(token) {
+    function _saveToken(token, refresh_token) {
         _token = token;
+        _refresh_token = refresh_token;
         _auth_done = true;
         Settings.setToken(token);
+        Settings.setRefreshToken(refresh_token);
     }
 
     function _resetToken() {
         _token = null;
         _auth_done = false;
         Settings.setToken(null);
+    }
+
+    function _resetAllToken() {
+        _token = null;
+        _refresh_token = null;
+        _auth_done = false;
+        Settings.setToken(null);
+        Settings.setRefreshToken(null);
     }
 }
