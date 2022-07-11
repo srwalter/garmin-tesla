@@ -26,11 +26,12 @@ class Tesla {
     hidden function genericPost(url, notify) {
         Communications.makeWebRequest(
             url,
-            null,
+            { "dummy" => "dummy" },
             {
                 :method => Communications.HTTP_REQUEST_METHOD_POST,
                 :headers => {
-                    "Authorization" => _token
+                    "Authorization" => _token,
+                    "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON
                 },
                 :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
             },
@@ -100,7 +101,8 @@ class Tesla {
             {
                 :method => Communications.HTTP_REQUEST_METHOD_POST,
                 :headers => {
-                    "Authorization" => _token
+                    "Authorization" => _token,
+                    "Content-Type" => Communications.REQUEST_CONTENT_TYPE_JSON
                 },
                 :responseType => Communications.HTTP_RESPONSE_CONTENT_TYPE_JSON
             },
