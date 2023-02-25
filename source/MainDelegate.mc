@@ -142,19 +142,37 @@ class MainDelegate extends Ui.BehaviorDelegate {
                 :toRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
             });
             
-            var hmac = new Cryptography.HashBasedMessageAuthenticationCode({
-                :algorithm => Cryptography.HASH_SHA256,
-                :key => code_verifier_bytes
-            });
+            var hmac = new Cryptography.Hash({:algorithm => Cryptography.HASH_SHA256});
+            hmac.update(code_verifier_bytes);
 
             var code_challenge = StringUtil.convertEncodedString(hmac.digest(), {
                 :fromRepresentation => StringUtil.REPRESENTATION_BYTE_ARRAY,
                 :toRepresentation => StringUtil.REPRESENTATION_STRING_BASE64,
             });
 
+            var cc_array = code_challenge.toCharArray();
+            var cc_len = code_challenge.length();
+            var cc_fixed = "";
+
+            for (var i=0; i<cc_len; i++) {
+                switch (cc_array[i]) {
+                    case '+':
+                        cc_fixed = cc_fixed + '-';
+                        break;
+                    case '/':
+                        cc_fixed = cc_fixed + '_';
+                        break;
+                    case '=':
+                        break;
+
+                    default:
+                        cc_fixed = cc_fixed + cc_array[i].toString();
+                }
+            }
+
             var params = {
                 "client_id" => "ownerapi",
-                "code_challenge" => code_challenge,
+                "code_challenge" => cc_fixed,
                 "code_challenge_method" => "S256",
                 "redirect_uri" => "https://auth.tesla.com/void/callback",
                 "response_type" => "code",
