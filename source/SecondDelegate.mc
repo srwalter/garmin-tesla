@@ -25,7 +25,7 @@ class SecondDelegate extends Ui.BehaviorDelegate {
     var _unlock;
     var _lock;
     var _settings;
-    // Template: // var _%lower_case% dnl
+    // Template: // var _%lower_case%
     var _flash_lights;
 
     var _data;
