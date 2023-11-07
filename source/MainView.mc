@@ -110,7 +110,7 @@ class MainView extends Ui.View {
             if (_data._vehicle_data != null) {
                 // Retrieve and display the vehicle name
                 var name_drawable = View.findDrawableById("name");
-                var vehicle_name = _data._vehicle_data.get("display_name");
+                var vehicle_name = _data._vehicle_data.get("vehicle_state").get("vehicle_name");
                 Application.getApp().setProperty("vehicle_name", vehicle_name);
                 name_drawable.setText(vehicle_name);
                 name_drawable.draw(dc);
